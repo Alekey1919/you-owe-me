@@ -1,13 +1,19 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
-import Cross from "@public/images/cross.svg";
 import NewParticipant from "./NewParticipant";
+import ParticipantList from "./ParticipantList";
 
 const PARTICIPANTS = ["Alekey", "Crisol", "Octi", "Anto", "Mateo", "Cimi"];
 
+export enum AnimationStatesEnum {
+  Overlap,
+  Move,
+  End,
+}
+
 const Page = () => {
   const [participants, setParticipants] = useState(PARTICIPANTS);
+  const [animationState, setAnimationState] = useState(AnimationStatesEnum.End);
 
   const removeParticipant = (index: number) => {
     setParticipants((curr) => {
@@ -23,28 +29,36 @@ const Page = () => {
     setParticipants((curr) => {
       return [participant, ...curr];
     });
+
+    handleAnimation();
+  };
+
+  const handleAnimation = () => {
+    setAnimationState(AnimationStatesEnum.Overlap);
+
+    setTimeout(() => {
+      setAnimationState(AnimationStatesEnum.Move);
+    }, 0);
+
+    setTimeout(() => {
+      setAnimationState(AnimationStatesEnum.End);
+    }, 1000);
   };
 
   return (
-    <div className="min-h-screen min-w-[100vh] flex items-center justify-center">
+    <div className="min-h-screen min-w-[100vh] flex justify-center ">
       {/* <button className="bg-secondary rounded-lg shadow-lg border-none font-semibold text-primary hover:scale-105 transition-all px-4 py-2">
         Create new ticket
       </button> */}
-
       <div className="flex flex-col space-y-8">
         <span className="font-medium text-xl">Participants:</span>
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2 relative">
           <NewParticipant handleAdd={handleAdd} />
-          {participants.map((participant, index) => {
-            return (
-              <div className="flex box justify-between space-x-8" key={index}>
-                <span className="">{participant}</span>{" "}
-                <button onClick={() => removeParticipant(index)}>
-                  <Image src={Cross} alt="Close" className="w-5" />
-                </button>
-              </div>
-            );
-          })}
+          <ParticipantList
+            participants={participants}
+            removeParticipant={removeParticipant}
+            animationState={animationState}
+          />
         </div>
       </div>
     </div>
