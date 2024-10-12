@@ -1,31 +1,31 @@
 import Cross from "@public/images/cross.svg"; // adjust the import path accordingly
 import Image from "next/image"; // adjust if using a different method for images
+import { CSSProperties } from "react";
 import { twMerge } from "tailwind-merge";
-import { AnimationStatesEnum } from "./page";
 
 const Participant = ({
   name,
-  onClick,
-  animationState,
+  onRemove,
+  styles,
+  disabled,
 }: {
   name: string;
-  onClick: () => void;
-  animationState?: AnimationStatesEnum;
+  onRemove: () => void;
+  styles?: { img?: CSSProperties; container?: CSSProperties };
+  disabled: boolean;
 }) => {
   return (
-    <div className="flex box justify-between space-x-8">
+    <div
+      className="flex box justify-between space-x-8 participant"
+      style={styles?.container}
+    >
       <span>{name}</span>
-      <button onClick={onClick}>
+      <button onClick={onRemove} disabled={disabled}>
         <Image
           src={Cross}
           alt="Close"
-          className={twMerge(
-            "w-5",
-            animationState === AnimationStatesEnum.Overlap && "rotate-45",
-            animationState &&
-              animationState >= AnimationStatesEnum.Move &&
-              "transition-transform duration-500 rotate-0"
-          )}
+          style={styles?.img}
+          className={twMerge("w-5", disabled && "cursor-not-allowed")}
         />
       </button>
     </div>

@@ -1,6 +1,7 @@
 import { AnimationStatesEnum } from "./page";
 import { twMerge } from "tailwind-merge";
 import Participant from "./Participant";
+import useListAnimations from "./useListAnimations";
 
 const ParticipantList = ({
   participants,
@@ -11,23 +12,30 @@ const ParticipantList = ({
   removeParticipant: (index: number) => void;
   animationState: AnimationStatesEnum;
 }) => {
+  const {
+    listContainerStyles,
+    getBoxAnimationStyles,
+    handleRemoveAnimation,
+    performingAnimation,
+  } = useListAnimations({
+    animationState,
+    removeParticipant: removeParticipant,
+  });
+
   if (!participants.length) return <></>;
 
   return (
     <div
-      className={twMerge(
-        "flex flex-col space-y-2 relative",
-        animationState < AnimationStatesEnum.Move && "-translate-y-[56px]",
-        animationState >= AnimationStatesEnum.Move &&
-          "transition-transform duration-500 translate-y-0"
-      )}
+      className={twMerge("flex flex-col space-y-2 relative")}
+      style={listContainerStyles}
     >
       {participants.map((participant, index) => {
         return (
           <Participant
             name={participant}
-            onClick={() => removeParticipant(index)}
-            animationState={index === 0 ? animationState : undefined}
+            onRemove={() => handleRemoveAnimation(index)}
+            styles={getBoxAnimationStyles(index)}
+            disabled={performingAnimation}
             key={index}
           />
         );
