@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AnimationStatesEnum } from "./page";
+import { AnimationStatesEnum } from "./Participants";
 
 const listItemsSpace = 8;
 

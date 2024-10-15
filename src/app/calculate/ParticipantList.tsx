@@ -1,7 +1,7 @@
-import { AnimationStatesEnum } from "./page";
 import { twMerge } from "tailwind-merge";
 import Participant from "./Participant";
 import useListAnimations from "./useListAnimations";
+import { AnimationStatesEnum } from "./Participants";
 
 const ParticipantList = ({
   participants,

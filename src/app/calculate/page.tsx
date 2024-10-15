@@ -1,67 +1,92 @@
 "use client";
 import { useState } from "react";
-import NewParticipant from "./NewParticipant";
-import ParticipantList from "./ParticipantList";
+import { CalculationContextProvider } from "./CalculationContext";
+import Expenses from "./Expenses";
+import Participants from "./Participants";
+import { IPayers } from "./NewExpense";
+
+export interface IExpense {
+  name: string;
+  price: number;
+  payedAmounts: IPayers;
+}
 
 const PARTICIPANTS = ["Alekey", "Crisol", "Octi", "Anto", "Mateo", "Cimi"];
 
-export enum AnimationStatesEnum {
-  Overlap,
-  Move,
-  End,
-}
+const EXPENSES: IExpense[] = [
+  {
+    name: "Nafta",
+    price: 10000,
+    payedAmounts: {
+      Alekey: 0,
+      Crisol: 10000,
+      Octi: 0,
+      Anto: 0,
+      Mateo: 0,
+      Cimi: 0,
+    },
+  },
+  {
+    name: "Cancha",
+    price: 15000,
+    payedAmounts: {
+      Alekey: 10000,
+      Crisol: 5000,
+      Octi: 0,
+      Anto: 0,
+      Mateo: 0,
+      Cimi: 0,
+    },
+  },
+  {
+    name: "Super",
+    price: 30000,
+    payedAmounts: {
+      Alekey: 0,
+      Crisol: 0,
+      Octi: 30000,
+      Anto: 0,
+      Mateo: 0,
+      Cimi: 0,
+    },
+  },
+  {
+    name: "Helado",
+    price: 8000,
+    payedAmounts: {
+      Alekey: 0,
+      Crisol: 0,
+      Octi: 0,
+      Anto: 8000,
+      Mateo: 0,
+      Cimi: 0,
+    },
+  },
+];
 
 const Page = () => {
   const [participants, setParticipants] = useState(PARTICIPANTS);
-  const [animationState, setAnimationState] = useState(AnimationStatesEnum.End);
-
-  const removeParticipant = (index: number) => {
-    setParticipants((curr) => {
-      const _curr = [...curr];
-
-      _curr.splice(index, 1);
-
-      return _curr;
-    });
-  };
-
-  const handleAdd = (participant: string) => {
-    setParticipants((curr) => {
-      return [participant, ...curr];
-    });
-
-    handleAnimation();
-  };
-
-  const handleAnimation = () => {
-    setAnimationState(AnimationStatesEnum.Overlap);
-
-    setTimeout(() => {
-      setAnimationState(AnimationStatesEnum.Move);
-    }, 0);
-
-    setTimeout(() => {
-      setAnimationState(AnimationStatesEnum.End);
-    }, 1000);
-  };
+  const [expenses, setExpenses] = useState(EXPENSES);
 
   return (
-    <div className="min-h-screen min-w-[100vh] flex justify-center ">
-      {/* <button className="bg-secondary rounded-lg shadow-lg border-none font-semibold text-primary hover:scale-105 transition-all px-4 py-2">
+    <CalculationContextProvider
+      state={{ participants, setParticipants, expenses, setExpenses }}
+    >
+      <div className="min-h-screen min-w-[100vh]">
+        {/* <button className="bg-secondary rounded-lg shadow-lg border-none font-semibold text-primary hover:scale-105 transition-all px-4 py-2">
         Create new ticket
       </button> */}
-      <div className="flex flex-col space-y-8">
-        <span className="font-medium text-xl">Participants:</span>
-        <div className="flex flex-col space-y-2 relative">
-          <NewParticipant handleAdd={handleAdd} />
-          <ParticipantList
-            participants={participants}
-            removeParticipant={removeParticipant}
-            animationState={animationState}
-          />
+        <div className="">
+          <h1 className="text-4xl text-center block">
+            Add all participants and expenses
+          </h1>
+        </div>
+        <div className="flex space-x-40 justify-center mt-20">
+          <Participants />
+          <Expenses />
         </div>
       </div>
-    </div>
+    </CalculationContextProvider>
   );
 };
 
