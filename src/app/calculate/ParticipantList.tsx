@@ -1,7 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import Participant from "./Participant";
-import useListAnimations from "./useListAnimations";
-import { AnimationStatesEnum } from "./Participants";
+import useListAnimations, {
+  AnimationStatesEnum,
+} from "../hooks/useListAnimations";
 
 const ParticipantList = ({
   participants,
@@ -19,7 +20,8 @@ const ParticipantList = ({
     performingAnimation,
   } = useListAnimations({
     animationState,
-    removeParticipant: removeParticipant,
+    removeListItem: removeParticipant,
+    boxClassName: "participant",
   });
 
   if (!participants.length) return <></>;

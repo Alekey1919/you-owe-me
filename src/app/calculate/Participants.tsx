@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import NewParticipant from "./NewParticipant";
 import ParticipantList from "./ParticipantList";
 import useCalculationContext from "./CalculationContext";
-
-export enum AnimationStatesEnum {
-  Overlap,
-  Move,
-  End,
-}
+import { AnimationStatesEnum } from "../hooks/useListAnimations";
 
 const Participants = () => {
   const { participants, setParticipants } = useCalculationContext();

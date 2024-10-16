@@ -105,8 +105,6 @@ export const ConsumersStep = ({
   const [showAllParticipants, setShowAllParticipants] = useState(false);
   const { participants } = useCalculationContext();
 
-  console.log("consumerStates", consumerStates);
-
   const allConsumersSelected = useMemo(() => {
     return (
       Object.values(consumerStates).filter((v) => v === false).length === 0
@@ -193,6 +191,7 @@ export const PayersStep = ({
 }) => {
   const { participants } = useCalculationContext();
 
+  // TODO: Make sure the total amount equals the price of the expense
   const onChange = (e: any, payer: string) => {
     if (e.target.value) {
       handlePayerAmount({ payer, amount: e.target.value });

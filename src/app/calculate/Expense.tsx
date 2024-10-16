@@ -1,4 +1,10 @@
-import React, { Fragment, useMemo, useState } from "react";
+import React, {
+  CSSProperties,
+  Fragment,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { IExpense } from "../types/expenseTypes";
 import { twMerge } from "tailwind-merge";
 import Cross from "@public/images/cross.svg";
@@ -12,9 +18,13 @@ interface IPaymentPercentages {
 const Expense = ({
   expenseData: { name, price, payedAmounts },
   deleteExpense,
+  styles,
+  performingAnimation,
 }: {
   expenseData: IExpense;
   deleteExpense: () => void;
+  styles: { container?: CSSProperties };
+  performingAnimation: boolean;
 }) => {
   const [showDetails, setShowDetails] = useState(false);
 
@@ -31,11 +41,19 @@ const Expense = ({
     return payers;
   }, [payedAmounts, price]);
 
+  // Close details if a deletion is happening to align the items correctly
+  useEffect(() => {
+    if (performingAnimation) {
+      setShowDetails(false);
+    }
+  }, [performingAnimation]);
+
   return (
     <div
       className="flex flex-col relative box !p-0"
       onPointerEnter={() => setShowDetails(true)}
       onPointerLeave={() => setShowDetails(false)}
+      style={styles.container}
     >
       <div
         className={twMerge(
