@@ -3,13 +3,7 @@ import { useState } from "react";
 import { CalculationContextProvider } from "./CalculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
-import { IPayers } from "./NewExpense";
-
-export interface IExpense {
-  name: string;
-  price: number;
-  payedAmounts: IPayers;
-}
+import { IExpense } from "../types/expenseTypes";
 
 const PARTICIPANTS = ["Alekey", "Crisol", "Octi", "Anto", "Mateo", "Cimi"];
 
@@ -73,14 +67,9 @@ const Page = () => {
       state={{ participants, setParticipants, expenses, setExpenses }}
     >
       <div className="min-h-screen min-w-[100vh]">
-        {/* <button className="bg-secondary rounded-lg shadow-lg border-none font-semibold text-primary hover:scale-105 transition-all px-4 py-2">
-        Create new ticket
-      </button> */}
-        <div className="">
-          <h1 className="text-4xl text-center block">
-            Add all participants and expenses
-          </h1>
-        </div>
+        <h1 className="text-4xl text-center block pt-20">
+          Add all participants and expenses
+        </h1>
         <div className="flex space-x-40 justify-center mt-20">
           <Participants />
           <Expenses />

@@ -40,6 +40,7 @@
   height: 0px;
   transition: height 0.5s;
   interpolate-size: allow-keywords;
+  overflow: hidden;
 }
 
 .transition-height.open {

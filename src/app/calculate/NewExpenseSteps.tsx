@@ -1,16 +1,19 @@
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import useCalculationContext from "./CalculationContext";
-import { IConsumerStates, IPayers, NewExpenseStepsEnum } from "./NewExpense";
+import { NewExpenseStepsEnum } from "./NewExpense";
+import { IConsumerStates, IPayedAmounts } from "../types/expenseTypes";
 
 const getCarouselStyles = (
   stepNumber: NewExpenseStepsEnum,
   currentStep: NewExpenseStepsEnum
 ) => {
+  const isVisible = stepNumber === currentStep;
   return {
-    opacity: stepNumber === currentStep ? "1" : "0",
+    opacity: isVisible ? "1" : "0",
     transform: `translateX(-${stepNumber * 100}%)`,
-  };
+    pointerEvents: isVisible ? "auto" : "none",
+  } as CSSProperties;
 };
 
 const StepContainer = ({
@@ -89,13 +92,11 @@ export const PriceStep = ({
 };
 
 export const ConsumersStep = ({
-  allConsumersSelected,
   consumerStates,
   selectAllConsumers,
   selectConsumer,
   currentStep,
 }: {
-  allConsumersSelected: boolean;
   consumerStates: IConsumerStates;
   selectAllConsumers: () => void;
   selectConsumer: (value: string) => void;
@@ -104,7 +105,16 @@ export const ConsumersStep = ({
   const [showAllParticipants, setShowAllParticipants] = useState(false);
   const { participants } = useCalculationContext();
 
+  console.log("consumerStates", consumerStates);
+
+  const allConsumersSelected = useMemo(() => {
+    return (
+      Object.values(consumerStates).filter((v) => v === false).length === 0
+    );
+  }, [consumerStates]);
+
   useEffect(() => {
+    // Close the list once we leave this step, so it doesn't take space while it's not visible
     if (currentStep !== NewExpenseStepsEnum.Consumers) {
       setShowAllParticipants(false);
     }
@@ -145,7 +155,7 @@ export const ConsumersStep = ({
           </div>
           <div
             className={twMerge(
-              "flex flex-col space-y-2 transition-height overflow-hidden",
+              "flex flex-col space-y-2 transition-height",
               showAllParticipants && "open"
             )}
           >
@@ -179,7 +189,7 @@ export const PayersStep = ({
   currentStep: NewExpenseStepsEnum;
   fullPrice: number;
   handlePayerAmount: (value: { payer: string; amount: number }) => void;
-  payedAmounts: IPayers;
+  payedAmounts: IPayedAmounts;
 }) => {
   const { participants } = useCalculationContext();
 
@@ -193,7 +203,7 @@ export const PayersStep = ({
     <StepContainer
       styles={getCarouselStyles(currentStep, NewExpenseStepsEnum.Payers)}
       classNames={twMerge(
-        "transition-height overflow-hidden",
+        "transition-height",
         currentStep === NewExpenseStepsEnum.Payers && "open"
       )}
     >
