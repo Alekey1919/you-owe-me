@@ -13,8 +13,16 @@
   box-sizing: border-box;
 }
 
+*::selection {
+  background: var(--background);
+}
+
 .box {
   @apply pl-4 pr-3 py-3 rounded-lg shadow-lg bg-secondary;
+}
+
+.button {
+  @apply pl-4 pr-3 py-3 rounded-lg shadow-lg bg-primary text-secondary transition-shadow duration-300;
 }
 
 .fade-enter {

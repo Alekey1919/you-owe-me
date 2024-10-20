@@ -2,7 +2,7 @@ import { CSSProperties, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import useCalculationContext from "./CalculationContext";
 import { NewExpenseStepsEnum } from "./NewExpense";
-import { IConsumerStates, IPayedAmounts } from "../types/expenseTypes";
+import { IConsumerStates, IPayedAmounts } from "../types/types";
 
 const getCarouselStyles = (
   stepNumber: NewExpenseStepsEnum,

@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { IExpense } from "../types/expenseTypes";
+import { IExpense } from "../types/types";
 import { twMerge } from "tailwind-merge";
 import Cross from "@public/images/cross.svg";
 import Image from "next/image";

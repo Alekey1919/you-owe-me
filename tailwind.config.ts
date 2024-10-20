@@ -12,10 +12,12 @@ const config: Config = {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
         background: "var(--background)",
+        orange: "var(--orange)",
       },
       screens: {
         "3xl": "1920px",
         "4xl": "2560px",
+        touch: { raw: "(pointer: coarse)" },
       },
     },
   },

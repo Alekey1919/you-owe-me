@@ -9,7 +9,8 @@ import {
 import { twMerge } from "tailwind-merge";
 import BackArrow from "@public/images/back-arrow.svg";
 import Image from "next/image";
-import { IConsumerStates, IPayedAmounts } from "../types/expenseTypes";
+import { IConsumerStates, IPayedAmounts } from "../types/types";
+import Button from "../components/Button";
 
 export enum NewExpenseStepsEnum {
   Name,
@@ -67,7 +68,16 @@ const NewExpense = () => {
 
   const saveExpense = useCallback(() => {
     setExpenses((curr) => {
-      const _curr = [...curr, { name, price, payedAmounts: payedAmounts }];
+      const _curr = [
+        ...curr,
+        {
+          name,
+          price,
+          payedAmounts: payedAmounts,
+          participants,
+          consumers: Object.keys(consumerStates),
+        },
+      ];
 
       return _curr;
     });
@@ -133,12 +143,7 @@ const NewExpense = () => {
 
   return (
     <>
-      <button
-        className="box !bg-primary text-secondary"
-        onClick={() => setShowModal(true)}
-      >
-        Add expense
-      </button>
+      <Button text="Add expense" onClick={() => setShowModal(true)} />
 
       <div
         className={twMerge(

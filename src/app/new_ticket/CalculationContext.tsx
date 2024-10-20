@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction, useContext } from "react";
-import { IExpense } from "../types/expenseTypes";
+import { IExpense } from "../types/types";
 
 interface ICalculationContext {
   participants: string[];
