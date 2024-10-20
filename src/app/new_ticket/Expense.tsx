@@ -61,7 +61,7 @@ const Expense = ({
         )}
       >
         <span>{name}</span>
-        <span>{price}</span>
+        <span>${price}</span>
 
         <div
           className={twMerge(

@@ -191,11 +191,37 @@ export const PayersStep = ({
 }) => {
   const { participants } = useCalculationContext();
 
-  // TODO: Make sure the total amount equals the price of the expense
   const onChange = (e: any, payer: string) => {
-    if (e.target.value) {
-      handlePayerAmount({ payer, amount: e.target.value });
+    let value = e.target.value === "" ? 0 : parseInt(e.target.value);
+
+    if (isNaN(value)) return;
+
+    const onlyPayer = !Object.keys(payedAmounts).filter((payerKey) => {
+      if (payerKey === payer) return;
+
+      return payedAmounts[payerKey] > 0;
+    }).length;
+
+    // Make sure the total amount equals the price of the expense
+    // Let's say the full price is $1000, no one can pay more than that
+    let maxValue = fullPrice;
+
+    // Also, the same happens with combined values. If first payer pays $600 a second payer can't pay more than $400.
+    if (!onlyPayer) {
+      Object.keys(payedAmounts).forEach((payerKey) => {
+        if (payerKey === payer) return;
+
+        // Subtract the amounts payed already from the full price to calculate how much is left to pay
+        maxValue -= payedAmounts[payerKey];
+      });
     }
+
+    // If the amount entered is more than that user can pay it's set to the maxValue
+    if (value > maxValue) {
+      value = maxValue;
+    }
+
+    handlePayerAmount({ payer, amount: value });
   };
 
   return (
@@ -214,11 +240,12 @@ export const PayersStep = ({
               <div className="flex space-x-4">
                 <span>$</span>
                 <input
-                  type="number"
+                  type="text"
                   max={fullPrice}
                   min={0}
-                  className="w-20 bg-transparent"
-                  value={payedAmounts[participant]}
+                  className="w-20 bg-transparent "
+                  placeholder="0"
+                  value={payedAmounts[participant] || 0}
                   onChange={(e) => onChange(e, participant)}
                 />
               </div>
