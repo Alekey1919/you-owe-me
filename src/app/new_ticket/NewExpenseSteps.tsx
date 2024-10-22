@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import useCalculationContext from "./CalculationContext";
-import { NewExpenseStepsEnum } from "./NewExpense";
+import { NewExpenseStepsEnum } from "./NewExpenseModal";
 import { IConsumerStates, IPayedAmounts } from "../types/types";
 
 const getCarouselStyles = (
@@ -229,6 +229,7 @@ export const PayersStep = ({
       styles={getCarouselStyles(currentStep, NewExpenseStepsEnum.Payers)}
       classNames={twMerge(
         "transition-height",
+        // TODO: also open if previous was opened to avoid a funny transition where the modal shrinks and expands
         currentStep === NewExpenseStepsEnum.Payers && "open"
       )}
     >

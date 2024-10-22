@@ -6,6 +6,9 @@ interface ICalculationContext {
   setParticipants: Dispatch<SetStateAction<string[]>>;
   expenses: IExpense[];
   setExpenses: Dispatch<SetStateAction<IExpense[]>>;
+  lgScreen: boolean;
+  isLeftSelected: boolean;
+  setIsLeftSelected: Dispatch<SetStateAction<boolean>>;
 }
 
 const CalculationContext = createContext({});

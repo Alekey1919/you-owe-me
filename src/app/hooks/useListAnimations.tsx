@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import useCalculationContext from "../new_ticket/CalculationContext";
 
 export enum AnimationStatesEnum {
   Overlap,
@@ -20,6 +21,7 @@ const useListAnimations = ({
 }) => {
   const [boxHeight, setBoxHeight] = useState(0);
   const [deletedIndex, setDeletedIndex] = useState<number>();
+  const { lgScreen } = useCalculationContext();
 
   const performingAnimation = useMemo(() => {
     return (
@@ -39,7 +41,9 @@ const useListAnimations = ({
         return {
           container: {
             transition: "transform 500ms, opacity 1s",
-            transform: `translateX(calc(-100% - ${listItemsSpace}px))`,
+            transform: `translate${
+              lgScreen ? "X" : "Y"
+            }(calc(-100% - ${listItemsSpace}px))`,
             opacity: 0,
           },
         };

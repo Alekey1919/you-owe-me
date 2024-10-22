@@ -1,4 +1,3 @@
-import { twMerge } from "tailwind-merge";
 import Participant from "./Participant";
 import useListAnimations, {
   AnimationStatesEnum,
@@ -28,7 +27,7 @@ const ParticipantList = ({
 
   return (
     <div
-      className={twMerge("flex flex-col space-y-2 relative")}
+      className="flex flex-col space-y-2 relative lg:pb-10"
       style={listContainerStyles}
     >
       {participants.map((participant, index) => {

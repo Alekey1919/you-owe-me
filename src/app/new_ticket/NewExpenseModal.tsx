@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useCalculationContext from "./CalculationContext";
 import {
@@ -10,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 import BackArrow from "@public/images/back-arrow.svg";
 import Image from "next/image";
 import { IConsumerStates, IPayedAmounts } from "../types/types";
-import Button from "../components/Button";
+import { createPortal } from "react-dom";
 
 export enum NewExpenseStepsEnum {
   Name,
@@ -19,14 +21,19 @@ export enum NewExpenseStepsEnum {
   Payers,
 }
 
-const NewExpense = () => {
-  const [showModal, setShowModal] = useState(false);
-
+const NewExpenseModal = ({
+  showModal,
+  setShowModal,
+}: {
+  showModal: boolean;
+  setShowModal: (v: boolean) => void;
+}) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [consumerStates, setConsumerStates] = useState<IConsumerStates>({});
   const [currentStep, setCurrentStep] = useState(NewExpenseStepsEnum.Name);
   const [payedAmounts, setPayedAmounts] = useState<IPayedAmounts>({});
+  const [domReady, setDomReady] = useState(false);
 
   const { participants, setExpenses } = useCalculationContext();
 
@@ -52,7 +59,8 @@ const NewExpense = () => {
           Object.values(consumerStates).filter((payed) => payed).length === 0
         );
       default:
-        return Object.values(payedAmounts).length === 0;
+        // Return true if the combined sum of all the payments doesn't add up to the price
+        return Object.values(payedAmounts).reduce((a, b) => a + b, 0) < price;
     }
   }, [consumerStates, currentStep, name, payedAmounts, price]);
 
@@ -83,10 +91,11 @@ const NewExpense = () => {
     });
 
     setShowModal(false);
-  }, [payedAmounts, setExpenses, name, price]);
+  }, [setExpenses, name, price, payedAmounts, participants, consumerStates]);
 
   const handleNext = useCallback(() => {
     if (nextDisabled) return;
+
     if (currentStep === NewExpenseStepsEnum.Payers) {
       saveExpense();
     } else {
@@ -129,9 +138,14 @@ const NewExpense = () => {
         setName("");
         setPrice(0);
         setCurrentStep(NewExpenseStepsEnum.Name);
+        setPayedAmounts({});
       }, 300);
     }
   }, [showModal]);
+
+  useEffect(() => {
+    setDomReady(true);
+  }, []);
 
   const titles = ["Name", "Price", "Consumers", "Payers"];
 
@@ -141,69 +155,64 @@ const NewExpense = () => {
     }
   };
 
-  return (
-    <>
-      <Button text="Add expense" onClick={() => setShowModal(true)} />
+  if (!domReady) return <></>;
 
-      <div
-        className={twMerge(
-          "fixed top-0 left-0 right-0 bottom-0 bg-[#000000a9] flex items-center justify-center !m-0 z-[100] transition-all duration-300",
-          !showModal && "opacity-0 pointer-events-none"
-        )}
-        id="modal-container"
-        onClick={handleExit}
-        style={{ backdropFilter: "blur(10px)" }}
-      >
-        <div className="flex flex-col space-y-5 items-between justify-center w-[400px] bg-background rounded-xl p-4 relative">
-          <h1 className="text-3xl text-center">{titles[currentStep]}</h1>
-          <div className="w-full flex overflow-visible transition-transform ">
-            <NameStep
-              value={name}
-              setValue={setName}
-              currentStep={currentStep}
-            />
+  return createPortal(
+    <div
+      className={twMerge(
+        "fixed top-0 left-0 right-0 bottom-0 bg-[#000000a9] flex items-center justify-center !m-0 z-[100] transition-all duration-300 w-full h-full",
+        !showModal && "opacity-0 pointer-events-none -z-10"
+      )}
+      id="modal-container"
+      onClick={handleExit}
+      style={{ backdropFilter: "blur(10px)" }}
+    >
+      <div className="flex flex-col space-y-5 items-between justify-center w-10/12 max-w-[350px] lg:max-w-[unset] lg:w-[400px] bg-background rounded-xl p-4 relative">
+        <h1 className="title text-center">{titles[currentStep]}</h1>
+        <div className="w-full flex overflow-visible transition-transform ">
+          <NameStep value={name} setValue={setName} currentStep={currentStep} />
 
-            <PriceStep
-              value={price}
-              setValue={setPrice}
-              currentStep={currentStep}
-            />
+          <PriceStep
+            value={price}
+            setValue={setPrice}
+            currentStep={currentStep}
+          />
 
-            <ConsumersStep
-              consumerStates={consumerStates}
-              selectAllConsumers={selectAllConsumers}
-              selectConsumer={selectConsumer}
-              currentStep={currentStep}
-            />
+          <ConsumersStep
+            consumerStates={consumerStates}
+            selectAllConsumers={selectAllConsumers}
+            selectConsumer={selectConsumer}
+            currentStep={currentStep}
+          />
 
-            <PayersStep
-              currentStep={currentStep}
-              fullPrice={price}
-              handlePayerAmount={handlePayerAmount}
-              payedAmounts={payedAmounts}
-            />
-          </div>
-
-          <button
-            className="box !bg-primary text-secondary disabled:!bg-gray-800 disabled:opacity-50 transition-all"
-            onClick={handleNext}
-            disabled={nextDisabled}
-          >
-            {currentStep !== NewExpenseStepsEnum.Payers ? "Next" : "Save"}
-          </button>
-
-          {currentStep > NewExpenseStepsEnum.Name && (
-            <Image
-              src={BackArrow}
-              alt="Back"
-              className="w-9 absolute top-4 left-4 !mt-0 cursor-pointer"
-              onClick={() => setCurrentStep((curr) => curr - 1)}
-            />
-          )}
+          <PayersStep
+            currentStep={currentStep}
+            fullPrice={price}
+            handlePayerAmount={handlePayerAmount}
+            payedAmounts={payedAmounts}
+          />
         </div>
+
+        <button
+          className="box !bg-primary text-secondary disabled:!bg-gray-800 disabled:opacity-50 transition-all"
+          onClick={handleNext}
+          disabled={nextDisabled}
+        >
+          {currentStep !== NewExpenseStepsEnum.Payers ? "Next" : "Save"}
+        </button>
+
+        {currentStep > NewExpenseStepsEnum.Name && (
+          <Image
+            src={BackArrow}
+            alt="Back"
+            className="w-9 absolute top-4 left-4 !mt-0 cursor-pointer"
+            onClick={() => setCurrentStep((curr) => curr - 1)}
+          />
+        )}
       </div>
-    </>
+    </div>,
+    document.getElementById("portal")!
   );
 };
 
-export default NewExpense;
+export default NewExpenseModal;

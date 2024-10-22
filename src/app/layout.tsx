@@ -20,6 +20,7 @@ export default function RootLayout({
       <body className="bg-background text-primary">
         <Navbar />
         <div className={outfit.className}>{children}</div>
+        <div id="portal" />
       </body>
     </html>
   );

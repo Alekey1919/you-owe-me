@@ -18,7 +18,7 @@
 }
 
 .box {
-  @apply pl-4 pr-3 py-3 rounded-lg shadow-lg bg-secondary;
+  @apply pl-4 pr-3 py-3 rounded-lg lg:shadow-lg bg-secondary;
 }
 
 .button {
@@ -53,4 +53,12 @@
 
 .transition-height.open {
   height: auto;
+}
+
+.title {
+  @apply text-2xl lg:text-3xl 3xl:text-4xl;
+}
+
+.subtitle {
+  @apply text-lg lg:text-xl 3xl:text-2xl;
 }
