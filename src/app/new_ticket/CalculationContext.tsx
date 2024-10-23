@@ -7,6 +7,7 @@ interface ICalculationContext {
   expenses: IExpense[];
   setExpenses: Dispatch<SetStateAction<IExpense[]>>;
   lgScreen: boolean;
+  isTouch: boolean;
   isLeftSelected: boolean;
   setIsLeftSelected: Dispatch<SetStateAction<boolean>>;
 }

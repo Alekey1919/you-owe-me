@@ -8,7 +8,9 @@ import React, {
 import { IExpense } from "../types/types";
 import { twMerge } from "tailwind-merge";
 import Cross from "@public/images/cross.svg";
+import Edit from "@public/images/edit.svg";
 import Image from "next/image";
+import useCalculationContext from "./CalculationContext";
 
 interface IPaymentPercentages {
   payer: string;
@@ -20,12 +22,17 @@ const Expense = ({
   deleteExpense,
   styles,
   performingAnimation,
+  isFocusedTouch,
+  handleTouch,
 }: {
   expenseData: IExpense;
   deleteExpense: () => void;
   styles: { container?: CSSProperties };
   performingAnimation: boolean;
+  isFocusedTouch: boolean;
+  handleTouch: (e: any) => void;
 }) => {
+  const { isTouch } = useCalculationContext();
   const [showDetails, setShowDetails] = useState(false);
 
   const paymentPercentages = useMemo(() => {
@@ -48,35 +55,39 @@ const Expense = ({
     }
   }, [performingAnimation]);
 
+  useEffect(() => {
+    setShowDetails(isFocusedTouch);
+  }, [isFocusedTouch]);
+
   return (
     <div
-      className="flex flex-col relative box !p-0"
-      onPointerEnter={() => setShowDetails(true)}
-      onPointerLeave={() => setShowDetails(false)}
+      className="flex flex-col relative box !p-0 !pt-3 expense"
+      onTouchStart={handleTouch}
+      onPointerEnter={() => (isTouch ? undefined : setShowDetails(true))}
+      onPointerLeave={() => (isTouch ? undefined : setShowDetails(false))}
       style={styles.container}
     >
       <div
         className={twMerge(
-          "w-full flex justify-between p-3 px-4 transition-all relative"
+          "w-full flex justify-center space-x-6 px-3 transition-height",
+          showDetails && "open"
+        )}
+      >
+        <Image src={Edit} alt="Edit" className="w-4 cursor-pointer" />
+        <Image
+          src={Cross}
+          alt="Close"
+          className="w-4 cursor-pointer"
+          onClick={deleteExpense}
+        />
+      </div>
+      <div
+        className={twMerge(
+          "w-full flex justify-between pb-3 px-4 transition-all relative pointer-events-none"
         )}
       >
         <span>{name}</span>
         <span>${price}</span>
-
-        <div
-          className={twMerge(
-            "top-0 bottom-0 left-0 opacity-0 absolute duration-300 flex items-center pr-4",
-            showDetails && "opacity-100 -translate-x-[100%]"
-          )}
-          style={{ transition: "opacity 100ms, transform 300ms" }}
-        >
-          <Image
-            src={Cross}
-            alt="Delete"
-            className="w-6 cursor-pointer"
-            onClick={deleteExpense}
-          />
-        </div>
       </div>
       <div
         className={twMerge(

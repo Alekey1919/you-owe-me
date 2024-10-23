@@ -17,6 +17,9 @@ const Page = () => {
   const [isLeftSelected, setIsLeftSelected] = useState(true);
 
   const lgScreen = useMediaQueryState({ breakpoint: DefaultBreakpoints.lg });
+  const isTouch = useMediaQueryState({
+    query: "(hover: none), (pointer: coarse)",
+  });
 
   return (
     <CalculationContextProvider
@@ -26,6 +29,7 @@ const Page = () => {
         expenses,
         setExpenses,
         lgScreen,
+        isTouch,
         isLeftSelected,
         setIsLeftSelected,
       }}

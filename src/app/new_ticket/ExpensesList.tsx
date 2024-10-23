@@ -1,9 +1,11 @@
+import { useCallback, useEffect, useState } from "react";
 import useListAnimations from "../hooks/useListAnimations";
 import useCalculationContext from "./CalculationContext";
 import Expense from "./Expense";
 
 const ExpensesList = () => {
-  const { expenses, setExpenses } = useCalculationContext();
+  const { expenses, setExpenses, isTouch } = useCalculationContext();
+  const [focusedExpense, setFocusedExpense] = useState<number | null>(null);
 
   const deleteExpense = (index: number) => {
     setExpenses((curr) => {
@@ -21,6 +23,25 @@ const ExpensesList = () => {
       boxClassName: "participant",
     });
 
+  const handleTouch = useCallback(
+    (e?: any, index?: number) => {
+      if (!isTouch) return;
+
+      if (!e || !e.target.className.includes("expense")) {
+        setFocusedExpense(null);
+      } else {
+        setFocusedExpense(index || 0);
+      }
+    },
+    [isTouch]
+  );
+
+  useEffect(() => {
+    document.addEventListener("pointerdown", handleTouch);
+
+    return () => document.removeEventListener("pointerdown", handleTouch);
+  }, [handleTouch]);
+
   if (!expenses.length) return <></>;
 
   return (
@@ -32,6 +53,8 @@ const ExpensesList = () => {
             deleteExpense={() => handleRemoveAnimation(index)}
             styles={getBoxAnimationStyles(index)}
             performingAnimation={performingAnimation}
+            isFocusedTouch={focusedExpense === index}
+            handleTouch={(e) => handleTouch(e, index)}
             key={index}
           />
         );
