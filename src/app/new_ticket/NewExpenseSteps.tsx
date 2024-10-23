@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import useCalculationContext from "./CalculationContext";
+import useCalculationContext from "../contexts/calculationContext";
 import { NewExpenseStepsEnum } from "./NewExpenseModal";
 import { IConsumerStates, IPayedAmounts } from "../types/types";
 

@@ -1,11 +1,8 @@
 import { createContext, Dispatch, SetStateAction, useContext } from "react";
-import { IExpense } from "../types/types";
 
 interface ICalculationContext {
   participants: string[];
   setParticipants: Dispatch<SetStateAction<string[]>>;
-  expenses: IExpense[];
-  setExpenses: Dispatch<SetStateAction<IExpense[]>>;
   lgScreen: boolean;
   isTouch: boolean;
   isLeftSelected: boolean;

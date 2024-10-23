@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import NewParticipant from "./NewParticipant";
 import ParticipantList from "./ParticipantList";
-import useCalculationContext from "./CalculationContext";
+import useCalculationContext from "../contexts/calculationContext";
 import { AnimationStatesEnum } from "../hooks/useListAnimations";
 import { twMerge } from "tailwind-merge";
 

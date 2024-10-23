@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import useListAnimations from "../hooks/useListAnimations";
-import useCalculationContext from "./CalculationContext";
+import useCalculationContext from "../contexts/calculationContext";
 import Expense from "./Expense";
+import useExpensesContext from "../contexts/expensesContext";
 
 const ExpensesList = () => {
-  const { expenses, setExpenses, isTouch } = useCalculationContext();
+  const { isTouch } = useCalculationContext();
+  const { expenses, setExpenses, setEditingIndex } = useExpensesContext();
+
   const [focusedExpense, setFocusedExpense] = useState<number | null>(null);
 
   const deleteExpense = (index: number) => {
@@ -55,6 +58,7 @@ const ExpensesList = () => {
             performingAnimation={performingAnimation}
             isFocusedTouch={focusedExpense === index}
             handleTouch={(e) => handleTouch(e, index)}
+            handleEdit={() => setEditingIndex(index)}
             key={index}
           />
         );

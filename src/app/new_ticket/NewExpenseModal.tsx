@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import useCalculationContext from "./CalculationContext";
+import useCalculationContext from "../contexts/calculationContext";
 import {
   ConsumersStep,
   NameStep,
@@ -13,6 +13,7 @@ import BackArrow from "@public/images/back-arrow.svg";
 import Image from "next/image";
 import { IConsumerStates, IPayedAmounts } from "../types/types";
 import { createPortal } from "react-dom";
+import useExpensesContext from "../contexts/expensesContext";
 
 export enum NewExpenseStepsEnum {
   Name,
@@ -28,14 +29,16 @@ const NewExpenseModal = ({
   showModal: boolean;
   setShowModal: (v: boolean) => void;
 }) => {
+  const { participants } = useCalculationContext();
+  const { expenses, setExpenses, editingIndex, setEditingIndex } =
+    useExpensesContext();
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [consumerStates, setConsumerStates] = useState<IConsumerStates>({});
   const [currentStep, setCurrentStep] = useState(NewExpenseStepsEnum.Name);
   const [payedAmounts, setPayedAmounts] = useState<IPayedAmounts>({});
   const [domReady, setDomReady] = useState(false);
-
-  const { participants, setExpenses } = useCalculationContext();
 
   const selectConsumer = (participant: string) => {
     setConsumerStates((curr) => {
@@ -75,23 +78,39 @@ const NewExpenseModal = ({
   };
 
   const saveExpense = useCallback(() => {
+    const isEditing = editingIndex !== null;
+
+    const newExpense = {
+      name,
+      price,
+      payedAmounts: payedAmounts,
+      participants,
+      consumers: Object.keys(consumerStates),
+    };
+
     setExpenses((curr) => {
-      const _curr = [
-        ...curr,
-        {
-          name,
-          price,
-          payedAmounts: payedAmounts,
-          participants,
-          consumers: Object.keys(consumerStates),
-        },
-      ];
+      const _curr = [...curr];
+
+      if (isEditing) {
+        _curr[editingIndex] = newExpense;
+      } else {
+        _curr.push(newExpense);
+      }
 
       return _curr;
     });
 
     setShowModal(false);
-  }, [setExpenses, name, price, payedAmounts, participants, consumerStates]);
+  }, [
+    editingIndex,
+    name,
+    price,
+    payedAmounts,
+    participants,
+    consumerStates,
+    setExpenses,
+    setShowModal,
+  ]);
 
   const handleNext = useCallback(() => {
     if (nextDisabled) return;
@@ -123,12 +142,20 @@ const NewExpenseModal = ({
   useEffect(() => {
     const _consumerStates: IConsumerStates = {};
 
+    const editingExpense = editingIndex ? expenses[editingIndex] : null;
+
+    // When editing an expense we use the payedAmounts to determine
     participants.forEach((participant) => {
-      _consumerStates[participant] = true;
+      if (editingExpense) {
+        _consumerStates[participant] =
+          editingExpense.consumers.includes(participant);
+      } else {
+        _consumerStates[participant] = true;
+      }
     });
 
     setConsumerStates(_consumerStates);
-  }, [participants]);
+  }, [editingIndex, expenses, participants]);
 
   // Clearing all states when closing the modal
   // Wait fot the opacity animation to happen before
@@ -139,9 +166,21 @@ const NewExpenseModal = ({
         setPrice(0);
         setCurrentStep(NewExpenseStepsEnum.Name);
         setPayedAmounts({});
+        setEditingIndex(null);
       }, 300);
     }
-  }, [showModal]);
+  }, [setEditingIndex, showModal]);
+
+  // Re-initialize states when selecting an expense to edit
+  useEffect(() => {
+    if (editingIndex) {
+      const data = expenses[editingIndex];
+
+      setName(data.name);
+      setPrice(data.price);
+      setPayedAmounts(data.payedAmounts);
+    }
+  }, [editingIndex, expenses]);
 
   useEffect(() => {
     setDomReady(true);

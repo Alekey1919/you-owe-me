@@ -10,7 +10,7 @@ import { twMerge } from "tailwind-merge";
 import Cross from "@public/images/cross.svg";
 import Edit from "@public/images/edit.svg";
 import Image from "next/image";
-import useCalculationContext from "./CalculationContext";
+import useCalculationContext from "../contexts/calculationContext";
 
 interface IPaymentPercentages {
   payer: string;
@@ -24,6 +24,7 @@ const Expense = ({
   performingAnimation,
   isFocusedTouch,
   handleTouch,
+  handleEdit,
 }: {
   expenseData: IExpense;
   deleteExpense: () => void;
@@ -31,9 +32,11 @@ const Expense = ({
   performingAnimation: boolean;
   isFocusedTouch: boolean;
   handleTouch: (e: any) => void;
+  handleEdit: () => void;
 }) => {
-  const { isTouch } = useCalculationContext();
   const [showDetails, setShowDetails] = useState(false);
+
+  const { isTouch } = useCalculationContext();
 
   const paymentPercentages = useMemo(() => {
     const payers: IPaymentPercentages[] = [];
@@ -73,7 +76,12 @@ const Expense = ({
           showDetails && "open"
         )}
       >
-        <Image src={Edit} alt="Edit" className="w-4 cursor-pointer" />
+        <Image
+          src={Edit}
+          alt="Edit"
+          className="w-4 cursor-pointer"
+          onClick={handleEdit}
+        />
         <Image
           src={Cross}
           alt="Close"
@@ -81,11 +89,7 @@ const Expense = ({
           onClick={deleteExpense}
         />
       </div>
-      <div
-        className={twMerge(
-          "w-full flex justify-between pb-3 px-4 transition-all relative pointer-events-none"
-        )}
-      >
+      <div className="w-full flex justify-between pb-3 px-4 transition-all relative pointer-events-none">
         <span>{name}</span>
         <span>${price}</span>
       </div>
@@ -96,16 +100,18 @@ const Expense = ({
         )}
       >
         {paymentPercentages.map((payer, index) => {
+          const theresMore = paymentPercentages[index + 1] !== undefined;
+
           return (
             <Fragment key={index}>
-              {/* Separator between payers */}
-              {index % 2 !== 0 && <div className="w-[1.5px] bg-secondary" />}
               <div
                 className="bg-gray-400 text-center text-background"
                 style={{ width: `${payer.percentage}%` }}
               >
                 {payer.payer}
               </div>
+              {/* Separator between payers */}
+              {theresMore && <div className="w-[1.5px] bg-secondary" />}
             </Fragment>
           );
         })}

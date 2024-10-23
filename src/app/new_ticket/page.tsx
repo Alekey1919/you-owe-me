@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { CalculationContextProvider } from "./CalculationContext";
+import { CalculationContextProvider } from "../contexts/calculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
 import Button from "../components/Button";
-import { EXPENSES, PARTICIPANTS } from "../../../mockedData";
+import { PARTICIPANTS } from "../../../mockedData";
 import Tabs from "./Tabs";
 import useMediaQueryState, {
   DefaultBreakpoints,
@@ -12,9 +12,8 @@ import useMediaQueryState, {
 
 const Page = () => {
   const [participants, setParticipants] = useState(PARTICIPANTS);
-  const [expenses, setExpenses] = useState(EXPENSES);
 
-  const [isLeftSelected, setIsLeftSelected] = useState(true);
+  const [isLeftSelected, setIsLeftSelected] = useState(true); // TODO: Rename this to isParticipantsSelected or something
 
   const lgScreen = useMediaQueryState({ breakpoint: DefaultBreakpoints.lg });
   const isTouch = useMediaQueryState({
@@ -26,8 +25,6 @@ const Page = () => {
       state={{
         participants,
         setParticipants,
-        expenses,
-        setExpenses,
         lgScreen,
         isTouch,
         isLeftSelected,
