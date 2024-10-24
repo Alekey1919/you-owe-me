@@ -23,8 +23,6 @@ const Results = () => {
     return grouped;
   }, [transactions]);
 
-  console.log(groupedTransactions);
-
   return (
     <div className="min-h-screen min-w-[100vh] flex flex-col items-center space-y-20 pt-20">
       <div className="flex flex-col w-full justify-center space-y-20">
