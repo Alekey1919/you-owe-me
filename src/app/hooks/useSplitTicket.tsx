@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Bill } from "../../../mockedData";
+import { MOCKED_TICKET } from "../../../mockedData";
 import {
-  IBill,
+  ITicket,
   ITransaction,
   ITransactionData,
   IUserBalances,
@@ -11,11 +11,11 @@ const useSplitTicket = () => {
   const [userBalances, setUserBalances] = useState<IUserBalances>({});
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
-  const calculateSplit = (bill: IBill) => {
+  const calculateSplit = (ticket: ITicket) => {
     const _userBalances: IUserBalances = {}; // Track each participant's balance (positive = owes money, negative = should be reimbursed)
 
     // Initialize balances for each participant
-    bill.participants.forEach((participant) => {
+    ticket.participants.forEach((participant) => {
       _userBalances[participant] = {
         amountToPay: { total: 0, details: [] },
         amountPayed: { total: 0, details: [] },
@@ -24,7 +24,7 @@ const useSplitTicket = () => {
     });
 
     // Loop through each expense to calculate who owes what
-    bill.expenses.forEach((expense) => {
+    ticket.expenses.forEach((expense) => {
       const consumers = expense.consumers;
       const pricePerConsumer = expense.price / consumers.length;
 
@@ -102,7 +102,7 @@ const useSplitTicket = () => {
   };
 
   useEffect(() => {
-    const balances = calculateSplit(Bill);
+    const balances = calculateSplit(MOCKED_TICKET);
     setUserBalances(balances);
 
     const transactions = minimizeTransactions(balances);

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import useListAnimations from "../hooks/useListAnimations";
-import useCalculationContext from "../contexts/calculationContext";
+import useListAnimations from "@app/hooks/useListAnimations";
+import useCalculationContext from "@app/contexts/calculationContext";
 import Expense from "./Expense";
-import useExpensesContext from "../contexts/expensesContext";
+import useExpensesContext from "@app/contexts/expensesContext";
 
 const ExpensesList = () => {
   const { isTouch } = useCalculationContext();

@@ -16,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="min-h-screen bg-secondary w-screen">
-      <body className="bg-background text-primary">
+    <html lang="en" className="min-h-screen w-screen bg-background">
+      <body className="text-primary">
         <Navbar />
         <div className={outfit.className}>{children}</div>
         <div id="portal" />

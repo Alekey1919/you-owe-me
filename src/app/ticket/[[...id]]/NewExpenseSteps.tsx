@@ -1,8 +1,8 @@
 import { CSSProperties, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import useCalculationContext from "../contexts/calculationContext";
+import useCalculationContext from "@app/contexts/calculationContext";
 import { NewExpenseStepsEnum } from "./NewExpenseModal";
-import { IConsumerStates, IPayedAmounts } from "../types/types";
+import { IConsumerStates, IPayedAmounts } from "@app/types/types";
 
 const getCarouselStyles = (
   stepNumber: NewExpenseStepsEnum,

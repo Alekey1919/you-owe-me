@@ -13,7 +13,10 @@ export interface IExpense {
   consumers: string[];
 }
 
-export interface IBill {
+export interface ITicket {
+  name: string;
+  date: number;
+  notes?: string;
   participants: string[];
   expenses: IExpense[];
 }

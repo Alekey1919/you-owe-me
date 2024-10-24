@@ -1,6 +1,12 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-const Button = ({ text, onClick }: { text: string; onClick: () => void }) => {
+const Button = ({
+  text,
+  onClick,
+}: {
+  text: string | ReactNode;
+  onClick: () => void;
+}) => {
   return (
     <button className="button relative group overflow-hidden" onClick={onClick}>
       <span className="touch:hidden absolute right-0 top-0 inline-block h-4 w-4 rounded transition-all bg-[#294ba0] duration-500 ease-in-out group-hover:-mr-4 group-hover:-mt-4">

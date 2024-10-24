@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import ExpensesList from "./ExpensesList";
-import useCalculationContext from "../contexts/calculationContext";
+import useCalculationContext from "@app/contexts/calculationContext";
 import { twMerge } from "tailwind-merge";
-import Button from "../components/Button";
+import Button from "@app/components/Button";
 import NewExpenseModal from "./NewExpenseModal";
-import { ExpensesContextProvider } from "../contexts/expensesContext";
-import { EXPENSES } from "../../../mockedData";
+import { ExpensesContextProvider } from "@app/contexts/expensesContext";
+import { EXPENSES } from "@root/mockedData";
 
 const Expenses = () => {
   const [expenses, setExpenses] = useState(EXPENSES);

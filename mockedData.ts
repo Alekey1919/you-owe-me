@@ -1,6 +1,9 @@
-import { IBill, IExpense } from "@/app/types/types";
+import { ITicket, IExpense } from "@/app/types/types";
 
-export const Bill: IBill = {
+export const MOCKED_TICKET: ITicket = {
+  name: "Hogwarts visit",
+  date: 0,
+  notes: "Some notes I guess",
   participants: ["Alekey", "Crisol", "Octi", "Anto", "Mateo", "Cimi"],
   expenses: [
     {

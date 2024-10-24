@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import NewParticipant from "./NewParticipant";
 import ParticipantList from "./ParticipantList";
-import useCalculationContext from "../contexts/calculationContext";
-import { AnimationStatesEnum } from "../hooks/useListAnimations";
+import useCalculationContext from "@app/contexts/calculationContext";
+import { AnimationStatesEnum } from "@app/hooks/useListAnimations";
 import { twMerge } from "tailwind-merge";
 
 const Participants = () => {

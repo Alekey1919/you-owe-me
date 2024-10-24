@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import useCalculationContext from "../contexts/calculationContext";
+import useCalculationContext from "@app/contexts/calculationContext";
 
 const Tab = ({
   text,

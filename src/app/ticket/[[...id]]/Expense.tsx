@@ -5,12 +5,12 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { IExpense } from "../types/types";
+import { IExpense } from "@app/types/types";
 import { twMerge } from "tailwind-merge";
 import Cross from "@public/images/cross.svg";
 import Edit from "@public/images/edit.svg";
 import Image from "next/image";
-import useCalculationContext from "../contexts/calculationContext";
+import useCalculationContext from "@app/contexts/calculationContext";
 
 interface IPaymentPercentages {
   payer: string;

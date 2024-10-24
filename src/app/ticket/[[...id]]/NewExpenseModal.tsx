@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import useCalculationContext from "../contexts/calculationContext";
+import useCalculationContext from "@app/contexts/calculationContext";
 import {
   ConsumersStep,
   NameStep,
@@ -11,9 +11,9 @@ import {
 import { twMerge } from "tailwind-merge";
 import BackArrow from "@public/images/back-arrow.svg";
 import Image from "next/image";
-import { IConsumerStates, IPayedAmounts } from "../types/types";
+import { IConsumerStates, IPayedAmounts } from "@app/types/types";
 import { createPortal } from "react-dom";
-import useExpensesContext from "../contexts/expensesContext";
+import useExpensesContext from "@app/contexts/expensesContext";
 
 export enum NewExpenseStepsEnum {
   Name,

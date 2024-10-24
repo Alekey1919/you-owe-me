@@ -1,7 +1,7 @@
 import Participant from "./Participant";
 import useListAnimations, {
   AnimationStatesEnum,
-} from "../hooks/useListAnimations";
+} from "@app/hooks/useListAnimations";
 
 const ParticipantList = ({
   participants,
