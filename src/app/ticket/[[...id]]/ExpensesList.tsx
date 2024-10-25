@@ -3,18 +3,23 @@ import useListAnimations from "@app/hooks/useListAnimations";
 import useCalculationContext from "@app/contexts/calculationContext";
 import Expense from "./Expense";
 import useExpensesContext from "@app/contexts/expensesContext";
+import { ITicket } from "@/app/types/types";
 
 const ExpensesList = () => {
   const { isTouch } = useCalculationContext();
-  const { expenses, setExpenses, setEditingIndex } = useExpensesContext();
+  const { setEditingIndex } = useExpensesContext();
+  const {
+    ticketData: { expenses },
+    setTicketData,
+  } = useCalculationContext();
 
   const [focusedExpense, setFocusedExpense] = useState<number | null>(null);
 
   const deleteExpense = (index: number) => {
-    setExpenses((curr) => {
-      const _curr = [...curr];
+    setTicketData((curr) => {
+      const _curr: ITicket = JSON.parse(JSON.stringify(curr));
 
-      _curr.splice(index, 1);
+      _curr.expenses.splice(index, 1);
 
       return _curr;
     });

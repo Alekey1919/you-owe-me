@@ -1,11 +1,8 @@
 import { createContext, Dispatch, SetStateAction, useContext } from "react";
-import { IExpense } from "../types/types";
 
 interface IExpensesContext {
   showModal: boolean;
   setShowModal: (v: boolean) => void;
-  expenses: IExpense[];
-  setExpenses: Dispatch<SetStateAction<IExpense[]>>;
   editingIndex: number | null;
   setEditingIndex: Dispatch<SetStateAction<null | number>>;
 }

@@ -1,14 +1,40 @@
-import Button from "@/app/components/Button";
 import ModalCard from "@/app/components/ModalCard";
+import useCalculationContext from "@/app/contexts/calculationContext";
 import { useMemo, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [notes, setNotes] = useState("");
 
+  const {
+    ticketData: { participants, expenses },
+  } = useCalculationContext();
+
   const handleSave = () => {
-    console.log("saving", name, date, notes);
+    const ticket = {
+      id: uuidv4(),
+      name,
+      date,
+      notes: notes || null,
+      participants,
+      expenses,
+    };
+
+    const savedTickets = localStorage.getItem("tickets");
+
+    let tickets = [];
+
+    if (savedTickets) {
+      tickets = [...JSON.parse(savedTickets)];
+    } else {
+      tickets.push(ticket);
+    }
+
+    localStorage.setItem("tickets", JSON.stringify(tickets));
+
+    handleClose();
   };
 
   const isButtonDisabled = useMemo(() => {

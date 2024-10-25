@@ -4,7 +4,7 @@ import { CalculationContextProvider } from "@app/contexts/calculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
 import Button from "@app/components/Button";
-import { PARTICIPANTS } from "@root/mockedData";
+import { EXPENSES, PARTICIPANTS } from "@root/mockedData";
 import Tabs from "./Tabs";
 import useMediaQueryState, {
   DefaultBreakpoints,
@@ -14,14 +14,25 @@ import Save from "@public/images/save.svg";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import SaveExpenseModal from "./SaveExpenseModal";
+import { ITicket } from "@/app/types/types";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const [participants, setParticipants] = useState(PARTICIPANTS);
-  const [date, setDate] = useState<number | null>(null);
-  const [description, setDescription] = useState<string>();
+  const initialState = {
+    id: "",
+    name: "",
+    date: 0,
+    notes: undefined,
+    participants: PARTICIPANTS,
+    expenses: EXPENSES,
+  };
+
+  const [ticketData, setTicketData] = useState<ITicket>(initialState);
+
   const [ticketNotFound, setTicketNotFound] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const params = useParams();
+  const router = useRouter();
 
   const [isLeftSelected, setIsLeftSelected] = useState(true); // TODO: Rename this to isParticipantsSelected or something
 
@@ -30,13 +41,29 @@ const Page = () => {
     query: "(hover: none), (pointer: coarse)",
   });
 
+  const redirectToResults = () => {
+    localStorage.setItem("currentTicket", JSON.stringify(ticketData));
+
+    router.push("/split_ticket");
+  };
+
   useEffect(() => {
     if (params?.id?.length) {
-      const savedData = localStorage.getItem(`ticket_${params.id[0]}`);
+      const savedData = localStorage.getItem(`tickets`);
 
       if (!savedData) return setTicketNotFound(true);
 
-      console.log(JSON.parse(savedData));
+      const tickets = JSON.parse(savedData);
+
+      const indexOfTicket = tickets
+        .map((ticket: ITicket) => ticket.id)
+        .indexOf(params.id[0]);
+
+      if (indexOfTicket >= 0) {
+        console.log(JSON.parse(savedData));
+      } else {
+        return setTicketNotFound(true);
+      }
     }
   }, [params.id]);
 
@@ -53,8 +80,8 @@ const Page = () => {
   return (
     <CalculationContextProvider
       state={{
-        participants,
-        setParticipants,
+        ticketData,
+        setTicketData,
         lgScreen,
         isTouch,
         isLeftSelected,
@@ -67,6 +94,7 @@ const Page = () => {
         </h1>
         {!lgScreen && <Tabs />}
         <div className="flex lg:space-x-40 lg:justify-center lg:mt-10 w-full overflow-hidden lg:overflow-visible">
+          {/* TODO: What happens if you delete a participant that has been added to some expenses? */}
           <Participants />
           <Expenses />
         </div>
@@ -82,7 +110,8 @@ const Page = () => {
             }
             onClick={() => setShowSaveModal(true)}
           />
-          <Button text="Calculate" onClick={() => console.log("first")} />
+
+          <Button text="Calculate" onClick={redirectToResults} />
         </div>
       </div>
 

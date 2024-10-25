@@ -5,10 +5,8 @@ import { twMerge } from "tailwind-merge";
 import Button from "@app/components/Button";
 import NewExpenseModal from "./NewExpenseModal";
 import { ExpensesContextProvider } from "@app/contexts/expensesContext";
-import { EXPENSES } from "@root/mockedData";
 
 const Expenses = () => {
-  const [expenses, setExpenses] = useState(EXPENSES);
   const [showModal, setShowModal] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
@@ -31,8 +29,6 @@ const Expenses = () => {
       state={{
         showModal,
         setShowModal,
-        expenses,
-        setExpenses,
         editingIndex,
         setEditingIndex,
       }}

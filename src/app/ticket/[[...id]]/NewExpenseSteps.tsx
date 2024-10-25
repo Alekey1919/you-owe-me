@@ -103,7 +103,9 @@ export const ConsumersStep = ({
   currentStep: NewExpenseStepsEnum;
 }) => {
   const [showAllParticipants, setShowAllParticipants] = useState(false);
-  const { participants } = useCalculationContext();
+  const {
+    ticketData: { participants },
+  } = useCalculationContext();
 
   const allConsumersSelected = useMemo(() => {
     return (
@@ -189,7 +191,9 @@ export const PayersStep = ({
   handlePayerAmount: (value: { payer: string; amount: number }) => void;
   payedAmounts: IPayedAmounts;
 }) => {
-  const { participants } = useCalculationContext();
+  const {
+    ticketData: { participants },
+  } = useCalculationContext();
 
   const onChange = (e: any, payer: string) => {
     let value = e.target.value === "" ? 0 : parseInt(e.target.value);

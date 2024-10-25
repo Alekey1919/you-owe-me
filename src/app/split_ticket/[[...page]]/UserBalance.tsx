@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { IUserBalance, IUserBalanceAmountsDetails } from "../types/types";
+import { IUserBalance, IUserBalanceAmountsDetails } from "../../types/types";
 import { twMerge } from "tailwind-merge";
 
 const DetailsSection = ({

@@ -6,24 +6,28 @@ import { AnimationStatesEnum } from "@app/hooks/useListAnimations";
 import { twMerge } from "tailwind-merge";
 
 const Participants = () => {
-  const { participants, setParticipants } = useCalculationContext();
+  const { setTicketData } = useCalculationContext();
   const [animationState, setAnimationState] = useState(AnimationStatesEnum.End);
 
   const { lgScreen, isLeftSelected } = useCalculationContext();
 
   const removeParticipant = (index: number) => {
-    setParticipants((curr) => {
-      const _curr = [...curr];
+    setTicketData((curr) => {
+      const _curr = JSON.parse(JSON.stringify(curr));
 
-      _curr.splice(index, 1);
+      _curr.participants.splice(index, 1);
 
       return _curr;
     });
   };
 
   const handleAdd = (participant: string) => {
-    setParticipants((curr) => {
-      return [participant, ...curr];
+    setTicketData((curr) => {
+      const _curr = JSON.parse(JSON.stringify(curr));
+
+      _curr.participants.unshift(participant);
+
+      return _curr;
     });
 
     handleAnimation();
@@ -60,7 +64,6 @@ const Participants = () => {
       <div className="flex flex-col space-y-2 relative">
         <NewParticipant handleAdd={handleAdd} />
         <ParticipantList
-          participants={participants}
           removeParticipant={removeParticipant}
           animationState={animationState}
         />

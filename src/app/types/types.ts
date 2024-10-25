@@ -14,6 +14,7 @@ export interface IExpense {
 }
 
 export interface ITicket {
+  id: string;
   name: string;
   date: number;
   notes?: string;

@@ -1,17 +1,20 @@
+import useCalculationContext from "@/app/contexts/calculationContext";
 import Participant from "./Participant";
 import useListAnimations, {
   AnimationStatesEnum,
 } from "@app/hooks/useListAnimations";
 
 const ParticipantList = ({
-  participants,
   removeParticipant,
   animationState,
 }: {
-  participants: string[];
   removeParticipant: (index: number) => void;
   animationState: AnimationStatesEnum;
 }) => {
+  const {
+    ticketData: { participants },
+  } = useCalculationContext();
+
   const {
     listContainerStyles,
     getBoxAnimationStyles,

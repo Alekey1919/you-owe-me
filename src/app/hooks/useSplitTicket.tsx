@@ -6,10 +6,12 @@ import {
   ITransactionData,
   IUserBalances,
 } from "../types/types";
+import { useParams } from "next/navigation";
 
 const useSplitTicket = () => {
   const [userBalances, setUserBalances] = useState<IUserBalances>({});
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const params = useParams();
 
   const calculateSplit = (ticket: ITicket) => {
     const _userBalances: IUserBalances = {}; // Track each participant's balance (positive = owes money, negative = should be reimbursed)
@@ -102,12 +104,25 @@ const useSplitTicket = () => {
   };
 
   useEffect(() => {
-    const balances = calculateSplit(MOCKED_TICKET);
-    setUserBalances(balances);
+    // Fetch ticket from localstore here
+    const currentTicket = localStorage.getItem("currentTicket");
 
-    const transactions = minimizeTransactions(balances);
-    setTransactions(transactions);
-  }, []);
+    if (currentTicket) {
+      const ticket: ITicket = JSON.parse(currentTicket);
+
+      const balances = calculateSplit(ticket);
+      setUserBalances(balances);
+
+      const transactions = minimizeTransactions(balances);
+      setTransactions(transactions);
+    } else {
+      const balances = calculateSplit(MOCKED_TICKET);
+      setUserBalances(balances);
+
+      const transactions = minimizeTransactions(balances);
+      setTransactions(transactions);
+    }
+  }, [params]);
 
   return { userBalances, transactions };
 };

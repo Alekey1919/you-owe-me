@@ -1,8 +1,9 @@
 import { createContext, Dispatch, SetStateAction, useContext } from "react";
+import { ITicket } from "../types/types";
 
 interface ICalculationContext {
-  participants: string[];
-  setParticipants: Dispatch<SetStateAction<string[]>>;
+  ticketData: ITicket;
+  setTicketData: Dispatch<SetStateAction<ITicket>>;
   lgScreen: boolean;
   isTouch: boolean;
   isLeftSelected: boolean;

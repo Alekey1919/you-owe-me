@@ -1,6 +1,7 @@
 import { ITicket, IExpense } from "@/app/types/types";
 
 export const MOCKED_TICKET: ITicket = {
+  id: "013130987",
   name: "Hogwarts visit",
   date: 0,
   notes: "Some notes I guess",

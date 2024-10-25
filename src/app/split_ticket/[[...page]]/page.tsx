@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
-import useSplitTicket from "../hooks/useSplitTicket";
+import useSplitTicket from "../../hooks/useSplitTicket";
 import UserBalance from "./UserBalance";
-import { ITransaction } from "../types/types";
+import { ITransaction } from "../../types/types";
 import UserTransactions from "./UserTransactions";
 
 const Results = () => {

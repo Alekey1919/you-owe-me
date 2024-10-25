@@ -11,7 +11,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import BackArrow from "@public/images/back-arrow.svg";
 import Image from "next/image";
-import { IConsumerStates, IPayedAmounts } from "@app/types/types";
+import { IConsumerStates, IPayedAmounts, ITicket } from "@app/types/types";
 import { createPortal } from "react-dom";
 import useExpensesContext from "@app/contexts/expensesContext";
 
@@ -22,6 +22,9 @@ export enum NewExpenseStepsEnum {
   Payers,
 }
 
+// TODO: When editing a modal a participant may be missing in the payedAmounts step
+// TODO: When changing the name of the expense it messes the results. Change one expense name and then the amount to pay in the results is different
+
 const NewExpenseModal = ({
   showModal,
   setShowModal,
@@ -29,9 +32,11 @@ const NewExpenseModal = ({
   showModal: boolean;
   setShowModal: (v: boolean) => void;
 }) => {
-  const { participants } = useCalculationContext();
-  const { expenses, setExpenses, editingIndex, setEditingIndex } =
-    useExpensesContext();
+  const {
+    ticketData: { participants, expenses },
+    setTicketData,
+  } = useCalculationContext();
+  const { editingIndex, setEditingIndex } = useExpensesContext();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -88,13 +93,13 @@ const NewExpenseModal = ({
       consumers: Object.keys(consumerStates),
     };
 
-    setExpenses((curr) => {
-      const _curr = [...curr];
+    setTicketData((curr) => {
+      const _curr: ITicket = JSON.parse(JSON.stringify(curr));
 
       if (isEditing) {
-        _curr[editingIndex] = newExpense;
+        _curr.expenses[editingIndex] = newExpense;
       } else {
-        _curr.push(newExpense);
+        _curr.expenses.push(newExpense);
       }
 
       return _curr;
@@ -108,7 +113,7 @@ const NewExpenseModal = ({
     payedAmounts,
     participants,
     consumerStates,
-    setExpenses,
+    setTicketData,
     setShowModal,
   ]);
 
@@ -173,7 +178,7 @@ const NewExpenseModal = ({
 
   // Re-initialize states when selecting an expense to edit
   useEffect(() => {
-    if (editingIndex) {
+    if (editingIndex !== null) {
       const data = expenses[editingIndex];
 
       setName(data.name);
