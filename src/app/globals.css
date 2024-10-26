@@ -52,7 +52,7 @@
 }
 
 .transition-height.open {
-  height: auto;
+  height: auto !important;
 }
 
 .title {
