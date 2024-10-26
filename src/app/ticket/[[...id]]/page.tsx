@@ -4,7 +4,7 @@ import { CalculationContextProvider } from "@app/contexts/calculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
 import Button from "@app/components/Button";
-import { EXPENSES, PARTICIPANTS } from "@root/mockedData";
+// import { EXPENSES, PARTICIPANTS } from "@root/mockedData";
 import Tabs from "./Tabs";
 import useMediaQueryState, {
   DefaultBreakpoints,
@@ -23,8 +23,8 @@ const Page = () => {
     name: "",
     date: 0,
     notes: undefined,
-    participants: PARTICIPANTS,
-    expenses: EXPENSES,
+    participants: [], //PARTICIPANTS,
+    expenses: [], //EXPENSES,
   };
 
   const [ticketData, setTicketData] = useState<ITicket>(initialState);
