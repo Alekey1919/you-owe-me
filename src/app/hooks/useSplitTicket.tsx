@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MOCKED_TICKET } from "../../../mockedData";
+import { MOCKED_TICKET, MOCKED_TICKET_2 } from "../../../mockedData";
 import {
   ITicket,
   ITransaction,
@@ -46,7 +46,7 @@ const useSplitTicket = () => {
         _userBalances[payer].balance += amountPaid;
 
         if (amountPaid) {
-          _userBalances[payer].amountPayed.total += amountPaid;
+          _userBalances[payer].amountPayed.total = amountPaid;
           _userBalances[payer].amountPayed.details.push({
             productName: expense.name,
             amount: amountPaid,
@@ -116,6 +116,7 @@ const useSplitTicket = () => {
       const transactions = minimizeTransactions(balances);
       setTransactions(transactions);
     } else {
+      // TODO: fetch ticket
       const balances = calculateSplit(MOCKED_TICKET);
       setUserBalances(balances);
 

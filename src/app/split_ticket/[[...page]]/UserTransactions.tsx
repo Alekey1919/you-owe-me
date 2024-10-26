@@ -13,7 +13,7 @@ const UserTransactions = ({
         {transactions.map((transaction, index) => {
           return (
             <span key={index}>
-              ${transaction.amount} to {transaction.payee}
+              ${Math.round(transaction.amount)} to {transaction.payee}
             </span>
           );
         })}

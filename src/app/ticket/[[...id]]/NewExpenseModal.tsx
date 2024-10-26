@@ -89,8 +89,9 @@ const NewExpenseModal = ({
       name,
       price,
       payedAmounts: payedAmounts,
-      participants,
-      consumers: Object.keys(consumerStates),
+      consumers: Object.keys(consumerStates).filter(
+        (key) => consumerStates[key]
+      ),
     };
 
     setTicketData((curr) => {
@@ -111,7 +112,6 @@ const NewExpenseModal = ({
     name,
     price,
     payedAmounts,
-    participants,
     consumerStates,
     setTicketData,
     setShowModal,

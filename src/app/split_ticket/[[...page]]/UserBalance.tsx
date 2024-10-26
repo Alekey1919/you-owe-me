@@ -28,7 +28,7 @@ const DetailsSection = ({
             isInFavor ? "text-green-400" : "text-red-400"
           )}
         >
-          ${totalAmount}
+          ${Math.round(totalAmount)}
         </span>
       </span>
       <div
@@ -46,7 +46,7 @@ const DetailsSection = ({
                   isInFavor ? "text-green-400" : "text-red-400"
                 )}
               >
-                ${expense.amount}
+                ${Math.round(expense.amount)}
               </span>
             </span>
           );
@@ -80,7 +80,7 @@ const UserBalance = ({
           src={Arrow}
           alt={isOpen ? "Close" : "Open"}
           className={twMerge(
-            "w-6 transition-transform ",
+            "w-6 transition-transform sm:hidden",
             isOpen ? "rotate-90" : "rotate-[-90deg]"
           )}
           onClick={() => setIsOpen((curr) => !curr)}
@@ -119,8 +119,8 @@ const UserBalance = ({
         >
           {/* If balance is negative e.g -1000 we remove the minus sign and add it manually before the $ sign  */}
           {owesMoney
-            ? `-$${userBalance.balance.toString().substring(1)}`
-            : `$${userBalance.balance}`}
+            ? `-$${Math.round(userBalance.balance).toString().substring(1)}`
+            : `$${Math.round(userBalance.balance)}`}
         </span>
       </span>
     </div>

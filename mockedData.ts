@@ -122,3 +122,30 @@ export const EXPENSES: IExpense[] = [
     consumers: ["Crisol", "Octi", "Anto", "Mateo", "Cimi"],
   },
 ];
+
+export const MOCKED_TICKET_2: ITicket = {
+  id: "",
+  name: "",
+  date: 0,
+  participants: ["Canela", "Mariano", "Alejo"],
+  expenses: [
+    {
+      name: "Food",
+      price: 10000,
+      payedAmounts: { Canela: 3000, Mariano: 7000 },
+      consumers: ["Canela", "Mariano", "Alejo"],
+    },
+    {
+      name: "Ice cream",
+      price: 12000,
+      payedAmounts: { Alejo: 12000 },
+      consumers: ["Canela", "Mariano", "Alejo"],
+    },
+    {
+      name: "Gas",
+      price: 5000,
+      payedAmounts: { Alejo: 5000 },
+      consumers: ["Canela", "Mariano", "Alejo"],
+    },
+  ],
+};
