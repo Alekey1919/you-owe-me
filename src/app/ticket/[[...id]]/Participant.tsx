@@ -15,7 +15,7 @@ const Participant = ({
 }) => {
   return (
     <div
-      className="flex box justify-between space-x-8 participant"
+      className="flex box justify-between space-x-8"
       style={styles?.container}
     >
       <span>{name}</span>

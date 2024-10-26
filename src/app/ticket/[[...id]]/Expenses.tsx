@@ -39,6 +39,7 @@ const Expenses = () => {
           isSelectedInMobile && "-translate-x-full"
         )}
       >
+        {/* TODO: Add placeholder to calculate boxHeight in animations hook  */}
         <span className="subtitle text-center hidden lg:block">Expenses:</span>
         <div className="flex flex-col space-y-2">
           <Button text="Add expense" onClick={() => setShowModal(true)} />

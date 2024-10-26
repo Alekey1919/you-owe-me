@@ -31,48 +31,52 @@ const useListAnimations = ({
     );
   }, [animationState, deletedIndex]);
 
-  const getBoxAnimationStyles = (index: number) => {
-    const styles = { img: {}, container: {} };
+  const getBoxAnimationStyles = useCallback(
+    (index: number) => {
+      const styles = { img: {}, container: {} };
 
-    // Removing an item from the list
-    if (deletedIndex !== undefined) {
-      // The once being removed moves to the left
-      if (index === deletedIndex) {
-        return {
-          container: {
-            transition: "transform 500ms, opacity 1s",
-            transform: `translate${
-              lgScreen ? "X" : "Y"
-            }(calc(-100% - ${listItemsSpace}px))`,
-            opacity: 0,
-          },
-        };
-      } else if (index > deletedIndex) {
-        // All the ones below it move up
-        return {
-          container: {
+      // Removing an item from the list
+      if (deletedIndex !== undefined) {
+        // The once being removed moves to the left
+        if (index === deletedIndex) {
+          return {
+            container: {
+              transition: "transform 500ms, opacity 1s",
+              transform: `translate${
+                lgScreen ? "X" : "Y"
+              }(calc(-100% - ${listItemsSpace}px))`,
+              opacity: 0,
+            },
+          };
+        } else if (index > deletedIndex) {
+          // All the ones below it move up
+          return {
+            container: {
+              transition: "transform 500ms",
+              transform: `translateY(-${boxHeight + listItemsSpace}px)`,
+            },
+          };
+        }
+      }
+
+      // Adding a new element to the list
+      // The first element takes the space of the input, and then moves down with the whole list
+      if (index === 0 && animationState !== undefined) {
+        if (animationState === AnimationStatesEnum.Overlap) {
+          styles.img = { transform: "rotate(45deg)" };
+          // styles.container = {position: }
+        } else if (animationState >= AnimationStatesEnum.Move) {
+          styles.img = {
             transition: "transform 500ms",
-            transform: `translateY(-${boxHeight + listItemsSpace}px)`,
-          },
-        };
+            transform: "rotate(0deg)",
+          };
+        }
       }
-    }
 
-    // Adding a new element to the list
-    // The first element takes the space of the input, and then moves down with the whole list
-    if (index === 0 && animationState !== undefined) {
-      if (animationState === AnimationStatesEnum.Overlap) {
-        styles.img = { transform: "rotate(45deg)" };
-      } else if (animationState >= AnimationStatesEnum.Move) {
-        styles.img = {
-          transition: "transform 500ms",
-          transform: "rotate(0deg)",
-        };
-      }
-    }
-
-    return styles;
-  };
+      return styles;
+    },
+    [animationState, boxHeight, deletedIndex, lgScreen]
+  );
 
   // When adding a new element to the list, the whole list moves down making room fot the new item coming from the top
   const listContainerStyles = useMemo(() => {

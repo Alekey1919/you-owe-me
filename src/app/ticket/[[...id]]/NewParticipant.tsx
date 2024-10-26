@@ -18,7 +18,7 @@ const NewParticipant = ({
   };
 
   return (
-    <div className="box flex justify-between">
+    <div className="box flex justify-between participant">
       <input
         type="text"
         placeholder="Harry Potter"
