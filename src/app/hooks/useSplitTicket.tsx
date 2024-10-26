@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MOCKED_TICKET, MOCKED_TICKET_2 } from "../../../mockedData";
+import { MOCKED_TICKET } from "../../../mockedData";
 import {
   ITicket,
   ITransaction,
