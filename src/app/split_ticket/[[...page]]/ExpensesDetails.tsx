@@ -24,7 +24,7 @@ const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
       </div>
       <div
         className={twMerge(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 transition-height",
+          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 gap-4 transition-height",
           isOpen && "open pb-4"
         )}
       >

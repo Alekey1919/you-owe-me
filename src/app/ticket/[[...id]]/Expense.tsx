@@ -89,7 +89,7 @@ const Expense = ({
           onClick={deleteExpense}
         />
       </div>
-      <div className="w-full flex justify-between pb-3 px-4 transition-all relative pointer-events-none">
+      <div className="w-full flex justify-between pb-3 px-4 transition-all relative pointer-events-none space-x-2">
         <span>{name}</span>
         <span>${price}</span>
       </div>

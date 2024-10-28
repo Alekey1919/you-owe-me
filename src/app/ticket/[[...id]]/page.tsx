@@ -27,7 +27,9 @@ const Page = () => {
     expenses: [], //EXPENSES,
   };
 
-  const [ticketData, setTicketData] = useState<ITicket>(initialState);
+  const [ticketData, setTicketData] = useState<ITicket>(
+    initialState as ITicket
+  );
 
   const [ticketNotFound, setTicketNotFound] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
@@ -60,7 +62,7 @@ const Page = () => {
         .indexOf(params.id[0]);
 
       if (indexOfTicket >= 0) {
-        console.log(JSON.parse(savedData));
+        setTicketData(tickets[indexOfTicket]);
       } else {
         return setTicketNotFound(true);
       }

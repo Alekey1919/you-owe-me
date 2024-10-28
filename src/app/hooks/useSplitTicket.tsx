@@ -48,7 +48,7 @@ const useSplitTicket = () => {
         _userBalances[payer].balance += amountPaid;
 
         if (amountPaid) {
-          _userBalances[payer].amountPayed.total = amountPaid;
+          _userBalances[payer].amountPayed.total += amountPaid;
           _userBalances[payer].amountPayed.details.push({
             productName: expense.name,
             amount: amountPaid,

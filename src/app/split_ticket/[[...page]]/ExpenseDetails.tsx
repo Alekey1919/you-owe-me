@@ -8,7 +8,12 @@ const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
   return (
     <div className="box flex flex-col text-base 2xl:text-lg">
       <span className="pl-3">
-        {expense.name} ~ ${expense.price}
+        {expense.name} ~ ${expense.price}{" "}
+        {expense.consumers.length > 1 && (
+          <span className="block">{`($${
+            expense.price / expense.consumers.length
+          } each)`}</span>
+        )}
       </span>
       <div className="flex flex-col space-y-2 border-background border-solid border-[2px] p-2 rounded-xl text-base 2xl:text-lg mt-3">
         <span className="underline">Consumers:</span>

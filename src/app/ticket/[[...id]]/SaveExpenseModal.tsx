@@ -25,12 +25,16 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
     const savedTickets = localStorage.getItem("tickets");
 
     let tickets = [];
+    console.log("savedTickets", savedTickets);
+    console.log("saving", ticket);
 
     if (savedTickets) {
-      tickets = [...JSON.parse(savedTickets)];
+      tickets = [...JSON.parse(savedTickets), ticket];
     } else {
       tickets.push(ticket);
     }
+
+    console.log("after", tickets);
 
     localStorage.setItem("tickets", JSON.stringify(tickets));
 
