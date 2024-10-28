@@ -7,8 +7,8 @@ import UserTransactions from "./UserTransactions";
 import UserBalanceList from "./UserBalanceList";
 import ExpensesDetails from "./ExpensesDetails";
 
-const Results = () => {
-  const { userBalances, transactions, expenses } = useSplitTicket();
+const Results = ({ isTesting }: { isTesting?: boolean }) => {
+  const { userBalances, transactions, expenses } = useSplitTicket(isTesting);
 
   const groupedTransactions = useMemo(() => {
     const grouped: { [key: string]: ITransaction[] } = {};

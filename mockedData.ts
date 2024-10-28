@@ -150,10 +150,10 @@ export const MOCKED_TICKET_2: ITicket = {
   ],
 };
 
-export const ANTO_BIRTHDAY = {
-  id: "378aea1f-32b0-4864-bac6-9cae8ba8c9e2",
-  name: "Cumple Anto",
-  date: "2024-10-27",
+export const ANTO_BIRTHDAY: ITicket = {
+  id: "9afd9585-6ca6-424c-984e-8084f516ff07",
+  name: "Cumple Anto 2",
+  date: 0,
   notes: "Incluye sabado y domingo",
   participants: ["Cimi", "Mateo", "Octi", "Cris", "Ale"],
   expenses: [
@@ -205,6 +205,70 @@ export const ANTO_BIRTHDAY = {
         Octi: 25000,
       },
       consumers: ["Mateo", "Octi", "Cris", "Ale"],
+    },
+    {
+      name: "Promo licuado",
+      price: 11000,
+      payedAmounts: {
+        Cimi: 11000,
+      },
+      consumers: ["Mateo", "Cris"],
+    },
+    {
+      name: "Cafe (Octi)",
+      price: 2800,
+      payedAmounts: {
+        Cimi: 2800,
+      },
+      consumers: ["Octi"],
+    },
+    {
+      name: "Cafe (Cimi)",
+      price: 2800,
+      payedAmounts: {
+        Cimi: 2800,
+      },
+      consumers: ["Cimi"],
+    },
+    {
+      name: "Tostado (Cimi y octi)",
+      price: 4900,
+      payedAmounts: {
+        Cimi: 4900,
+      },
+      consumers: ["Cimi", "Octi"],
+    },
+    {
+      name: "Tostado (Alejo)",
+      price: 4900,
+      payedAmounts: {
+        Cimi: 4900,
+      },
+      consumers: ["Ale"],
+    },
+    {
+      name: "Submarino (Alejo)",
+      price: 4100,
+      payedAmounts: {
+        Cimi: 4100,
+      },
+      consumers: ["Ale"],
+    },
+    {
+      name: "Submarino (Anto)",
+      price: 4100,
+      payedAmounts: {
+        Ale: 4100,
+      },
+      consumers: ["Cimi", "Mateo", "Octi", "Cris", "Ale"],
+    },
+    {
+      name: "Tostado (Anto)",
+      price: 4900,
+      payedAmounts: {
+        Ale: 4900,
+      },
+      consumers: ["Cimi", "Mateo", "Octi", "Cris", "Ale"],
     },
   ],
 };

@@ -10,7 +10,10 @@ const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
 
   return (
     <div className="flex flex-col space-y-6 3xl:space-y-10">
-      <div className="flex space-x-10">
+      <div
+        className="flex space-x-10 cursor-pointer"
+        onClick={() => setIsOpen((curr) => !curr)}
+      >
         <h1 className="text-2xl 2xl:text-3xl">Todos los gastos</h1>
         <Image
           src={Arrow}
@@ -19,7 +22,6 @@ const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
             "w-8 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"
           )}
-          onClick={() => setIsOpen((curr) => !curr)}
         />
       </div>
       <div

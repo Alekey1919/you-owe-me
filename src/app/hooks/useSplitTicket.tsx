@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MOCKED_TICKET } from "../../../mockedData";
+import { ANTO_BIRTHDAY, MOCKED_TICKET } from "../../../mockedData";
 import {
   IExpense,
   ITicket,
@@ -9,7 +9,7 @@ import {
 } from "../types/types";
 import { useParams } from "next/navigation";
 
-const useSplitTicket = () => {
+const useSplitTicket = (isTesting?: boolean) => {
   const [userBalances, setUserBalances] = useState<IUserBalances>({});
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [expenses, setExpenses] = useState<IExpense[]>([]);
@@ -109,7 +109,15 @@ const useSplitTicket = () => {
     // Fetch ticket from localstore here
     const currentTicket = localStorage.getItem("currentTicket");
 
-    if (currentTicket) {
+    if (isTesting) {
+      setExpenses(ANTO_BIRTHDAY.expenses);
+
+      const balances = calculateSplit(ANTO_BIRTHDAY);
+      setUserBalances(balances);
+
+      const transactions = minimizeTransactions(balances);
+      setTransactions(transactions);
+    } else if (currentTicket) {
       const ticket: ITicket = JSON.parse(currentTicket);
       setExpenses(ticket.expenses);
 

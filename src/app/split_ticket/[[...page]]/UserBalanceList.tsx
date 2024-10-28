@@ -11,7 +11,12 @@ const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
   return (
     <div className="flex flex-col space-y-6 3xl:space-y-10">
       <div className="flex space-x-10">
-        <h1 className="text-2xl 2xl:text-3xl">Gastos por persona</h1>
+        <h1
+          className="text-2xl 2xl:text-3xl cursor-pointer"
+          onClick={() => setIsOpen((curr) => !curr)}
+        >
+          Gastos por persona
+        </h1>
         <Image
           src={Arrow}
           alt={isOpen ? "Close" : "Open"}
@@ -19,7 +24,6 @@ const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
             "w-8 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"
           )}
-          onClick={() => setIsOpen((curr) => !curr)}
         />
       </div>
       <div

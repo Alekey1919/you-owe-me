@@ -62,3 +62,8 @@
 .subtitle {
   @apply text-lg lg:text-xl 3xl:text-2xl;
 }
+
+/* Hide srollbar */
+::-webkit-scrollbar {
+  display: none;
+}
