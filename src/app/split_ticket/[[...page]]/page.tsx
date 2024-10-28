@@ -31,7 +31,7 @@ const Results = () => {
         <UserBalanceList userBalances={userBalances} />
 
         <div className="flex flex-col space-y-6 3xl:space-y-10">
-          <h1 className="text-2xl">Transactions</h1>
+          <h1 className="text-2xl 2xl:text-3xl">Transacciones</h1>
 
           <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
             {Object.keys(groupedTransactions).map((payer, index) => {

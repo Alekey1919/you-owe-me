@@ -95,12 +95,12 @@ const UserBalance = ({
       >
         <div className="flex flex-col space-y-2">
           <DetailsSection
-            text="Total amount to pay:"
+            text="Total a pagar:"
             totalAmount={userBalance.amountToPay.total}
             expenses={userBalance.amountToPay.details}
           />
           <DetailsSection
-            text="Total amount payed:"
+            text="Total pagado:"
             totalAmount={userBalance.amountPayed.total}
             expenses={userBalance.amountPayed.details}
             isInFavor

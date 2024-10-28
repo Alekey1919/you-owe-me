@@ -11,7 +11,7 @@ const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
   return (
     <div className="flex flex-col space-y-6 3xl:space-y-10">
       <div className="flex space-x-10">
-        <h1 className="text-2xl 2xl:text-3xl">Expenses per user</h1>
+        <h1 className="text-2xl 2xl:text-3xl">Gastos por persona</h1>
         <Image
           src={Arrow}
           alt={isOpen ? "Close" : "Open"}

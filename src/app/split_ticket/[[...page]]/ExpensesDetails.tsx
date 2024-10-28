@@ -11,7 +11,7 @@ const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
   return (
     <div className="flex flex-col space-y-6 3xl:space-y-10">
       <div className="flex space-x-10">
-        <h1 className="text-2xl 2xl:text-3xl">All expenses</h1>
+        <h1 className="text-2xl 2xl:text-3xl">Todos los gastos</h1>
         <Image
           src={Arrow}
           alt={isOpen ? "Close" : "Open"}

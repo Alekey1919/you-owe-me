@@ -8,12 +8,12 @@ const UserTransactions = ({
 }) => {
   return (
     <div className="box">
-      <span className="font-medium">{transactions[0].payer} pays:</span>
+      <span className="font-medium">{transactions[0].payer} paga:</span>
       <div className="flex flex-col space-y-2">
         {transactions.map((transaction, index) => {
           return (
             <span key={index}>
-              ${Math.round(transaction.amount)} to {transaction.payee}
+              ${Math.round(transaction.amount)} a {transaction.payee}
             </span>
           );
         })}

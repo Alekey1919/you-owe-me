@@ -12,17 +12,17 @@ const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
         {expense.consumers.length > 1 && (
           <span className="block">{`($${
             expense.price / expense.consumers.length
-          } each)`}</span>
+          } c/u)`}</span>
         )}
       </span>
       <div className="flex flex-col space-y-2 border-background border-solid border-[2px] p-2 rounded-xl text-base 2xl:text-lg mt-3">
-        <span className="underline">Consumers:</span>
+        <span className="underline">Consumidores:</span>
         {/* // TODO: Add "Everyone" when all consumers are present */}
         <span>{expense.consumers.join(", ")}</span>
       </div>
 
       <div className="flex flex-col space-y-2 border-background border-solid border-[2px] p-2 rounded-xl text-base 2xl:text-lg mt-3">
-        <span className="underline">Payed by:</span>
+        <span className="underline">Pagado por:</span>
         {Object.keys(expense.payedAmounts).map((payer, index) => {
           if (!isPaymentShared) {
             return <span key={index}>{payer}</span>;
