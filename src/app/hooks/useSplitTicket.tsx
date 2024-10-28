@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MOCKED_TICKET } from "../../../mockedData";
 import {
+  IExpense,
   ITicket,
   ITransaction,
   ITransactionData,
@@ -11,6 +12,7 @@ import { useParams } from "next/navigation";
 const useSplitTicket = () => {
   const [userBalances, setUserBalances] = useState<IUserBalances>({});
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [expenses, setExpenses] = useState<IExpense[]>([]);
   const params = useParams();
 
   const calculateSplit = (ticket: ITicket) => {
@@ -109,6 +111,7 @@ const useSplitTicket = () => {
 
     if (currentTicket) {
       const ticket: ITicket = JSON.parse(currentTicket);
+      setExpenses(ticket.expenses);
 
       const balances = calculateSplit(ticket);
       setUserBalances(balances);
@@ -117,6 +120,8 @@ const useSplitTicket = () => {
       setTransactions(transactions);
     } else {
       // TODO: fetch ticket
+      setExpenses(MOCKED_TICKET.expenses);
+
       const balances = calculateSplit(MOCKED_TICKET);
       setUserBalances(balances);
 
@@ -125,7 +130,7 @@ const useSplitTicket = () => {
     }
   }, [params]);
 
-  return { userBalances, transactions };
+  return { userBalances, transactions, expenses };
 };
 
 export default useSplitTicket;
