@@ -1,6 +1,7 @@
 import ModalCard from "@/app/components/ModalCard";
 import useCalculationContext from "@/app/contexts/calculationContext";
-import { useMemo, useState } from "react";
+import { ITicket } from "@/app/types/types";
+import { useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
@@ -8,33 +9,50 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   const [date, setDate] = useState("");
   const [notes, setNotes] = useState("");
 
-  const {
-    ticketData: { participants, expenses },
-  } = useCalculationContext();
+  const { ticketData } = useCalculationContext();
+
+  // If the ticket was already saved we auto-complete with the values
+  useEffect(() => {
+    if (ticketData.name) setName(ticketData.name);
+
+    // if (ticketData.date) setDate("");
+
+    if (ticketData.notes) setNotes(ticketData.notes);
+  }, [ticketData]);
 
   const handleSave = () => {
+    const isNew = !ticketData.id;
+
     const ticket = {
-      id: uuidv4(),
+      id: isNew ? uuidv4() : ticketData.id,
       name,
       date,
       notes: notes || null,
-      participants,
-      expenses,
+      participants: ticketData.participants,
+      expenses: ticketData.expenses,
     };
 
     const savedTickets = localStorage.getItem("tickets");
 
     let tickets = [];
-    console.log("savedTickets", savedTickets);
-    console.log("saving", ticket);
 
     if (savedTickets) {
-      tickets = [...JSON.parse(savedTickets), ticket];
+      const savedTicketsParsed = JSON.parse(savedTickets);
+      if (isNew) {
+        tickets = [...savedTicketsParsed, ticket];
+      } else {
+        // If we're saved an already created ticket overwrite it
+        const existingTicketIndex = JSON.parse(savedTickets)
+          .map((ticket: ITicket) => ticket.id)
+          .indexOf(ticketData.id);
+
+        savedTicketsParsed[existingTicketIndex] = ticket;
+
+        tickets = savedTicketsParsed;
+      }
     } else {
       tickets.push(ticket);
     }
-
-    console.log("after", tickets);
 
     localStorage.setItem("tickets", JSON.stringify(tickets));
 
@@ -92,7 +110,7 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
           className="button hover:brightness-95"
           disabled={isButtonDisabled}
         >
-          Save
+          {ticketData.id ? "Update" : "Save"}
         </button>
       </div>
     </ModalCard>

@@ -151,8 +151,8 @@ export const MOCKED_TICKET_2: ITicket = {
 };
 
 export const ANTO_BIRTHDAY: ITicket = {
-  id: "9afd9585-6ca6-424c-984e-8084f516ff07",
-  name: "Cumple Anto 2",
+  id: "acf16173-eee6-4ad2-87b1-90642535ab1c",
+  name: "Cumple Anto",
   date: 0,
   notes: "Incluye sabado y domingo",
   participants: ["Cimi", "Mateo", "Octi", "Cris", "Ale"],
@@ -267,6 +267,23 @@ export const ANTO_BIRTHDAY: ITicket = {
       price: 4900,
       payedAmounts: {
         Ale: 4900,
+      },
+      consumers: ["Cimi", "Mateo", "Octi", "Cris", "Ale"],
+    },
+    {
+      name: "Fox hasta AG y vuelta (nafta y peajes)",
+      price: 10300,
+      payedAmounts: {
+        Cris: 10300,
+      },
+      consumers: ["Mateo", "Cris", "Ale"],
+    },
+    {
+      name: "Nafta entre AG y cumbresita (fox y cangoo)",
+      price: 24200,
+      payedAmounts: {
+        Cris: 12100,
+        Octi: 12100,
       },
       consumers: ["Cimi", "Mateo", "Octi", "Cris", "Ale"],
     },

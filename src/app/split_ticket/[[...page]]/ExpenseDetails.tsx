@@ -10,9 +10,9 @@ const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
       <span className="pl-3">
         {expense.name} ~ ${expense.price}{" "}
         {expense.consumers.length > 1 && (
-          <span className="block">{`($${
+          <span className="block">{`($${Math.round(
             expense.price / expense.consumers.length
-          } c/u)`}</span>
+          )} c/u)`}</span>
         )}
       </span>
       <div className="flex flex-col space-y-2 border-background border-solid border-[2px] p-2 rounded-xl text-base 2xl:text-lg mt-3">
