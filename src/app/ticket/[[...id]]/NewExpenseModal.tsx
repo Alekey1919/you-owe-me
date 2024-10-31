@@ -147,7 +147,8 @@ const NewExpenseModal = ({
   useEffect(() => {
     const _consumerStates: IConsumerStates = {};
 
-    const editingExpense = editingIndex ? expenses[editingIndex] : null;
+    const editingExpense =
+      editingIndex !== null ? expenses[editingIndex] : null;
 
     // When editing an expense we use the payedAmounts to determine
     participants.forEach((participant) => {
