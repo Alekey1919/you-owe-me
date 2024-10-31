@@ -22,9 +22,6 @@ export enum NewExpenseStepsEnum {
   Payers,
 }
 
-// TODO: When editing a modal a participant may be missing in the payedAmounts step
-// TODO: When changing the name of the expense it messes the results. Change one expense name and then the amount to pay in the results is different
-
 const NewExpenseModal = ({
   showModal,
   setShowModal,
@@ -43,6 +40,8 @@ const NewExpenseModal = ({
   const [consumerStates, setConsumerStates] = useState<IConsumerStates>({});
   const [currentStep, setCurrentStep] = useState(NewExpenseStepsEnum.Name);
   const [payedAmounts, setPayedAmounts] = useState<IPayedAmounts>({});
+  //
+  const [showAllParticipants, setShowAllParticipants] = useState(false);
   const [domReady, setDomReady] = useState(false);
 
   const selectConsumer = (participant: string) => {
@@ -173,9 +172,17 @@ const NewExpenseModal = ({
         setCurrentStep(NewExpenseStepsEnum.Name);
         setPayedAmounts({});
         setEditingIndex(null);
+        setShowAllParticipants(false); // Close the list once we leave this step, so it doesn't take space while it's not visible
       }, 300);
     }
   }, [setEditingIndex, showModal]);
+
+  // Close when going back a step
+  useEffect(() => {
+    if (currentStep < NewExpenseStepsEnum.Consumers && showAllParticipants) {
+      setShowAllParticipants(false);
+    }
+  }, [currentStep, showAllParticipants]);
 
   // Re-initialize states when selecting an expense to edit
   useEffect(() => {
@@ -228,6 +235,8 @@ const NewExpenseModal = ({
             selectAllConsumers={selectAllConsumers}
             selectConsumer={selectConsumer}
             currentStep={currentStep}
+            showAllParticipants={showAllParticipants}
+            setShowAllParticipants={setShowAllParticipants}
           />
 
           <PayersStep
@@ -235,6 +244,9 @@ const NewExpenseModal = ({
             fullPrice={price}
             handlePayerAmount={handlePayerAmount}
             payedAmounts={payedAmounts}
+            isOpen={
+              showAllParticipants || currentStep === NewExpenseStepsEnum.Payers
+            }
           />
         </div>
 

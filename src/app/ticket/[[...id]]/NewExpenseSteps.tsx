@@ -1,4 +1,10 @@
-import { CSSProperties, useEffect, useMemo, useState } from "react";
+import {
+  CSSProperties,
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useState,
+} from "react";
 import { twMerge } from "tailwind-merge";
 import useCalculationContext from "@app/contexts/calculationContext";
 import { NewExpenseStepsEnum } from "./NewExpenseModal";
@@ -96,13 +102,17 @@ export const ConsumersStep = ({
   selectAllConsumers,
   selectConsumer,
   currentStep,
+  showAllParticipants,
+  setShowAllParticipants,
 }: {
   consumerStates: IConsumerStates;
   selectAllConsumers: () => void;
   selectConsumer: (value: string) => void;
   currentStep: NewExpenseStepsEnum;
+  showAllParticipants: boolean;
+  setShowAllParticipants: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [showAllParticipants, setShowAllParticipants] = useState(false);
+  const [] = useState(false);
   const {
     ticketData: { participants },
   } = useCalculationContext();
@@ -112,13 +122,6 @@ export const ConsumersStep = ({
       Object.values(consumerStates).filter((v) => v === false).length === 0
     );
   }, [consumerStates]);
-
-  useEffect(() => {
-    // Close the list once we leave this step, so it doesn't take space while it's not visible
-    if (currentStep !== NewExpenseStepsEnum.Consumers) {
-      setShowAllParticipants(false);
-    }
-  }, [currentStep]);
 
   return (
     <>
@@ -185,11 +188,13 @@ export const PayersStep = ({
   fullPrice,
   handlePayerAmount,
   payedAmounts,
+  isOpen,
 }: {
   currentStep: NewExpenseStepsEnum;
   fullPrice: number;
   handlePayerAmount: (value: { payer: string; amount: number }) => void;
   payedAmounts: IPayedAmounts;
+  isOpen: boolean;
 }) => {
   const {
     ticketData: { participants },
@@ -231,11 +236,7 @@ export const PayersStep = ({
   return (
     <StepContainer
       styles={getCarouselStyles(currentStep, NewExpenseStepsEnum.Payers)}
-      classNames={twMerge(
-        "transition-height",
-        // TODO: also open if previous was opened to avoid a funny transition where the modal shrinks and expands
-        currentStep === NewExpenseStepsEnum.Payers && "open"
-      )}
+      classNames={twMerge("transition-height", isOpen && "open")}
     >
       <div className="flex flex-col space-y-2 w-full cursor-pointer">
         {participants.map((participant, index) => {
