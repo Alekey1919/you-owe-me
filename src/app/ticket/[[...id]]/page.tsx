@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CalculationContextProvider } from "@app/contexts/calculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
@@ -42,6 +42,10 @@ const Page = () => {
   const isTouch = useMediaQueryState({
     query: "(hover: none), (pointer: coarse)",
   });
+
+  const calculateDisabled = useMemo(() => {
+    return ticketData.participants.length < 2 || !ticketData.expenses.length;
+  }, [ticketData.expenses.length, ticketData.participants.length]);
 
   const redirectToResults = () => {
     localStorage.setItem("currentTicket", JSON.stringify(ticketData));
@@ -101,7 +105,6 @@ const Page = () => {
           <Expenses />
         </div>
 
-        {/* TODO: Disable button if there are less than 2 participants or no expenses */}
         <div className="w-full flex justify-center space-x-6">
           <Button
             text={
@@ -113,7 +116,11 @@ const Page = () => {
             onClick={() => setShowSaveModal(true)}
           />
 
-          <Button text="Calculate" onClick={redirectToResults} />
+          <Button
+            text="Calculate"
+            onClick={redirectToResults}
+            disabled={calculateDisabled}
+          />
         </div>
       </div>
 

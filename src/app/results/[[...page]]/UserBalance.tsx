@@ -81,7 +81,10 @@ const UserBalance = ({
 
   return (
     <div className={twMerge("card relative ", isOpen && "!pb-16")}>
-      <div className="flex justify-between">
+      <div
+        className="flex justify-between"
+        onClick={() => setIsOpen((curr) => !curr)}
+      >
         <span className="text-lg font-medium pl-2">{userName}</span>
         <Image
           src={Arrow}
@@ -90,7 +93,6 @@ const UserBalance = ({
             "w-6 transition-transform sm:hidden",
             isOpen ? "rotate-90" : "rotate-[-90deg]"
           )}
-          onClick={() => setIsOpen((curr) => !curr)}
         />
       </div>
 
@@ -117,7 +119,7 @@ const UserBalance = ({
       <span
         className={twMerge(
           "pl-2 text-base 2xl:text-lg absolute bottom-4 opacity-0 transition-opacity",
-          isOpen && "opacity-100"
+          isOpen ? "opacity-100" : "pointer-events-none"
         )}
       >
         Balance:{" "}
