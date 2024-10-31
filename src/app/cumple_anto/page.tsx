@@ -1,5 +1,5 @@
 import React from "react";
-import ResultsPage from "@app/split_ticket/[[...page]]/page";
+import ResultsPage from "@/app/results/[[...page]]/page";
 
 const page = () => {
   return <ResultsPage isTesting />;

@@ -46,7 +46,7 @@ const Page = () => {
   const redirectToResults = () => {
     localStorage.setItem("currentTicket", JSON.stringify(ticketData));
 
-    router.push("/split_ticket");
+    router.push("/results");
   };
 
   useEffect(() => {

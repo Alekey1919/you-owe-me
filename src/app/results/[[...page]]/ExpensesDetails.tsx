@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Arrow from "@public/images/back-arrow.svg";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { IExpense } from "@/app/types/types";
 import ExpenseDetails from "./ExpenseDetails";
+import useResultContext from "@/app/contexts/resultsContext";
 
 const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { highlightedExpense } = useResultContext();
+
+  useEffect(() => {
+    if (highlightedExpense) {
+      setIsOpen(true);
+    }
+  }, [highlightedExpense]);
 
   return (
     <div className="flex flex-col space-y-6 3xl:space-y-10">

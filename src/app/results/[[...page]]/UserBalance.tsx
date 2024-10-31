@@ -6,6 +6,7 @@ import Arrow from "@public/images/back-arrow.svg";
 import useMediaQueryState, {
   DefaultBreakpoints,
 } from "@/app/hooks/useMediaQueryState";
+import useResultContext from "@/app/contexts/resultsContext";
 
 const DetailsSection = ({
   text,
@@ -18,8 +19,10 @@ const DetailsSection = ({
   expenses: IUserBalanceAmountsDetails[];
   isInFavor?: boolean;
 }) => {
+  const { highlightExpense } = useResultContext();
+
   return (
-    <div className="flex flex-col space-y-2 border-background border-solid border-[2px] p-2 rounded-xl text-base 2xl:text-lg">
+    <div className="card-section">
       <span className="underline">
         {text}{" "}
         <span
@@ -39,7 +42,11 @@ const DetailsSection = ({
       >
         {expenses.map((expense, index) => {
           return (
-            <span key={index}>
+            <span
+              key={index}
+              className="text-red-500"
+              onClick={() => highlightExpense(expense.productName)}
+            >
               {expense.productName}:{" "}
               <span
                 className={twMerge(
@@ -73,7 +80,7 @@ const UserBalance = ({
   }, [smScreen]);
 
   return (
-    <div className={twMerge("box flex flex-col relative ", isOpen && "!pb-16")}>
+    <div className={twMerge("card relative ", isOpen && "!pb-16")}>
       <div className="flex justify-between">
         <span className="text-lg font-medium pl-2">{userName}</span>
         <Image

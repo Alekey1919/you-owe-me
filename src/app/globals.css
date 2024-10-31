@@ -63,7 +63,75 @@
   @apply text-lg lg:text-xl 3xl:text-2xl;
 }
 
+.card {
+  @apply box flex flex-col relative;
+}
+
+.card-section {
+  @apply flex flex-col space-y-2 border-background border-solid border-[2px] p-2 rounded-xl text-base 2xl:text-lg mt-3;
+}
+
 /* Hide srollbar */
 ::-webkit-scrollbar {
   display: none;
+}
+
+.highlighted {
+  --offset: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.highlighted > * {
+  position: relative;
+  z-index: 10;
+}
+
+/* Conic gradient */
+.highlighted::before {
+  content: "";
+  background: conic-gradient(transparent 270deg, var(--primary), transparent);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1;
+  width: 100%;
+  animation: rotate 3s linear infinite;
+}
+
+/* Overlay */
+.highlighted::after {
+  content: "";
+  background: inherit;
+  border-radius: inherit;
+  position: absolute;
+  inset: var(--offset);
+  height: calc(100% - 2 * var(--offset));
+  width: calc(100% - 2 * var(--offset));
+}
+
+.highlighted input {
+  background: transparent;
+  color: white;
+  font-size: 1.5rem;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  padding: 1.5rem;
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) scale(1.4) rotate(0turn);
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.4) rotate(1turn);
+    opacity: 0;
+  }
 }
