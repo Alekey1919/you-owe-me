@@ -10,13 +10,13 @@ const Expenses = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
-  const { lgScreen, isLeftSelected } = useCalculationContext();
+  const { lgScreen, isParticipantsSelected } = useCalculationContext();
 
   const isSelectedInMobile = useMemo(() => {
     if (lgScreen) return;
 
-    return !isLeftSelected;
-  }, [isLeftSelected, lgScreen]);
+    return !isParticipantsSelected;
+  }, [isParticipantsSelected, lgScreen]);
 
   useEffect(() => {
     if (editingIndex !== null) {

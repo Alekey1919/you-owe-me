@@ -36,7 +36,8 @@ const Page = () => {
   const params = useParams();
   const router = useRouter();
 
-  const [isLeftSelected, setIsLeftSelected] = useState(true); // TODO: Rename this to isParticipantsSelected or something
+  // In mobile we show only one section at the time
+  const [isParticipantsSelected, setIsParticipantsSelected] = useState(true);
 
   const lgScreen = useMediaQueryState({ breakpoint: DefaultBreakpoints.lg });
   const isTouch = useMediaQueryState({
@@ -90,8 +91,8 @@ const Page = () => {
         setTicketData,
         lgScreen,
         isTouch,
-        isLeftSelected,
-        setIsLeftSelected,
+        isParticipantsSelected,
+        setIsParticipantsSelected,
       }}
     >
       <div className="min-h-screen w-screen max-w-lg mx-auto lg:min-w-[100vh] flex flex-col items-center space-y-8 lg:space-y-14 3xl:space-y-20 pt-10 3xl:pt-20 px-10">

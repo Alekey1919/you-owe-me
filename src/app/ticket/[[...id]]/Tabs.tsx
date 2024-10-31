@@ -24,25 +24,26 @@ const Tab = ({
 };
 
 const Tabs = () => {
-  const { isLeftSelected, setIsLeftSelected } = useCalculationContext();
+  const { isParticipantsSelected, setIsParticipantsSelected } =
+    useCalculationContext();
 
   return (
     <div className="lg:hidden flex w-full rounded-full bg-secondary relative py-3 justify-around">
       <Tab
-        onClick={() => setIsLeftSelected(true)}
+        onClick={() => setIsParticipantsSelected(true)}
         text={"Participants"}
-        active={isLeftSelected}
+        active={isParticipantsSelected}
       />
       <Tab
-        onClick={() => setIsLeftSelected(false)}
+        onClick={() => setIsParticipantsSelected(false)}
         text={"Expenses"}
-        active={!isLeftSelected}
+        active={!isParticipantsSelected}
       />
 
       <div
         className={twMerge(
           "rounded-[inherit] absolute left-0 top-0 bottom-0 w-1/2 bg-primary transition-transform duration-300 z-10",
-          !isLeftSelected && "translate-x-full"
+          !isParticipantsSelected && "translate-x-full"
         )}
       />
       {/* <Tab text="Participants" selected />

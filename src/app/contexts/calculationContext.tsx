@@ -6,8 +6,8 @@ interface ICalculationContext {
   setTicketData: Dispatch<SetStateAction<ITicket>>;
   lgScreen: boolean;
   isTouch: boolean;
-  isLeftSelected: boolean;
-  setIsLeftSelected: Dispatch<SetStateAction<boolean>>;
+  isParticipantsSelected: boolean;
+  setIsParticipantsSelected: Dispatch<SetStateAction<boolean>>;
 }
 
 const CalculationContext = createContext({});

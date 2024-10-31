@@ -9,7 +9,7 @@ const Participants = () => {
   const { setTicketData } = useCalculationContext();
   const [animationState, setAnimationState] = useState(AnimationStatesEnum.End);
 
-  const { lgScreen, isLeftSelected } = useCalculationContext();
+  const { lgScreen, isParticipantsSelected } = useCalculationContext();
 
   const removeParticipant = (index: number) => {
     setTicketData((curr) => {
@@ -48,8 +48,8 @@ const Participants = () => {
   const isSelectedInMobile = useMemo(() => {
     if (lgScreen) return;
 
-    return isLeftSelected;
-  }, [isLeftSelected, lgScreen]);
+    return isParticipantsSelected;
+  }, [isParticipantsSelected, lgScreen]);
 
   return (
     <div
