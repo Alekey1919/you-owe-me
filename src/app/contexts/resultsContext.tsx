@@ -3,6 +3,7 @@ import { createContext, useContext } from "react";
 interface IResultsContext {
   highlightedExpense: string;
   highlightExpense: (expenseName: string) => void;
+  participants: string[];
 }
 
 const ResultContext = createContext({});

@@ -13,6 +13,7 @@ const useSplitTicket = (isTesting?: boolean) => {
   const [userBalances, setUserBalances] = useState<IUserBalances>({});
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [expenses, setExpenses] = useState<IExpense[]>([]);
+  const [participants, setParticipants] = useState<string[]>([]);
   const params = useParams();
 
   const calculateSplit = (ticket: ITicket) => {
@@ -117,6 +118,7 @@ const useSplitTicket = (isTesting?: boolean) => {
 
       const transactions = minimizeTransactions(balances);
       setTransactions(transactions);
+      setParticipants(ANTO_BIRTHDAY.participants);
     } else if (currentTicket) {
       const ticket: ITicket = JSON.parse(currentTicket);
       setExpenses(ticket.expenses);
@@ -126,6 +128,7 @@ const useSplitTicket = (isTesting?: boolean) => {
 
       const transactions = minimizeTransactions(balances);
       setTransactions(transactions);
+      setParticipants(ticket.participants);
     } else {
       // TODO: fetch ticket
       setExpenses(MOCKED_TICKET.expenses);
@@ -135,10 +138,11 @@ const useSplitTicket = (isTesting?: boolean) => {
 
       const transactions = minimizeTransactions(balances);
       setTransactions(transactions);
+      setParticipants(MOCKED_TICKET.participants);
     }
-  }, [params]);
+  }, [isTesting, params]);
 
-  return { userBalances, transactions, expenses };
+  return { userBalances, transactions, expenses, participants };
 };
 
 export default useSplitTicket;

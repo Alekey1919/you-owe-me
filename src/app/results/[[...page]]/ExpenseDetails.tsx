@@ -7,7 +7,7 @@ const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
   // If the ticket was payed by a single person or not
   const isPaymentShared = Object.keys(expense.payedAmounts).length > 1;
 
-  const { highlightedExpense } = useResultContext();
+  const { highlightedExpense, participants } = useResultContext();
 
   const isHighlighted = useMemo(() => {
     return highlightedExpense === expense.name;
@@ -28,8 +28,12 @@ const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
       </span>
       <div className="card-section">
         <span className="underline">Consumidores:</span>
-        {/* // TODO: Add "Everyone" when all consumers are present */}
-        <span>{expense.consumers.join(", ")}</span>
+
+        <span>
+          {participants.length === expense.consumers.length
+            ? `Todos (${participants.length})`
+            : expense.consumers.join(", ")}
+        </span>
       </div>
 
       <div className="flex flex-col space-y-2 border-background border-solid border-[2px] p-2 rounded-xl text-base 2xl:text-lg mt-3">

@@ -11,7 +11,8 @@ import { smoothScrollTo } from "@/app/utils/smoothScrollTo";
 
 const Results = ({ isTesting }: { isTesting?: boolean }) => {
   const [highlightedExpense, setHighlightedExpense] = useState("");
-  const { userBalances, transactions, expenses } = useSplitTicket(isTesting);
+  const { userBalances, transactions, expenses, participants } =
+    useSplitTicket(isTesting);
 
   const groupedTransactions = useMemo(() => {
     const grouped: { [key: string]: ITransaction[] } = {};
@@ -42,7 +43,9 @@ const Results = ({ isTesting }: { isTesting?: boolean }) => {
   };
 
   return (
-    <ResultContextProvider state={{ highlightedExpense, highlightExpense }}>
+    <ResultContextProvider
+      state={{ highlightedExpense, highlightExpense, participants }}
+    >
       <div className="w-full flex flex-col items-center space-y-20 py-8 3xl:py-14 px-8 3xl:px-10">
         <div className="flex flex-col w-full justify-center ">
           <ExpensesDetails expenses={expenses} />
