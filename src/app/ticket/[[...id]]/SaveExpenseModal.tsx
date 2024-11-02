@@ -15,7 +15,12 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   useEffect(() => {
     if (ticketData.name) setName(ticketData.name);
 
-    // if (ticketData.date) setDate("");
+    // We save the timestamp but the input type date expects a string
+    if (ticketData.date) {
+      const dateString = new Date(ticketData.date).toISOString().split("T")[0]; // Extracts 'YYYY-MM-DD'
+
+      setDate(dateString);
+    }
 
     if (ticketData.notes) setNotes(ticketData.notes);
   }, [ticketData]);
@@ -26,7 +31,7 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
     const ticket = {
       id: isNew ? uuidv4() : ticketData.id,
       name,
-      date,
+      date: Date.parse(date), // We save the timestamp
       notes: notes || null,
       participants: ticketData.participants,
       expenses: ticketData.expenses,
@@ -65,7 +70,7 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
 
   return (
     <ModalCard handleClose={handleClose}>
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-3">
         <div className="flex w-full justify-between">
           <label htmlFor="name" className="subtitle">
             Name:
