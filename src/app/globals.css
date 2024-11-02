@@ -17,6 +17,10 @@
   background: var(--background);
 }
 
+.layout {
+  @apply min-h-[100vh] min-w-[100vw] py-10 3xl:py-20 px-10;
+}
+
 .box {
   @apply pl-4 pr-3 py-3 rounded-lg lg:shadow-lg bg-secondary;
 }

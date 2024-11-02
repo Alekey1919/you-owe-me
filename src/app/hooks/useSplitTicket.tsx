@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ANTO_BIRTHDAY, MOCKED_TICKET } from "../../../mockedData";
+import { useCallback, useEffect, useState } from "react";
+import { ANTO_BIRTHDAY } from "../../../mockedData";
 import {
   IExpense,
   ITicket,
@@ -9,11 +9,16 @@ import {
 } from "../types/types";
 import { useParams } from "next/navigation";
 
+export enum ResultErrorsEnum {
+  TicketNotFound,
+}
+
 const useSplitTicket = (isTesting?: boolean) => {
   const [userBalances, setUserBalances] = useState<IUserBalances>({});
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [expenses, setExpenses] = useState<IExpense[]>([]);
   const [participants, setParticipants] = useState<string[]>([]);
+  const [error, setError] = useState<ResultErrorsEnum | null>(null);
   const params = useParams();
 
   const calculateSplit = (ticket: ITicket) => {
@@ -106,43 +111,48 @@ const useSplitTicket = (isTesting?: boolean) => {
     return _transactions;
   };
 
+  const calculateResults = useCallback((ticket: ITicket) => {
+    setExpenses(ticket.expenses);
+
+    const balances = calculateSplit(ticket);
+    setUserBalances(balances);
+
+    const transactions = minimizeTransactions(balances);
+    setTransactions(transactions);
+    setParticipants(ticket.participants);
+  }, []);
+
   useEffect(() => {
-    // Fetch ticket from localstore here
+    const ticketId = params.id[0];
     const currentTicket = localStorage.getItem("currentTicket");
 
     if (isTesting) {
-      setExpenses(ANTO_BIRTHDAY.expenses);
-
-      const balances = calculateSplit(ANTO_BIRTHDAY);
-      setUserBalances(balances);
-
-      const transactions = minimizeTransactions(balances);
-      setTransactions(transactions);
-      setParticipants(ANTO_BIRTHDAY.participants);
+      calculateResults(ANTO_BIRTHDAY);
     } else if (currentTicket) {
       const ticket: ITicket = JSON.parse(currentTicket);
-      setExpenses(ticket.expenses);
 
-      const balances = calculateSplit(ticket);
-      setUserBalances(balances);
+      calculateResults(ticket);
 
-      const transactions = minimizeTransactions(balances);
-      setTransactions(transactions);
-      setParticipants(ticket.participants);
-    } else {
-      // TODO: fetch ticket
-      setExpenses(MOCKED_TICKET.expenses);
+      localStorage.removeItem("currentTicket");
+    } else if (ticketId) {
+      // TODO: Fetch on db
+      const allTickets = localStorage.getItem("tickets") || "";
 
-      const balances = calculateSplit(MOCKED_TICKET);
-      setUserBalances(balances);
+      const parsedTickets: ITicket[] = JSON.parse(allTickets);
 
-      const transactions = minimizeTransactions(balances);
-      setTransactions(transactions);
-      setParticipants(MOCKED_TICKET.participants);
+      const ticket = parsedTickets.filter(
+        (ticket) => ticket.id === ticketId
+      )[0];
+
+      if (!ticket) {
+        setError(ResultErrorsEnum.TicketNotFound);
+      } else {
+        calculateResults(ticket);
+      }
     }
-  }, [isTesting, params]);
+  }, [calculateResults, isTesting, params]);
 
-  return { userBalances, transactions, expenses, participants };
+  return { userBalances, transactions, expenses, participants, error };
 };
 
 export default useSplitTicket;

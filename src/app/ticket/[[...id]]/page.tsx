@@ -95,7 +95,7 @@ const Page = () => {
         setIsParticipantsSelected,
       }}
     >
-      <div className="min-h-screen w-screen max-w-lg mx-auto lg:min-w-[100vh] flex flex-col items-center space-y-8 lg:space-y-14 3xl:space-y-20 pt-10 3xl:pt-20 px-10">
+      <div className="layout max-w-lg mx-auto flex flex-col items-center space-y-8 lg:space-y-14 3xl:space-y-20">
         <h1 className="title text-center block">
           Add all participants and expenses
         </h1>
