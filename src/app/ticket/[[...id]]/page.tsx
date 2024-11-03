@@ -74,12 +74,14 @@ const Page = () => {
     }
   }, [params.id]);
 
-  // TODO: Add proper 404 screen with button to create a ticket or go back to home
   if (ticketNotFound) {
     return (
-      <div className="">
-        <h1>The ticket was not found, sorry</h1>
-        <Link href="/ticket">Create one</Link>
+      <div className="flex flex-col h-screen w-screen justify-center items-center space-y-4">
+        <h1 className="title">The ticket was not found, sorry (404)</h1>
+
+        <Link href="/ticket">
+          <button className="bg-none subtitle">Create one</button>
+        </Link>
       </div>
     );
   }
@@ -101,7 +103,6 @@ const Page = () => {
         </h1>
         {!lgScreen && <Tabs />}
         <div className="flex lg:space-x-40 lg:justify-center lg:mt-10 w-full overflow-hidden lg:overflow-visible">
-          {/* TODO: What happens if you delete a participant that has been added to some expenses? */}
           <Participants />
           <Expenses />
         </div>
