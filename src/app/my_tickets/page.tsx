@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import EditImg from "@public/images/edit.svg";
 import ClipboardImg from "@public/images/clipboard.svg";
+import { parseDateToString } from "../utils/parseDateToString";
 
 const Page = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
@@ -30,7 +31,7 @@ const Page = () => {
             >
               <div className="flex flex-col space-y-2">
                 <h1 className="subtitle">{ticket.name}</h1>
-                <p className="">{ticket.date}</p>
+                <p className="">{parseDateToString(ticket.date)}</p>
               </div>
               <div className="flex flex-col justify-between">
                 <Link href={`/ticket/${ticket.id}`}>

@@ -1,6 +1,7 @@
 import ModalCard from "@/app/components/ModalCard";
 import useCalculationContext from "@/app/contexts/calculationContext";
 import { ITicket } from "@/app/types/types";
+import { parseDateToString } from "@/app/utils/parseDateToString";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -17,9 +18,7 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
 
     // We save the timestamp but the input type date expects a string
     if (ticketData.date) {
-      const dateString = new Date(ticketData.date).toISOString().split("T")[0]; // Extracts 'YYYY-MM-DD'
-
-      setDate(dateString);
+      setDate(parseDateToString(ticketData.date));
     }
 
     if (ticketData.notes) setNotes(ticketData.notes);
