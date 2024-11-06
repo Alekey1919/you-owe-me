@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import StoreProvider from "./redux/StoreProvider";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -16,12 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="min-h-screen w-screen bg-background">
-      <body className="text-primary">
-        <Navbar />
-        <div className={outfit.className}>{children}</div>
-        <div id="portal" />
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en" className="min-h-screen w-screen bg-background">
+        <body className="text-primary">
+          <Navbar />
+          <div className={outfit.className}>{children}</div>
+          <div id="portal" />
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

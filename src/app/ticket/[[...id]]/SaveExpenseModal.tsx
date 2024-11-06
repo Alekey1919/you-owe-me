@@ -1,8 +1,12 @@
 import ModalCard from "@/app/components/ModalCard";
 import useCalculationContext from "@/app/contexts/calculationContext";
+import { selectUser } from "@/app/redux/slices/userSlice";
+import { db } from "@/app/services/firebase/firebase";
 import { ITicket } from "@/app/types/types";
 import { parseDateToString } from "@/app/utils/parseDateToString";
-import { useEffect, useMemo, useState } from "react";
+import { doc, setDoc } from "firebase/firestore";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
@@ -11,6 +15,8 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   const [notes, setNotes] = useState("");
 
   const { ticketData } = useCalculationContext();
+
+  const user = useSelector(selectUser);
 
   // If the ticket was already saved we auto-complete with the values
   useEffect(() => {
@@ -24,44 +30,37 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
     if (ticketData.notes) setNotes(ticketData.notes);
   }, [ticketData]);
 
-  const handleSave = () => {
+  const handleSave = useCallback(async () => {
+    if (!user)
+      return console.log(
+        "TODO: prevent user from saving unless it's logged in"
+      );
+
     const isNew = !ticketData.id;
 
-    const ticket = {
+    const ticket: ITicket = {
       id: isNew ? uuidv4() : ticketData.id,
       name,
       date: Date.parse(date), // We save the timestamp
-      notes: notes || null,
+      notes,
       participants: ticketData.participants,
       expenses: ticketData.expenses,
+      userId: user?.id,
     };
 
-    const savedTickets = localStorage.getItem("tickets");
-
-    let tickets = [];
-
-    if (savedTickets) {
-      const savedTicketsParsed = JSON.parse(savedTickets);
-      if (isNew) {
-        tickets = [...savedTicketsParsed, ticket];
-      } else {
-        // If we're saved an already created ticket overwrite it
-        const existingTicketIndex = JSON.parse(savedTickets)
-          .map((ticket: ITicket) => ticket.id)
-          .indexOf(ticketData.id);
-
-        savedTicketsParsed[existingTicketIndex] = ticket;
-
-        tickets = savedTicketsParsed;
-      }
-    } else {
-      tickets.push(ticket);
-    }
-
-    localStorage.setItem("tickets", JSON.stringify(tickets));
+    await setDoc(doc(db, "tickets", ticket.id), ticket);
 
     handleClose();
-  };
+  }, [
+    date,
+    handleClose,
+    name,
+    notes,
+    ticketData.expenses,
+    ticketData.id,
+    ticketData.participants,
+    user,
+  ]);
 
   const isButtonDisabled = useMemo(() => {
     return !name || !date;

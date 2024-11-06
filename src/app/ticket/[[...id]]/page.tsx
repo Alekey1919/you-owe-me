@@ -16,8 +16,12 @@ import Link from "next/link";
 import SaveExpenseModal from "./SaveExpenseModal";
 import { ITicket } from "@/app/types/types";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { selectUser } from "@/app/redux/slices/userSlice";
 
 const Page = () => {
+  const user = useSelector(selectUser);
+
   const initialState = {
     id: "",
     name: "",
@@ -25,7 +29,7 @@ const Page = () => {
     notes: undefined,
     participants: [], //PARTICIPANTS,
     expenses: [], //EXPENSES,
-    userId: "", // TODO: Retrieve user from redux and use userId
+    userId: user?.id || "",
   };
 
   const [ticketData, setTicketData] = useState<ITicket>(
@@ -116,7 +120,8 @@ const Page = () => {
                 <Image src={Save} alt="Save" className="w-4" />
               </div>
             }
-            onClick={() => setShowSaveModal(true)}
+            onClick={() => user && setShowSaveModal(true)}
+            disabled={!user}
           />
 
           <Button

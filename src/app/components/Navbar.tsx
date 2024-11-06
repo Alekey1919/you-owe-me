@@ -12,10 +12,14 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { doc, setDoc } from "firebase/firestore";
+import { addUser } from "../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const Navbar = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+
+  const dispatch = useDispatch();
 
   const handleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -57,14 +61,25 @@ const Navbar = () => {
 
   // Listen to authentication state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const stateListener = onAuthStateChanged(auth, (user) => {
       setUser(user); // Set the user or null if logged out
       setIsLoading(false); // Stop loading once we have the auth state
+
+      // Saving user in redux
+      if (user) {
+        dispatch(
+          addUser({
+            id: user.uid,
+            name: user.displayName || "",
+            photoURL: user.photoURL || "",
+            email: user.email || "",
+          })
+        );
+      }
     });
 
-    // Clean up the listener on unmount
-    return () => unsubscribe();
-  }, []);
+    return () => stateListener();
+  }, [dispatch]);
 
   return (
     <div
