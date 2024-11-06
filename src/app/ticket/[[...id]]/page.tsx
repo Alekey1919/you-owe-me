@@ -25,6 +25,7 @@ const Page = () => {
     notes: undefined,
     participants: [], //PARTICIPANTS,
     expenses: [], //EXPENSES,
+    userId: "", // TODO: Retrieve user from redux and use userId
   };
 
   const [ticketData, setTicketData] = useState<ITicket>(

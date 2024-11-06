@@ -20,6 +20,7 @@ export interface ITicket {
   notes?: string;
   participants: string[];
   expenses: IExpense[];
+  userId: string;
 }
 
 export interface ITransactionData {

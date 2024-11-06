@@ -7,10 +7,11 @@ import {
   signOut,
   User,
 } from "firebase/auth";
-import { auth } from "@/app/services/firebase/firebase";
+import { auth, db } from "@/app/services/firebase/firebase";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import { doc, setDoc } from "firebase/firestore";
 
 const Navbar = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +22,8 @@ const Navbar = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       setUser(result.user); // Update the user state
+
+      await saveUserToFirestore(result.user);
     } catch (error) {
       console.error("Error signing in:", error);
     }
@@ -32,6 +35,23 @@ const Navbar = () => {
       setUser(null);
     } catch (error) {
       console.error("Error signing out:", error);
+    }
+  };
+
+  const saveUserToFirestore = async (user: User) => {
+    const userRef = doc(db, "users", user.uid); // Reference to the user's document
+    const userData = {
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      lastLogin: new Date(),
+    };
+
+    try {
+      await setDoc(userRef, userData, { merge: true }); // Merge to avoid overwriting
+    } catch (error) {
+      console.error("Error saving user to Firestore:", error);
     }
   };
 
@@ -60,7 +80,10 @@ const Navbar = () => {
           </Link>
         )}
 
-        <li className="" onClick={user ? handleSignOut : handleSignIn}>
+        <li
+          className="cursor-pointer"
+          onClick={user ? handleSignOut : handleSignIn}
+        >
           {user ? "Logout" : "Login"}
         </li>
       </ul>

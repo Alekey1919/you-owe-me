@@ -1,6 +1,7 @@
 import { ITicket, IExpense } from "@/app/types/types";
 
 export const MOCKED_TICKET: ITicket = {
+  userId: "",
   id: "013130987",
   name: "Hogwarts visit",
   date: 0,
@@ -89,6 +90,7 @@ export const EXPENSES: IExpense[] = [
 ];
 
 export const MOCKED_TICKET_2: ITicket = {
+  userId: "",
   id: "",
   name: "",
   date: 0,
@@ -116,6 +118,7 @@ export const MOCKED_TICKET_2: ITicket = {
 };
 
 export const ANTO_BIRTHDAY: ITicket = {
+  userId: "",
   id: "acf16173-eee6-4ad2-87b1-90642535ab1c",
   name: "Cumple Anto",
   date: 0,
