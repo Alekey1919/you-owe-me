@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CalculationContextProvider } from "@app/contexts/calculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
@@ -10,8 +10,6 @@ import Tabs from "./Tabs";
 import useMediaQueryState, {
   DefaultBreakpoints,
 } from "@app/hooks/useMediaQueryState";
-import Image from "next/image";
-import Save from "@public/images/save.svg";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import SaveExpenseModal from "./SaveExpenseModal";
@@ -19,7 +17,7 @@ import { ITicket } from "@/app/types/types";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { selectUser } from "@/app/redux/slices/userSlice";
-import toast from "react-hot-toast";
+import SaveButton from "./SaveButton";
 
 const Page = () => {
   const user = useSelector(selectUser);
@@ -31,7 +29,7 @@ const Page = () => {
     notes: undefined,
     participants: [], //PARTICIPANTS,
     expenses: [], //EXPENSES,
-    userId: user?.id || "",
+    userId: "",
   };
 
   const [ticketData, setTicketData] = useState<ITicket>(
@@ -61,14 +59,6 @@ const Page = () => {
     router.push("/results");
   };
 
-  const onClickSave = useCallback(() => {
-    if (user) {
-      setShowSaveModal(true);
-    } else {
-      toast.error("You need to sign it first");
-    }
-  }, [user]);
-
   useEffect(() => {
     if (params?.id?.length) {
       const savedData = localStorage.getItem(`tickets`);
@@ -88,6 +78,18 @@ const Page = () => {
       }
     }
   }, [params.id]);
+
+  useEffect(() => {
+    if (user) {
+      setTicketData((curr) => {
+        const _curr = { ...curr };
+
+        _curr.id = user.id;
+
+        return _curr;
+      });
+    }
+  }, [user]);
 
   if (ticketNotFound) {
     return (
@@ -123,16 +125,7 @@ const Page = () => {
         </div>
 
         <div className="w-full flex justify-center space-x-6">
-          <Button
-            text={
-              <div className="flex space-x-2 items-center">
-                <span>Save</span>
-                <Image src={Save} alt="Save" className="w-4" />
-              </div>
-            }
-            onClick={onClickSave}
-            disabled={!user}
-          />
+          <SaveButton openModal={() => setShowSaveModal(true)} />
 
           <Button
             text="Calculate"
