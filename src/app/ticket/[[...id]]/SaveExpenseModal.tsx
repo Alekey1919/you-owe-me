@@ -110,6 +110,7 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
           className="button hover:brightness-95"
           disabled={isButtonDisabled}
         >
+          {/* TODO: Fix this */}
           {ticketData.id ? "Update" : "Save"}
         </button>
       </div>
