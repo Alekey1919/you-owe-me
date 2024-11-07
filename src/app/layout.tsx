@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import StoreProvider from "./redux/StoreProvider";
+import { Toaster } from "react-hot-toast";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -23,6 +24,8 @@ export default function RootLayout({
           <Navbar />
           <div className={outfit.className}>{children}</div>
           <div id="portal" />
+
+          <Toaster />
         </body>
       </html>
     </StoreProvider>

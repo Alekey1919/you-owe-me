@@ -31,10 +31,7 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   }, [ticketData]);
 
   const handleSave = useCallback(async () => {
-    if (!user)
-      return console.log(
-        "TODO: prevent user from saving unless it's logged in"
-      );
+    if (!user) return;
 
     const isNew = !ticketData.id;
 

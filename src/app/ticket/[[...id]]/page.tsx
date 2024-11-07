@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CalculationContextProvider } from "@app/contexts/calculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
@@ -18,6 +19,7 @@ import { ITicket } from "@/app/types/types";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { selectUser } from "@/app/redux/slices/userSlice";
+import toast from "react-hot-toast";
 
 const Page = () => {
   const user = useSelector(selectUser);
@@ -58,6 +60,14 @@ const Page = () => {
 
     router.push("/results");
   };
+
+  const onClickSave = useCallback(() => {
+    if (user) {
+      setShowSaveModal(true);
+    } else {
+      toast.error("You need to sign it first");
+    }
+  }, [user]);
 
   useEffect(() => {
     if (params?.id?.length) {
@@ -120,7 +130,7 @@ const Page = () => {
                 <Image src={Save} alt="Save" className="w-4" />
               </div>
             }
-            onClick={() => user && setShowSaveModal(true)}
+            onClick={onClickSave}
             disabled={!user}
           />
 

@@ -12,9 +12,11 @@ const Button = ({
 }) => {
   return (
     <button
-      className="button relative group overflow-hidden"
-      onClick={disabled ? undefined : onClick}
-      disabled={disabled}
+      className={twMerge(
+        "button relative group overflow-hidden",
+        disabled && "!bg-gray-800 opacity-50" // Disabled only applies styles because we need the toast to be triggered on the onClick
+      )}
+      onClick={onClick}
     >
       <span
         className={twMerge(
