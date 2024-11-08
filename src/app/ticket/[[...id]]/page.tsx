@@ -84,7 +84,7 @@ const Page = () => {
       setTicketData((curr) => {
         const _curr = { ...curr };
 
-        _curr.id = user.id;
+        _curr.userId = user.id;
 
         return _curr;
       });

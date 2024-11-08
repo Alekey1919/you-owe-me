@@ -1,28 +1,58 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ITicket } from "../types/types";
 import Link from "next/link";
 import Image from "next/image";
 import EditImg from "@public/images/edit.svg";
 import ClipboardImg from "@public/images/clipboard.svg";
+import Spinner from "@public/images/spinner.svg";
 import { parseDateToString } from "../utils/parseDateToString";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/slices/userSlice";
+import { getUserTickets } from "../lib/fetchData";
+import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
+
+export const PAGE_SIZE = 10;
 
 const Page = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
 
-  useEffect(() => {
-    const savedTickets = localStorage.getItem("tickets");
+  // Keep track of the last doc to handle pagination
+  const lastDoc = useRef<QueryDocumentSnapshot<DocumentData, DocumentData>>();
 
-    if (savedTickets) {
-      setTickets(JSON.parse(savedTickets));
+  const user = useSelector(selectUser);
+
+  const fetchData = useCallback(async (userId: string) => {
+    setIsLoading(true);
+
+    const { tickets: _tickets, lastVisible } = await getUserTickets({
+      userId,
+      lastDoc: lastDoc.current,
+      pageSize: PAGE_SIZE,
+    });
+
+    setIsLoading(false);
+
+    if (_tickets.length) {
+      setTickets((curr) => [...curr, ..._tickets]);
+      setHasMore(_tickets.length === PAGE_SIZE);
+      lastDoc.current = lastVisible;
     }
   }, []);
 
+  useEffect(() => {
+    if (user?.id) {
+      fetchData(user.id);
+    }
+  }, [fetchData, user?.id]);
+
   return (
-    <div className="layout flex flex-col items-center">
+    <div className="layout flex flex-col items-center space-y-8">
       <h1 className="title">My tickets</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-4 mt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-4">
         {tickets.map((ticket, index) => {
           return (
             <div
@@ -53,6 +83,15 @@ const Page = () => {
           );
         })}
       </div>
+      {hasMore && (
+        <button
+          className="button"
+          onClick={() => user?.id && fetchData(user.id)}
+        >
+          Fetch more
+        </button>
+      )}
+      {isLoading && <Image src={Spinner} className="w-10" alt="Spinner" />}
     </div>
   );
 };
