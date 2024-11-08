@@ -5,14 +5,18 @@ import { db } from "@/app/services/firebase/firebase";
 import { ITicket } from "@/app/types/types";
 import { parseDateToString } from "@/app/utils/parseDateToString";
 import { doc, setDoc } from "firebase/firestore";
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+import Spinner from "@public/images/spinner.svg";
+import { twMerge } from "tailwind-merge";
 
 const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   const [name, setName] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(parseDateToString(Date.now()));
   const [notes, setNotes] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const { ticketData } = useCalculationContext();
 
@@ -44,6 +48,8 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
       expenses: ticketData.expenses,
       userId: user?.id,
     };
+
+    setIsSaving(true);
 
     await setDoc(doc(db, "tickets", ticket.id), ticket);
 
@@ -104,14 +110,28 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
             className="bg-transparent resize-none text-end focus:outline-none"
           />
         </div>
-
         <button
           onClick={handleSave}
-          className="button hover:brightness-95"
+          className="button hover:brightness-95 relative"
           disabled={isButtonDisabled}
         >
-          {/* TODO: Fix this */}
-          {ticketData.id ? "Update" : "Save"}
+          <span
+            className={twMerge(
+              "transition-opacity duration-300",
+              isSaving && "opacity-0"
+            )}
+          >
+            {ticketData.id ? "Update" : "Save"}
+          </span>
+
+          <Image
+            src={Spinner}
+            alt="Spinner"
+            className={twMerge(
+              "w-8 absolute left-0 right-0 bottom-0 top-0 m-auto mix-blend-difference opacity-0 transition-opacity duration-300",
+              isSaving && "opacity-100"
+            )}
+          />
         </button>
       </div>
     </ModalCard>
