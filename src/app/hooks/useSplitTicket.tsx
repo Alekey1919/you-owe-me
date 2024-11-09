@@ -137,7 +137,7 @@ const useSplitTicket = (isTesting?: boolean) => {
   );
 
   useEffect(() => {
-    const ticketId = params.id[0];
+    const ticketId = params?.id && params.id[0];
     const currentTicket = localStorage.getItem("currentTicket");
 
     if (isTesting) {

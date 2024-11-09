@@ -14,6 +14,7 @@ import { twMerge } from "tailwind-merge";
 import { doc, setDoc } from "firebase/firestore";
 import { addUser } from "../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
+import { RoutesEnum } from "../enums/routes";
 
 const Navbar = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -94,6 +95,10 @@ const Navbar = () => {
             <li>My tickets</li>
           </Link>
         )}
+
+        <Link href={RoutesEnum.Ticket}>
+          <li className="cursor-pointer">New ticket</li>
+        </Link>
 
         <li
           className="cursor-pointer"
