@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CalculationContextProvider } from "@app/contexts/calculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
@@ -18,6 +18,9 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { selectUser } from "@/app/redux/slices/userSlice";
 import SaveButton from "./SaveButton";
+import { getTicket } from "@/app/lib/fetchData";
+import Image from "next/image";
+import Spinner from "@public/images/spinner.svg";
 
 const Page = () => {
   const user = useSelector(selectUser);
@@ -38,6 +41,7 @@ const Page = () => {
 
   const [ticketNotFound, setTicketNotFound] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
 
@@ -59,25 +63,25 @@ const Page = () => {
     router.push("/results");
   };
 
+  const fetchTicket = useCallback(async (ticketId: string) => {
+    setIsLoading(true);
+
+    const ticket = await getTicket({ ticketId: ticketId });
+
+    if (ticket) {
+      setTicketData(ticket);
+    } else {
+      return setTicketNotFound(true);
+    }
+
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
     if (params?.id?.length) {
-      const savedData = localStorage.getItem(`tickets`);
-
-      if (!savedData) return setTicketNotFound(true);
-
-      const tickets = JSON.parse(savedData);
-
-      const indexOfTicket = tickets
-        .map((ticket: ITicket) => ticket.id)
-        .indexOf(params.id[0]);
-
-      if (indexOfTicket >= 0) {
-        setTicketData(tickets[indexOfTicket]);
-      } else {
-        return setTicketNotFound(true);
-      }
+      fetchTicket(params.id[0]);
     }
-  }, [params.id]);
+  }, [params.id, fetchTicket]);
 
   useEffect(() => {
     if (user) {
@@ -90,6 +94,14 @@ const Page = () => {
       });
     }
   }, [user]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center absolute top-0 right-0 bottom-0 left-0">
+        <Image src={Spinner} alt="Loading" className="w-20" />
+      </div>
+    );
+  }
 
   if (ticketNotFound) {
     return (
