@@ -8,6 +8,7 @@ import {
   IUserBalances,
 } from "../types/types";
 import { useParams } from "next/navigation";
+import { getTicket } from "../lib/fetchData";
 
 export enum ResultErrorsEnum {
   TicketNotFound,
@@ -122,6 +123,19 @@ const useSplitTicket = (isTesting?: boolean) => {
     setParticipants(ticket.participants);
   }, []);
 
+  const fetchAndCalculate = useCallback(
+    async (ticketId: string) => {
+      const ticket = await getTicket({ ticketId });
+
+      if (!ticket) {
+        setError(ResultErrorsEnum.TicketNotFound);
+      } else {
+        calculateResults(ticket);
+      }
+    },
+    [calculateResults]
+  );
+
   useEffect(() => {
     const ticketId = params.id[0];
     const currentTicket = localStorage.getItem("currentTicket");
@@ -129,28 +143,21 @@ const useSplitTicket = (isTesting?: boolean) => {
     if (isTesting) {
       calculateResults(ANTO_BIRTHDAY);
     } else if (currentTicket) {
+      // If a current ticket is present we use that one
+      // A current ticket is a ticket that hasn't been saved. You can create a ticket in the "/ticket" page and then click on "Calculate".
+      // This ticket is saved in the localStorage and it allows you to do a calculation on the fly without signing in.
       const ticket: ITicket = JSON.parse(currentTicket);
 
       calculateResults(ticket);
-
-      localStorage.removeItem("currentTicket");
     } else if (ticketId) {
-      // TODO: Fetch on db
-      const allTickets = localStorage.getItem("tickets") || "";
-
-      const parsedTickets: ITicket[] = JSON.parse(allTickets);
-
-      const ticket = parsedTickets.filter(
-        (ticket) => ticket.id === ticketId
-      )[0];
-
-      if (!ticket) {
-        setError(ResultErrorsEnum.TicketNotFound);
-      } else {
-        calculateResults(ticket);
-      }
+      fetchAndCalculate(ticketId);
     }
-  }, [calculateResults, isTesting, params]);
+  }, [calculateResults, fetchAndCalculate, isTesting, params]);
+
+  // Clearing the current ticket
+  useEffect(() => {
+    return () => localStorage.removeItem("currentTicket");
+  }, []);
 
   return { userBalances, transactions, expenses, participants, error };
 };

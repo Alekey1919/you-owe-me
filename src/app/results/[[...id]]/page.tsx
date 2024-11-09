@@ -8,10 +8,11 @@ import UserBalanceList from "./UserBalanceList";
 import ExpensesDetails from "./ExpensesDetails";
 import { ResultContextProvider } from "@/app/contexts/resultsContext";
 import { smoothScrollTo } from "@/app/utils/smoothScrollTo";
+import ErrorMessage from "./ErrorMessage";
 
 const Results = ({ isTesting }: { isTesting?: boolean }) => {
   const [highlightedExpense, setHighlightedExpense] = useState("");
-  const { userBalances, transactions, expenses, participants } =
+  const { userBalances, transactions, expenses, participants, error } =
     useSplitTicket(isTesting);
 
   const groupedTransactions = useMemo(() => {
@@ -41,6 +42,10 @@ const Results = ({ isTesting }: { isTesting?: boolean }) => {
       setHighlightedExpense("");
     }, 3000);
   };
+
+  if (error !== null) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <ResultContextProvider

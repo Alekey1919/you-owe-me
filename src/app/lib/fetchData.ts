@@ -40,3 +40,14 @@ export const getUserTickets = async ({
 
   return { tickets, lastVisible };
 };
+
+export const getTicket = async ({ ticketId }: { ticketId: string }) => {
+  const colRef = collection(db, CollectionsEnum.Tickets);
+  const q = query(colRef, where("id", "==", ticketId));
+
+  const snapshot = await getDocs(q);
+
+  if (snapshot.docs[0]) {
+    return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as ITicket;
+  }
+};
