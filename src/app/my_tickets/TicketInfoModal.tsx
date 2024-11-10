@@ -8,6 +8,7 @@ import { deleteTicketById } from "../lib/fetchData";
 import toast from "react-hot-toast";
 import ExpandableSection from "../components/ExpandableSection";
 import TextWithSpinner from "../components/TextWithSpinner";
+import Button from "../components/Button";
 
 const TicketInfoModal = ({
   ticket,
@@ -93,16 +94,22 @@ const TicketInfoModal = ({
       </div>
 
       <div className="flex space-x-3">
-        <button className="button w-full">
-          <Link href={`${RoutesEnum.Ticket}/${ticket.id}`}>Edit</Link>
-        </button>
-        <button className="button w-full">
-          <Link href={`${RoutesEnum.Results}/${ticket.id}`}>Results</Link>
-        </button>
+        <Button
+          text={<Link href={`${RoutesEnum.Ticket}/${ticket.id}`}>Edit</Link>}
+          styles="w-full"
+        />
+        <Button
+          text={
+            <Link href={`${RoutesEnum.Results}/${ticket.id}`}>Results</Link>
+          }
+          styles="w-full"
+        />
 
-        <button className="button w-full relative" onClick={deleteTicket}>
-          <TextWithSpinner text="Delete" isLoading={isDeleting} />
-        </button>
+        <Button
+          text={<TextWithSpinner text="Delete" isLoading={isDeleting} />}
+          styles="w-full relative"
+          onClick={deleteTicket}
+        ></Button>
       </div>
     </ModalCard>
   );

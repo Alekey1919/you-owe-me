@@ -5,16 +5,19 @@ const Button = ({
   text,
   onClick,
   disabled,
+  styles = "",
 }: {
   text: string | ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
+  styles?: string;
 }) => {
   return (
     <button
       className={twMerge(
         "button relative group overflow-hidden",
-        disabled && "!bg-gray-800 opacity-50" // Disabled only applies styles because we need the toast to be triggered on the onClick
+        disabled && "!bg-gray-800 opacity-50", // Disabled only applies styles because we need the toast to be triggered on the onClick
+        styles
       )}
       onClick={onClick}
     >
