@@ -51,7 +51,7 @@ const Results = ({ isTesting }: { isTesting?: boolean }) => {
     <ResultContextProvider
       state={{ highlightedExpense, highlightExpense, participants }}
     >
-      <div className="w-full flex flex-col items-center space-y-20 py-8 3xl:py-14 px-8 3xl:px-10">
+      <div className="w-full flex flex-col items-center space-y-20 layout">
         <div className="flex flex-col w-full justify-center ">
           <ExpensesDetails expenses={expenses} />
           <UserBalanceList userBalances={userBalances} />

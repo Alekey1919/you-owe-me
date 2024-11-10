@@ -44,7 +44,7 @@ const DetailsSection = ({
           return (
             <span
               key={index}
-              className="text-red-500"
+              className=""
               onClick={() => highlightExpense(expense.productName)}
             >
               {expense.productName}:{" "}

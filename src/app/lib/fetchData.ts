@@ -7,6 +7,8 @@ import {
   QueryDocumentSnapshot,
   startAfter,
   where,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../services/firebase/firebase";
 import { CollectionsEnum } from "../enums/collectionsEnum";
@@ -51,3 +53,15 @@ export const getTicket = async ({ ticketId }: { ticketId: string }) => {
     return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as ITicket;
   }
 };
+
+export async function deleteTicketById(ticketId: string) {
+  const docRef = doc(db, "tickets", ticketId);
+
+  try {
+    await deleteDoc(docRef);
+
+    return "Success";
+  } catch (error) {
+    return error;
+  }
+}

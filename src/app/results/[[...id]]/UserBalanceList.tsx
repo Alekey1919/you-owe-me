@@ -11,12 +11,10 @@ const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
   return (
     <div className="flex flex-col space-y-6 3xl:space-y-10">
       <div
-        className="flex space-x-10"
+        className="flex space-x-10 cursor-pointer"
         onClick={() => setIsOpen((curr) => !curr)}
       >
-        <h1 className="text-2xl 2xl:text-3xl cursor-pointer">
-          Gastos por persona
-        </h1>
+        <h1 className="text-2xl 2xl:text-3xl">Gastos por persona</h1>
         <Image
           src={Arrow}
           alt={isOpen ? "Close" : "Open"}
