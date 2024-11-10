@@ -12,10 +12,17 @@ const Ticket = ({
   ticket: ITicket;
   handleSelect: () => void;
 }) => {
+  const onClick = (event: any) => {
+    // Don't open modal if user clicked on one of the images (edit / results)
+    if (!event.target.alt) {
+      handleSelect();
+    }
+  };
+
   return (
     <div
       className="box shadow-lg flex flex-row space-y-2 w-full justify-between cursor-pointer"
-      onClick={handleSelect}
+      onClick={onClick}
     >
       <div className="flex flex-col space-y-2">
         <h1 className="subtitle">{ticket.name}</h1>
