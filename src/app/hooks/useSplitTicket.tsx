@@ -131,6 +131,9 @@ const useSplitTicket = (isTesting?: boolean) => {
         setError(ResultErrorsEnum.TicketNotFound);
       } else {
         calculateResults(ticket);
+
+        // Set page title to the ticket name
+        document.title = ticket.name;
       }
     },
     [calculateResults]
