@@ -19,3 +19,16 @@ const auth = getAuth(app);
 export { db, auth };
 
 export default app;
+
+auth.onAuthStateChanged(async (user) => {
+  if (typeof window === "undefined") return;
+
+  if (user) {
+    const token = await user.getIdToken();
+    // Set the token in a cookie
+    document.cookie = `auth_token=${token}; Path=/; Secure; HttpOnly;`;
+  } else {
+    // Clear the cookie if not logged in
+    document.cookie = "auth_token=; Path=/; Max-Age=0;";
+  }
+});
