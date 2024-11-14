@@ -1,15 +1,15 @@
-import ModalCard from "@/app/components/ModalCard";
-import useCalculationContext from "@/app/contexts/calculationContext";
-import { selectUser } from "@/app/redux/slices/userSlice";
-import { db } from "@/app/services/firebase/firebase";
-import { ITicket } from "@/app/types/types";
-import { parseDateToString } from "@/app/utils/parseDateToString";
+import ModalCard from "@app/components/ModalCard";
+import useCalculationContext from "@app/contexts/calculationContext";
+import { selectUser } from "@app/redux/slices/userSlice";
+import { db } from "@app/services/firebase/firebase";
+import { ITicket } from "@app/types/types";
+import { parseDateToString } from "@app/utils/parseDateToString";
 import { doc, setDoc } from "firebase/firestore";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
-import TextWithSpinner from "@/app/components/TextWithSpinner";
+import TextWithSpinner from "@app/components/TextWithSpinner";
 
 const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   const [name, setName] = useState("");

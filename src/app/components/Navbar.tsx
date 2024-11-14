@@ -7,7 +7,7 @@ import {
   signOut,
   User,
 } from "firebase/auth";
-import { auth, db } from "@/app/services/firebase/firebase";
+import { auth, db } from "@app/services/firebase/firebase";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";

@@ -3,7 +3,7 @@ import useListAnimations from "@app/hooks/useListAnimations";
 import useCalculationContext from "@app/contexts/calculationContext";
 import Expense from "./Expense";
 import useExpensesContext from "@app/contexts/expensesContext";
-import { ITicket } from "@/app/types/types";
+import { ITicket } from "@app/types/types";
 
 const ExpensesList = () => {
   const { isTouch } = useCalculationContext();

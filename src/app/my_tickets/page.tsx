@@ -10,6 +10,8 @@ import { getUserTickets } from "../lib/fetchData";
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import TicketInfoModal from "./TicketInfoModal";
 import Ticket from "./Ticket";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 const PAGE_SIZE = 10;
 
@@ -18,6 +20,8 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<number | null>(null);
+
+  const t = useTranslations();
 
   // Keep track of the last doc to handle pagination
   const lastDoc = useRef<QueryDocumentSnapshot<DocumentData, DocumentData>>();
@@ -61,7 +65,8 @@ const Page = () => {
   return (
     <>
       <div className="layout flex flex-col items-center space-y-8">
-        <h1 className="title">My tickets</h1>
+        <LanguageSwitcher />
+        <h1 className="title">{t("myTickets")}</h1>
         <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-4">
           {tickets.map((ticket, index) => {
             return (

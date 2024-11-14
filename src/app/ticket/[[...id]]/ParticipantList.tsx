@@ -1,4 +1,4 @@
-import useCalculationContext from "@/app/contexts/calculationContext";
+import useCalculationContext from "@app/contexts/calculationContext";
 import Participant from "./Participant";
 import useListAnimations, {
   AnimationStatesEnum,

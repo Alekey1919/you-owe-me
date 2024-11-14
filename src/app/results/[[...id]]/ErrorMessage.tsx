@@ -1,4 +1,4 @@
-import { ResultErrorsEnum } from "@/app/hooks/useSplitTicket";
+import { ResultErrorsEnum } from "@app/hooks/useSplitTicket";
 import React, { useMemo } from "react";
 
 const ErrorMessage = ({ error }: { error: ResultErrorsEnum }) => {

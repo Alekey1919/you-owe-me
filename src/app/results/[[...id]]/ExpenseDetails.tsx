@@ -1,5 +1,5 @@
-import useResultContext from "@/app/contexts/resultsContext";
-import { IExpense } from "@/app/types/types";
+import useResultContext from "@app/contexts/resultsContext";
+import { IExpense } from "@app/types/types";
 import React, { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 

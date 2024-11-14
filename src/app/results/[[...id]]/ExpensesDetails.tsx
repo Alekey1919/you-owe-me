@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Arrow from "@public/images/back-arrow.svg";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import { IExpense } from "@/app/types/types";
+import { IExpense } from "@app/types/types";
 import ExpenseDetails from "./ExpenseDetails";
-import useResultContext from "@/app/contexts/resultsContext";
+import useResultContext from "@app/contexts/resultsContext";
 
 const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
   const [isOpen, setIsOpen] = useState(false);

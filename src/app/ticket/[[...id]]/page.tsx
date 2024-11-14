@@ -13,12 +13,12 @@ import useMediaQueryState, {
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import SaveExpenseModal from "./SaveExpenseModal";
-import { ITicket } from "@/app/types/types";
+import { ITicket } from "@app/types/types";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import { selectUser } from "@/app/redux/slices/userSlice";
+import { selectUser } from "@app/redux/slices/userSlice";
 import SaveButton from "./SaveButton";
-import { getTicket } from "@/app/lib/fetchData";
+import { getTicket } from "@app/lib/fetchData";
 import Image from "next/image";
 import Spinner from "@public/images/spinner.svg";
 

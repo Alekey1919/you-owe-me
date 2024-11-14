@@ -5,8 +5,8 @@ import Image from "next/image";
 import Arrow from "@public/images/back-arrow.svg";
 import useMediaQueryState, {
   DefaultBreakpoints,
-} from "@/app/hooks/useMediaQueryState";
-import useResultContext from "@/app/contexts/resultsContext";
+} from "@app/hooks/useMediaQueryState";
+import useResultContext from "@app/contexts/resultsContext";
 
 const DetailsSection = ({
   text,

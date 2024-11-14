@@ -1,10 +1,10 @@
-import Button from "@/app/components/Button";
+import Button from "@app/components/Button";
 import React, { useCallback, useMemo } from "react";
 import Image from "next/image";
 import Save from "@public/images/save.svg";
 import { useSelector } from "react-redux";
-import { selectUser } from "@/app/redux/slices/userSlice";
-import useCalculationContext from "@/app/contexts/calculationContext";
+import { selectUser } from "@app/redux/slices/userSlice";
+import useCalculationContext from "@app/contexts/calculationContext";
 import toast from "react-hot-toast";
 
 const SaveButton = ({ openModal }: { openModal: () => void }) => {

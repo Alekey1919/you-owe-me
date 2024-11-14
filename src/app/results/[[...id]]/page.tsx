@@ -6,8 +6,8 @@ import { ITransaction } from "../../types/types";
 import UserTransactions from "./UserTransactions";
 import UserBalanceList from "./UserBalanceList";
 import ExpensesDetails from "./ExpensesDetails";
-import { ResultContextProvider } from "@/app/contexts/resultsContext";
-import { smoothScrollTo } from "@/app/utils/smoothScrollTo";
+import { ResultContextProvider } from "@app/contexts/resultsContext";
+import { smoothScrollTo } from "@app/utils/smoothScrollTo";
 import ErrorMessage from "./ErrorMessage";
 
 const Results = ({ isTesting }: { isTesting?: boolean }) => {
