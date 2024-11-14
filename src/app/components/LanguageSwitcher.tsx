@@ -1,32 +1,77 @@
-import { useTranslations } from "next-intl";
-import { useTransition } from "react";
+import { useRef, useState } from "react";
 import { setUserLocale } from "@app/services/locale";
 import { Locale } from "@/i18n/config";
+import Image from "next/image";
+import LanguagesIcon from "@public/images/language-icon.svg";
+import BritishFlag from "@public/images/british-flag.svg";
+import SpanishFlag from "@public/images/spanish-flag.svg";
+import { twMerge } from "tailwind-merge";
+
+const Flag = ({
+  image,
+  isAnimating,
+  onClick,
+}: {
+  image: string;
+  isAnimating: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <div
+      className={twMerge("w-5 lg:w-8", isAnimating && "click-shadow-animation")}
+    >
+      <Image src={image} alt="English" className="w-full" onClick={onClick} />
+    </div>
+  );
+};
 
 const LanguageSwitcher = () => {
-  const [isPending, startTransition] = useTransition();
+  const [showFlags, setShowFlags] = useState(false);
+  const [animatingFlag, setAnimatingFlag] = useState<"es" | "en" | null>(null);
 
-  const locales = ["es", "en"];
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const changeLanguage = (value: "en" | "zh") => {
-    console.log(value);
+  const changeLanguage = (value: "en" | "es") => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
     const locale = value as Locale;
-    startTransition(() => {
-      setUserLocale(locale);
-    });
+    setUserLocale(locale);
+
+    setAnimatingFlag(value);
+
+    timeoutRef.current = setTimeout(() => {
+      setAnimatingFlag(null);
+    }, 750);
   };
 
   return (
-    <div>
-      {locales.map((locale, index) => (
-        <option
-          key={index}
-          value={locale}
-          onClick={() => changeLanguage(locale as "en" | "zh")}
-        >
-          {locale}
-        </option>
-      ))}
+    <div className="relative">
+      <Image
+        src={LanguagesIcon}
+        alt="Languages"
+        className="w-8"
+        onClick={() => setShowFlags((curr) => !curr)}
+      />
+
+      <div
+        className={twMerge(
+          "transition-all duration-300 ease-out flex flex-col items-center space-y-4 absolute top-0 left-0 right-0 mx-auto opacity-0 pointer-events-none",
+          showFlags && "translate-y-10 !opacity-100 pointer-events-auto"
+        )}
+      >
+        <Flag
+          image={BritishFlag}
+          isAnimating={animatingFlag === "en"}
+          onClick={() => changeLanguage("en")}
+        />
+        <Flag
+          image={SpanishFlag}
+          isAnimating={animatingFlag === "es"}
+          onClick={() => changeLanguage("es")}
+        />
+      </div>
     </div>
   );
 };

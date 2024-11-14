@@ -139,3 +139,48 @@
     opacity: 0;
   }
 }
+
+/* Base style */
+.click-shadow-animation {
+  position: relative;
+}
+
+.click-shadow-animation::after {
+  content: "";
+  position: absolute;
+  top: 22%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--primary);
+  padding: 25%;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  border-radius: 10%;
+  border-collapse: separate;
+  animation: dust-fade-out 0.75s ease forwards;
+  z-index: -10;
+}
+
+/* Keyframe animation for fading and expanding */
+@keyframes dust-fade-out {
+  0% {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  70% {
+    transform: scale(1.5, 2.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.5, 2.5);
+    opacity: 0;
+  }
+}

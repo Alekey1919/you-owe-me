@@ -15,6 +15,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { addUser } from "../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { RoutesEnum } from "../enums/routes";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -85,28 +86,31 @@ const Navbar = () => {
   return (
     <div
       className={twMerge(
-        "absolute left-0 right-0 top-0 bg-orange-300 z-[100]",
+        "absolute left-0 right-0 top-0 bg-orange-300 z-[100] px-10 py-3",
         isLoading && "hidden"
       )}
     >
-      <ul className="flex w-full justify-end space-x-10 px-10 py-3 text-base">
-        {user && (
-          <Link href="/my_tickets">
-            <li>My tickets</li>
+      <div className="w-full flex justify-between">
+        <LanguageSwitcher />
+        <ul className="flex w-full justify-end space-x-10 text-base">
+          {user && (
+            <Link href="/my_tickets">
+              <li>My tickets</li>
+            </Link>
+          )}
+
+          <Link href={RoutesEnum.Ticket}>
+            <li className="cursor-pointer">New ticket</li>
           </Link>
-        )}
 
-        <Link href={RoutesEnum.Ticket}>
-          <li className="cursor-pointer">New ticket</li>
-        </Link>
-
-        <li
-          className="cursor-pointer"
-          onClick={user ? handleSignOut : handleSignIn}
-        >
-          {user ? "Logout" : "Login"}
-        </li>
-      </ul>
+          <li
+            className="cursor-pointer"
+            onClick={user ? handleSignOut : handleSignIn}
+          >
+            {user ? "Logout" : "Login"}
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

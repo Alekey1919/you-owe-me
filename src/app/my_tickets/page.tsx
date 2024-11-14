@@ -11,7 +11,6 @@ import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import TicketInfoModal from "./TicketInfoModal";
 import Ticket from "./Ticket";
 import { useTranslations } from "next-intl";
-import LanguageSwitcher from "../components/LanguageSwitcher";
 
 const PAGE_SIZE = 10;
 
@@ -65,7 +64,6 @@ const Page = () => {
   return (
     <>
       <div className="layout flex flex-col items-center space-y-8">
-        <LanguageSwitcher />
         <h1 className="title">{t("myTickets")}</h1>
         <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-4">
           {tickets.map((ticket, index) => {
