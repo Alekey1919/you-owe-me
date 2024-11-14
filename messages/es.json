@@ -1,1 +1,52 @@
-{ "myTickets": "Mis tickets" }
+{
+  "myTickets": {
+    "title": "Mis tickets",
+    "getMore": "Obtener más",
+    "ticketRemoved": "Ticket eliminado",
+    "errorDeleting": "Error al eliminar el ticket",
+    "edit": "Editar",
+    "results": "Resultados"
+  },
+  "ticket": {
+    "ticketNotFound": "El ticket no fue encontrado, lo sentimos (404)",
+    "createOne": "Crear uno",
+    "allParticipantsAndExpenses": "Agrega todos los participantes y gastos",
+    "signInFirst": "Necesitas iniciar sesión primero",
+    "needParticipants": "Necesitas algunos participantes",
+    "needExpenses": "Necesitas algunos gastos",
+    "save": "Guardar",
+    "addExpense": "Agregar gasto",
+    "seeAll": "Ver todos",
+    "back": "Atrás",
+    "next": "Siguiente"
+  },
+  "results": {
+    "ticketNotFound": "Ticket no encontrado",
+    "payedBy": "Pagado por",
+    "allExpenses": "Todos los gastos",
+    "transactions": "Transacciones",
+    "totalToPay": "Total a pagar",
+    "totalPayed": "Total pagado",
+    "balance": "Balance",
+    "expensesPerPerson": "Gastos por persona",
+    "pays": "Paga",
+    "to": "a"
+  },
+  "navbar": {
+    "newTicket": "Nuevo ticket",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión"
+  },
+  "common": {
+    "notes": "Notas:",
+    "participants": "Participantes",
+    "expenses": "Gastos",
+    "name": "Nombre",
+    "price": "Precio",
+    "consumers": "Consumidores",
+    "payers": "Pagadores",
+    "everyone": "Todos",
+    "languages": "Idiomas",
+    "date": "Fecha"
+  }
+}

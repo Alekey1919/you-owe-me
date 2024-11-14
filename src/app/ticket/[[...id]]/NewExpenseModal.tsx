@@ -14,6 +14,7 @@ import Image from "next/image";
 import { IConsumerStates, IPayedAmounts, ITicket } from "@app/types/types";
 import { createPortal } from "react-dom";
 import useExpensesContext from "@app/contexts/expensesContext";
+import { useTranslations } from "next-intl";
 
 export enum NewExpenseStepsEnum {
   Name,
@@ -43,6 +44,8 @@ const NewExpenseModal = ({
   //
   const [showAllParticipants, setShowAllParticipants] = useState(false);
   const [domReady, setDomReady] = useState(false);
+
+  const t = useTranslations();
 
   const selectConsumer = (participant: string) => {
     setConsumerStates((curr) => {
@@ -199,7 +202,7 @@ const NewExpenseModal = ({
     setDomReady(true);
   }, []);
 
-  const titles = ["Name", "Price", "Consumers", "Payers"];
+  const titles = ["name", "price", "consumers", "payers"];
 
   const handleExit = (e: any) => {
     if (e.target.id === "modal-container") {
@@ -220,7 +223,9 @@ const NewExpenseModal = ({
       style={{ backdropFilter: "blur(10px)" }}
     >
       <div className="flex flex-col space-y-5 items-between justify-center w-10/12 max-w-[350px] lg:max-w-[unset] lg:w-[400px] bg-background rounded-xl p-4 relative">
-        <h1 className="title text-center">{titles[currentStep]}</h1>
+        <h1 className="title text-center">
+          {t(`common.${titles[currentStep]}`)}
+        </h1>
         <div className="w-full flex overflow-visible transition-transform ">
           <NameStep value={name} setValue={setName} currentStep={currentStep} />
 
@@ -255,13 +260,17 @@ const NewExpenseModal = ({
           onClick={handleNext}
           disabled={nextDisabled}
         >
-          {currentStep !== NewExpenseStepsEnum.Payers ? "Next" : "Save"}
+          {t(
+            `ticket.${
+              currentStep !== NewExpenseStepsEnum.Payers ? "next" : "save"
+            }`
+          )}
         </button>
 
         {currentStep > NewExpenseStepsEnum.Name && (
           <Image
             src={BackArrow}
-            alt="Back"
+            alt={t("ticket.back")}
             className="w-9 absolute top-4 left-4 !mt-0 cursor-pointer"
             onClick={() => setCurrentStep((curr) => curr - 1)}
           />

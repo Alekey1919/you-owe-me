@@ -16,12 +16,14 @@ import { addUser } from "../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { RoutesEnum } from "../enums/routes";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 const Navbar = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
 
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const handleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -95,19 +97,19 @@ const Navbar = () => {
         <ul className="flex w-full justify-end space-x-10 text-base">
           {user && (
             <Link href="/my_tickets">
-              <li>My tickets</li>
+              <li>{t("myTickets.title")}</li>
             </Link>
           )}
 
           <Link href={RoutesEnum.Ticket}>
-            <li className="cursor-pointer">New ticket</li>
+            <li className="cursor-pointer">{t("navbar.newTicket")}</li>
           </Link>
 
           <li
             className="cursor-pointer"
             onClick={user ? handleSignOut : handleSignIn}
           >
-            {user ? "Logout" : "Login"}
+            {t(`navbar.${user ? "logout" : "login"}`)}
           </li>
         </ul>
       </div>

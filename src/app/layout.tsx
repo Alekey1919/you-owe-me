@@ -24,19 +24,17 @@ export default async function RootLayout({
 
   return (
     <StoreProvider>
-      <NextIntlClientProvider messages={messages}>
-        <html lang={locale} className="min-h-screen w-screen bg-background">
-          <body className="text-primary">
-            <NextIntlClientProvider messages={messages}>
-              <Navbar />
-              <div className={outfit.className}>{children}</div>
-              <div id="portal" />
+      <html lang={locale} className="min-h-screen w-screen bg-background">
+        <body className="text-primary">
+          <NextIntlClientProvider messages={messages}>
+            <Navbar />
+            <div className={outfit.className}>{children}</div>
+            <div id="portal" />
 
-              <Toaster />
-            </NextIntlClientProvider>
-          </body>
-        </html>
-      </NextIntlClientProvider>
+            <Toaster />
+          </NextIntlClientProvider>
+        </body>
+      </html>
     </StoreProvider>
   );
 }

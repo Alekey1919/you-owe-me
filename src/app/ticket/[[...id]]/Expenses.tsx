@@ -5,12 +5,14 @@ import { twMerge } from "tailwind-merge";
 import Button from "@app/components/Button";
 import NewExpenseModal from "./NewExpenseModal";
 import { ExpensesContextProvider } from "@app/contexts/expensesContext";
+import { useTranslations } from "next-intl";
 
 const Expenses = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const { lgScreen, isParticipantsSelected } = useCalculationContext();
+  const t = useTranslations();
 
   const isSelectedInMobile = useMemo(() => {
     if (lgScreen) return;
@@ -40,9 +42,14 @@ const Expenses = () => {
         )}
       >
         {/* TODO: Add placeholder to calculate boxHeight in animations hook  */}
-        <span className="subtitle text-center hidden lg:block">Expenses:</span>
+        <span className="subtitle text-center hidden lg:block">
+          {t("common.expenses")}:
+        </span>
         <div className="flex flex-col space-y-2">
-          <Button text="Add expense" onClick={() => setShowModal(true)} />
+          <Button
+            text={t("ticket.addExpense")}
+            onClick={() => setShowModal(true)}
+          />
           <NewExpenseModal showModal={showModal} setShowModal={setShowModal} />
           <ExpensesList />
         </div>

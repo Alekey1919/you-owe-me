@@ -4,12 +4,14 @@ import ParticipantList from "./ParticipantList";
 import useCalculationContext from "@app/contexts/calculationContext";
 import { AnimationStatesEnum } from "@app/hooks/useListAnimations";
 import { twMerge } from "tailwind-merge";
+import { useTranslations } from "next-intl";
 
 const Participants = () => {
   const { setTicketData } = useCalculationContext();
   const [animationState, setAnimationState] = useState(AnimationStatesEnum.End);
 
   const { lgScreen, isParticipantsSelected } = useCalculationContext();
+  const t = useTranslations();
 
   const removeParticipant = (index: number) => {
     setTicketData((curr) => {
@@ -59,7 +61,7 @@ const Participants = () => {
       )}
     >
       <span className="subtitle text-center hidden lg:block">
-        Participants:
+        {t("common.participants")}:
       </span>
       <div className="flex flex-col space-y-2 relative">
         <NewParticipant handleAdd={handleAdd} />

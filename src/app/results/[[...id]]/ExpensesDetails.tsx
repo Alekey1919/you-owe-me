@@ -5,11 +5,14 @@ import { twMerge } from "tailwind-merge";
 import { IExpense } from "@app/types/types";
 import ExpenseDetails from "./ExpenseDetails";
 import useResultContext from "@app/contexts/resultsContext";
+import { useTranslations } from "next-intl";
 
 const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { highlightedExpense } = useResultContext();
+
+  const t = useTranslations();
 
   useEffect(() => {
     if (highlightedExpense) {
@@ -23,7 +26,7 @@ const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
         className="flex space-x-10 cursor-pointer"
         onClick={() => setIsOpen((curr) => !curr)}
       >
-        <h1 className="text-2xl 2xl:text-3xl">Todos los gastos</h1>
+        <h1 className="text-2xl 2xl:text-3xl">{t("results.allExpenses")}</h1>
         <Image
           src={Arrow}
           alt={isOpen ? "Close" : "Open"}

@@ -6,6 +6,7 @@ import LanguagesIcon from "@public/images/language-icon.svg";
 import BritishFlag from "@public/images/british-flag.svg";
 import SpanishFlag from "@public/images/spanish-flag.svg";
 import { twMerge } from "tailwind-merge";
+import { useTranslations } from "next-intl";
 
 const Flag = ({
   image,
@@ -18,7 +19,10 @@ const Flag = ({
 }) => {
   return (
     <div
-      className={twMerge("w-5 lg:w-8", isAnimating && "click-shadow-animation")}
+      className={twMerge(
+        "w-5 lg:w-8 cursor-pointer",
+        isAnimating && "click-shadow-animation"
+      )}
     >
       <Image src={image} alt="English" className="w-full" onClick={onClick} />
     </div>
@@ -30,6 +34,8 @@ const LanguageSwitcher = () => {
   const [animatingFlag, setAnimatingFlag] = useState<"es" | "en" | null>(null);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const t = useTranslations();
 
   const changeLanguage = (value: "en" | "es") => {
     if (timeoutRef.current) {
@@ -50,8 +56,8 @@ const LanguageSwitcher = () => {
     <div className="relative">
       <Image
         src={LanguagesIcon}
-        alt="Languages"
-        className="w-8"
+        alt={t("common.languages")}
+        className="w-8 cursor-pointer"
         onClick={() => setShowFlags((curr) => !curr)}
       />
 

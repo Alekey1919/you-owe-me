@@ -9,11 +9,14 @@ import ExpensesDetails from "./ExpensesDetails";
 import { ResultContextProvider } from "@app/contexts/resultsContext";
 import { smoothScrollTo } from "@app/utils/smoothScrollTo";
 import ErrorMessage from "./ErrorMessage";
+import { useTranslations } from "next-intl";
 
 const Results = ({ isTesting }: { isTesting?: boolean }) => {
   const [highlightedExpense, setHighlightedExpense] = useState("");
   const { userBalances, transactions, expenses, participants, error } =
     useSplitTicket(isTesting);
+
+  const t = useTranslations("results");
 
   const groupedTransactions = useMemo(() => {
     const grouped: { [key: string]: ITransaction[] } = {};
@@ -57,7 +60,7 @@ const Results = ({ isTesting }: { isTesting?: boolean }) => {
           <UserBalanceList userBalances={userBalances} />
 
           <div className="flex flex-col space-y-6 3xl:space-y-10">
-            <h1 className="text-2xl 2xl:text-3xl">Transacciones</h1>
+            <h1 className="text-2xl 2xl:text-3xl">{t("transactions")}</h1>
 
             <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
               {Object.keys(groupedTransactions).map((payer, index) => {

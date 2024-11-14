@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import ExpandableSection from "../components/ExpandableSection";
 import TextWithSpinner from "../components/TextWithSpinner";
 import Button from "../components/Button";
+import { useTranslations } from "next-intl";
 
 const TicketInfoModal = ({
   ticket,
@@ -21,17 +22,19 @@ const TicketInfoModal = ({
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const t = useTranslations();
+
   const deleteTicket = async () => {
     setIsDeleting(true);
 
     const result = await deleteTicketById(ticket.id);
 
     if (result === "Success") {
-      toast.success("Ticket removed");
+      toast.success(t("myTickets.ticketRemoved"));
       removeFromList(); // Remove from the state
       handleClose();
     } else {
-      toast.error("Error deleting ticket");
+      toast.error(t("myTickets.errorDeleting"));
     }
 
     setIsDeleting(false);
@@ -42,19 +45,19 @@ const TicketInfoModal = ({
       <div className="flex flex-col space-y-4">
         <h1 className="title text-center">{ticket.name}</h1>
         <p>
-          <span className="font-medium">Date:</span>{" "}
+          <span className="font-medium">{t("date")}:</span>{" "}
           {parseDateToString(ticket.date)}
         </p>
         {ticket.notes && (
           <p>
-            <span className="font-medium">Notes:</span> {ticket.notes}
+            <span className="font-medium">{t("notes")}</span> {ticket.notes}
           </p>
         )}
 
         <ExpandableSection
           text={
             <p>
-              <span className="font-medium">Participants:</span>{" "}
+              <span className="font-medium">{t("common.participants")}:</span>{" "}
               {ticket.participants.length}
             </p>
           }
@@ -74,7 +77,7 @@ const TicketInfoModal = ({
         <ExpandableSection
           text={
             <p>
-              <span className="font-medium">Expenses:</span>{" "}
+              <span className="font-medium">{t("common.expenses")}:</span>{" "}
               {ticket.expenses.length}
             </p>
           }
@@ -95,12 +98,18 @@ const TicketInfoModal = ({
 
       <div className="flex space-x-3">
         <Button
-          text={<Link href={`${RoutesEnum.Ticket}/${ticket.id}`}>Edit</Link>}
+          text={
+            <Link href={`${RoutesEnum.Ticket}/${ticket.id}`}>
+              {t("myTickets.edit")}
+            </Link>
+          }
           styles="w-full"
         />
         <Button
           text={
-            <Link href={`${RoutesEnum.Results}/${ticket.id}`}>Results</Link>
+            <Link href={`${RoutesEnum.Results}/${ticket.id}`}>
+              {t("myTickets.results")}
+            </Link>
           }
           styles="w-full"
         />
@@ -109,7 +118,7 @@ const TicketInfoModal = ({
           text={<TextWithSpinner text="Delete" isLoading={isDeleting} />}
           styles="w-full relative"
           onClick={deleteTicket}
-        ></Button>
+        />
       </div>
     </ModalCard>
   );

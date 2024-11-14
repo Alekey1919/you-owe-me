@@ -1,14 +1,9 @@
-import {
-  CSSProperties,
-  Dispatch,
-  SetStateAction,
-  useMemo,
-  useState,
-} from "react";
+import { CSSProperties, Dispatch, SetStateAction, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import useCalculationContext from "@app/contexts/calculationContext";
 import { NewExpenseStepsEnum } from "./NewExpenseModal";
 import { IConsumerStates, IPayedAmounts } from "@app/types/types";
+import { useTranslations } from "next-intl";
 
 const getCarouselStyles = (
   stepNumber: NewExpenseStepsEnum,
@@ -112,10 +107,11 @@ export const ConsumersStep = ({
   showAllParticipants: boolean;
   setShowAllParticipants: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [] = useState(false);
   const {
     ticketData: { participants },
   } = useCalculationContext();
+
+  const t = useTranslations();
 
   const allConsumersSelected = useMemo(() => {
     return (
@@ -137,13 +133,13 @@ export const ConsumersStep = ({
               )}
               onClick={selectAllConsumers}
             >
-              Everyone
+              {t("common.everyone")}
             </button>
             <div
               className="flex flex-col space-y-4 items-center w-full"
               onClick={() => setShowAllParticipants((curr) => !curr)}
             >
-              <span>See all</span>
+              <span>{t("ticket.seeAll")}</span>
               <div className="w-8 h-4 bg-secondary rounded-full relative">
                 <div
                   className={twMerge(

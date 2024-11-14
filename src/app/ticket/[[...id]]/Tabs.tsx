@@ -1,5 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import useCalculationContext from "@app/contexts/calculationContext";
+import { useTranslations } from "next-intl";
 
 const Tab = ({
   text,
@@ -27,16 +28,18 @@ const Tabs = () => {
   const { isParticipantsSelected, setIsParticipantsSelected } =
     useCalculationContext();
 
+  const t = useTranslations("common");
+
   return (
     <div className="lg:hidden flex w-full rounded-full bg-secondary relative py-3 justify-around">
       <Tab
         onClick={() => setIsParticipantsSelected(true)}
-        text={"Participants"}
+        text={t("participants")}
         active={isParticipantsSelected}
       />
       <Tab
         onClick={() => setIsParticipantsSelected(false)}
-        text={"Expenses"}
+        text={t("expenses")}
         active={!isParticipantsSelected}
       />
 
@@ -46,8 +49,6 @@ const Tabs = () => {
           !isParticipantsSelected && "translate-x-full"
         )}
       />
-      {/* <Tab text="Participants" selected />
-      <Tab text="Expenses" selected={false} /> */}
     </div>
   );
 };

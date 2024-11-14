@@ -4,9 +4,12 @@ import { twMerge } from "tailwind-merge";
 import UserBalance from "./UserBalance";
 import Arrow from "@public/images/back-arrow.svg";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const t = useTranslations();
 
   return (
     <div className="flex flex-col space-y-6 3xl:space-y-10">
@@ -14,10 +17,12 @@ const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
         className="flex space-x-10 cursor-pointer"
         onClick={() => setIsOpen((curr) => !curr)}
       >
-        <h1 className="text-2xl 2xl:text-3xl">Gastos por persona</h1>
+        <h1 className="text-2xl 2xl:text-3xl">
+          {t("results.expensesPerPerson")}
+        </h1>
         <Image
           src={Arrow}
-          alt={isOpen ? "Close" : "Open"}
+          alt={t(`common.${isOpen ? "close" : "open"}`)}
           className={twMerge(
             "w-8 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"

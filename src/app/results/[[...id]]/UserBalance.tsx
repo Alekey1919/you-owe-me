@@ -7,6 +7,7 @@ import useMediaQueryState, {
   DefaultBreakpoints,
 } from "@app/hooks/useMediaQueryState";
 import useResultContext from "@app/contexts/resultsContext";
+import { useTranslations } from "next-intl";
 
 const DetailsSection = ({
   text,
@@ -44,7 +45,6 @@ const DetailsSection = ({
           return (
             <span
               key={index}
-              className=""
               onClick={() => highlightExpense(expense.productName)}
             >
               {expense.productName}:{" "}
@@ -73,6 +73,8 @@ const UserBalance = ({
   const smScreen = useMediaQueryState({ breakpoint: DefaultBreakpoints.sm });
   const [isOpen, setIsOpen] = useState(false);
 
+  const t = useTranslations();
+
   const owesMoney = userBalance.balance < 0;
 
   useEffect(() => {
@@ -88,7 +90,7 @@ const UserBalance = ({
         <span className="text-lg font-medium pl-2">{userName}</span>
         <Image
           src={Arrow}
-          alt={isOpen ? "Close" : "Open"}
+          alt={t(`common.${isOpen ? "close" : "open"}`)}
           className={twMerge(
             "w-6 transition-transform sm:hidden",
             isOpen ? "rotate-90" : "rotate-[-90deg]"
@@ -104,12 +106,12 @@ const UserBalance = ({
       >
         <div className="flex flex-col space-y-2">
           <DetailsSection
-            text="Total a pagar:"
+            text={`${t("results.totalToPay")}:`}
             totalAmount={userBalance.amountToPay.total}
             expenses={userBalance.amountToPay.details}
           />
           <DetailsSection
-            text="Total pagado:"
+            text={`${t("results.totalPayed")}:`}
             totalAmount={userBalance.amountPayed.total}
             expenses={userBalance.amountPayed.details}
             isInFavor
@@ -122,7 +124,7 @@ const UserBalance = ({
           isOpen ? "opacity-100" : "pointer-events-none"
         )}
       >
-        Balance:{" "}
+        {t("results.balance")}:{" "}
         <span
           className={twMerge(owesMoney ? "text-red-400" : "text-green-400")}
         >

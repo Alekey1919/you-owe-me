@@ -21,6 +21,7 @@ import SaveButton from "./SaveButton";
 import { getTicket } from "@app/lib/fetchData";
 import Image from "next/image";
 import Spinner from "@public/images/spinner.svg";
+import { useTranslations } from "next-intl";
 
 const Page = () => {
   const user = useSelector(selectUser);
@@ -52,6 +53,7 @@ const Page = () => {
   const isTouch = useMediaQueryState({
     query: "(hover: none), (pointer: coarse)",
   });
+  const t = useTranslations("ticket");
 
   const calculateDisabled = useMemo(() => {
     return ticketData.participants.length < 2 || !ticketData.expenses.length;
@@ -106,10 +108,10 @@ const Page = () => {
   if (ticketNotFound) {
     return (
       <div className="flex flex-col h-screen w-screen justify-center items-center space-y-4">
-        <h1 className="title">The ticket was not found, sorry (404)</h1>
+        <h1 className="title">{t("ticketNotFound")}</h1>
 
         <Link href="/ticket">
-          <button className="bg-none subtitle">Create one</button>
+          <button className="bg-none subtitle">{t("createOne")}</button>
         </Link>
       </div>
     );
@@ -128,7 +130,7 @@ const Page = () => {
     >
       <div className="layout max-w-lg mx-auto flex flex-col items-center space-y-8 lg:space-y-14 3xl:space-y-20">
         <h1 className="title text-center block">
-          Add all participants and expenses
+          {t("allParticipantsAndExpenses")}
         </h1>
         {!lgScreen && <Tabs />}
         <div className="flex lg:space-x-40 lg:justify-center lg:mt-10 w-full overflow-hidden lg:overflow-visible">

@@ -20,7 +20,7 @@ const Page = () => {
   const [hasMore, setHasMore] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<number | null>(null);
 
-  const t = useTranslations();
+  const t = useTranslations("myTickets");
 
   // Keep track of the last doc to handle pagination
   const lastDoc = useRef<QueryDocumentSnapshot<DocumentData, DocumentData>>();
@@ -64,7 +64,7 @@ const Page = () => {
   return (
     <>
       <div className="layout flex flex-col items-center space-y-8">
-        <h1 className="title">{t("myTickets")}</h1>
+        <h1 className="title">{t("title")}</h1>
         <div className="grid grid-cols-1 lg:grid-cols-4 w-full gap-4">
           {tickets.map((ticket, index) => {
             return (
@@ -81,7 +81,7 @@ const Page = () => {
             className="button"
             onClick={() => user?.id && fetchData(user.id)}
           >
-            Fetch more
+            {t("getMore")}
           </button>
         )}
         {isLoading && <Image src={Spinner} className="w-10" alt="Spinner" />}

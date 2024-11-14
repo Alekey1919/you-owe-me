@@ -1,1 +1,48 @@
-{ "myTickets": "My tickets" }
+{
+  "myTickets": {
+    "title": "My tickets",
+    "getMore": "Get more",
+    "ticketRemoved": "Ticket removed",
+    "errorDeleting": "Error deleting ticket",
+    "edit": "Edit",
+    "results": "Results"
+  },
+  "ticket": {
+    "ticketNotFound": "The ticket was not found, sorry (404)",
+    "createOne": "Create one",
+    "allParticipantsAndExpenses": "Add all participants and expenses",
+    "signInFirst": "You need to sign in first",
+    "needParticipants": "You need some participants",
+    "needExpenses": "You need some expenses",
+    "save": "Save",
+    "addExpense": "Add expense",
+    "seeAll": "See all",
+    "back": "Back",
+    "next": "Next"
+  },
+  "results": {
+    "ticketNotFound": "Ticket not found",
+    "payedBy": "Payed by",
+    "allExpenses": "All expenses",
+    "transactions": "Transactions",
+    "totalToPay": "Total to pay",
+    "totalPayed": "Total payed",
+    "balance": "Balance",
+    "expensesPerPerson": "Expenses per person",
+    "pays": "Pays",
+    "to": "to"
+  },
+  "navbar": { "newTicket": "New ticket", "login": "Login", "logout": "Logout" },
+  "common": {
+    "notes": "Notes:",
+    "participants": "Participants",
+    "expenses": "Expenses",
+    "name": "Name",
+    "price": "Price",
+    "consumers": "Consumers",
+    "payers": "Payers",
+    "everyone": "Everyone",
+    "languages": "Languages",
+    "date": "Date"
+  }
+}
