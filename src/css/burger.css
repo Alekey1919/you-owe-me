@@ -1,0 +1,63 @@
+button {
+  color: black;
+}
+.burger {
+  position: relative;
+  margin-right: -0.625rem;
+  border-width: 0px;
+  background-color: transparent;
+  padding: 0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.burger .burger-svg {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.burger .burger-svg {
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+.burger .burger-svg .top {
+  stroke-dasharray: 40 160;
+}
+.burger .burger-svg .middle {
+  transform-origin: 50%;
+  stroke-dasharray: 40 142;
+}
+.burger .burger-svg .bottom {
+  transform-origin: 50%;
+  stroke-dasharray: 40 85;
+}
+.burger .line {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 5;
+  transition-duration: 0.3s;
+  stroke-linecap: round;
+}
+.burger.active svg {
+  --tw-rotate: 45deg;
+  transform: rotate(var(--tw-rotate));
+}
+.burger.active svg .top {
+  stroke-dashoffset: -64px;
+}
+.burger.active svg .middle {
+  --tw-rotate: 90deg;
+  transform: rotate(var(--tw-rotate));
+}
+.burger.active svg .bottom {
+  stroke-dashoffset: -64px;
+}

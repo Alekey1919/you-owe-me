@@ -1,5 +1,3 @@
-"use client";
-
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -9,27 +7,19 @@ import {
 } from "firebase/auth";
 import { auth, db } from "@app/services/firebase/firebase";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { twMerge } from "tailwind-merge";
 import { doc, setDoc } from "firebase/firestore";
-import { addUser } from "../redux/slices/userSlice";
+import { addUser, removeUser } from "../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
-import { RoutesEnum } from "../enums/routes";
-import LanguageSwitcher from "./LanguageSwitcher";
-import { useTranslations } from "next-intl";
 
-const Navbar = () => {
+const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
 
   const dispatch = useDispatch();
-  const t = useTranslations();
 
   const handleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      setUser(result.user); // Update the user state
 
       await saveUserToFirestore(result.user);
     } catch (error) {
@@ -40,7 +30,7 @@ const Navbar = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      setUser(null);
+      dispatch(removeUser());
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -66,7 +56,6 @@ const Navbar = () => {
   // Listen to authentication state changes
   useEffect(() => {
     const stateListener = onAuthStateChanged(auth, (user) => {
-      setUser(user); // Set the user or null if logged out
       setIsLoading(false); // Stop loading once we have the auth state
 
       // Saving user in redux
@@ -85,36 +74,7 @@ const Navbar = () => {
     return () => stateListener();
   }, [dispatch]);
 
-  return (
-    <div
-      className={twMerge(
-        "absolute left-0 right-0 top-0 bg-orange-300 z-[100] px-10 py-3",
-        isLoading && "hidden"
-      )}
-    >
-      <div className="w-full flex justify-between">
-        <LanguageSwitcher />
-        <ul className="flex w-full justify-end space-x-10 text-base">
-          {user && (
-            <Link href="/my_tickets">
-              <li>{t("myTickets.title")}</li>
-            </Link>
-          )}
-
-          <Link href={RoutesEnum.Ticket}>
-            <li className="cursor-pointer">{t("navbar.newTicket")}</li>
-          </Link>
-
-          <li
-            className="cursor-pointer"
-            onClick={user ? handleSignOut : handleSignIn}
-          >
-            {t(`navbar.${user ? "logout" : "login"}`)}
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
+  return { isLoading, handleSignOut, handleSignIn };
 };
 
-export default Navbar;
+export default useAuth;

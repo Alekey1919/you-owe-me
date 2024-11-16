@@ -47,6 +47,8 @@
     "payers": "Pagadores",
     "everyone": "Todos",
     "languages": "Idiomas",
-    "date": "Fecha"
+    "date": "Fecha",
+    "open": "Abrir",
+    "close": "Cerrar"
   }
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import StoreProvider from "./redux/StoreProvider";
 import { Toaster } from "react-hot-toast";
 import { NextIntlClientProvider } from "next-intl";

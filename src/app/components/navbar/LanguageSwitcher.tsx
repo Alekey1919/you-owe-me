@@ -20,7 +20,7 @@ const Flag = ({
   return (
     <div
       className={twMerge(
-        "w-5 lg:w-8 cursor-pointer",
+        "w-5 lg:w-8 shrink-0 cursor-pointer",
         isAnimating && "click-shadow-animation"
       )}
     >
@@ -53,7 +53,7 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-fit">
       <Image
         src={LanguagesIcon}
         alt={t("common.languages")}
@@ -63,8 +63,9 @@ const LanguageSwitcher = () => {
 
       <div
         className={twMerge(
-          "transition-all duration-300 ease-out flex flex-col items-center space-y-4 absolute top-0 left-0 right-0 mx-auto opacity-0 pointer-events-none",
-          showFlags && "translate-y-10 !opacity-100 pointer-events-auto"
+          "transition-all duration-300 ease-out flex lg:flex-col items-center space-x-4 lg:space-x-0 lg:space-y-4 absolute top-0 left-0 right-0 bottom-0 mx-auto opacity-0 pointer-events-none",
+          showFlags &&
+            "translate-x-10 lg:translate-x-0 lg:translate-y-10 !opacity-100 pointer-events-auto"
         )}
       >
         <Flag
