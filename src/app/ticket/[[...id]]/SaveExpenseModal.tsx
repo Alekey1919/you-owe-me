@@ -85,7 +85,7 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
             id="name"
             onChange={(e) => setName(e.target.value)}
             placeholder="Summer camp"
-            className="bg-transparent text-end text-primary placeholder:text-primary placeholder:opacity-50 focus:outline-none"
+            className="bg-transparent text-end text-accent placeholder:text-accent placeholder:opacity-50 focus:outline-none"
           />
         </div>
         <div className="flex w-full justify-between">

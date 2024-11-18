@@ -25,7 +25,7 @@ export default async function RootLayout({
   return (
     <StoreProvider>
       <html lang={locale} className="min-h-screen w-screen bg-background">
-        <body className="text-primary">
+        <body className="text-accent">
           <NextIntlClientProvider messages={messages}>
             <Navbar />
             <div className={outfit.className}>{children}</div>

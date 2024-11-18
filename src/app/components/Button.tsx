@@ -15,20 +15,14 @@ const Button = ({
   return (
     <button
       className={twMerge(
-        "button relative group overflow-hidden",
-        disabled && "!bg-gray-800 opacity-50", // Disabled only applies styles because we need the toast to be triggered on the onClick
+        "button relative group overflow-hidden outline outline-1 outline-accent outline-offset-[3px]",
+        disabled
+          ? "opacity-30 cursor-not-allowed"
+          : "hover:outline-offset-0 transition-all duration-300", // Disabled only applies styles because we need the toast to be triggered on the onClick
         styles
       )}
       onClick={onClick}
     >
-      <span
-        className={twMerge(
-          "touch:hidden absolute right-0 top-0 inline-block h-4 w-4 rounded transition-all bg-[#294ba0] duration-500 ease-in-out",
-          disabled ? "bg-gray-950" : "group-hover:-mr-4 group-hover:-mt-4"
-        )}
-      >
-        <span className="absolute right-0 top-0 h-5 w-5 -translate-y-1/2 translate-x-1/2 rotate-45 bg-white brightness-100" />
-      </span>
       {text}
     </button>
   );

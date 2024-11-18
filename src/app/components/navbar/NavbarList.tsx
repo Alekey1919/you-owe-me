@@ -23,11 +23,10 @@ const NavbarList = ({
   return (
     <div
       className={twMerge(
-        "fixed w-screen left-0 top-0 pt-16 lg:pt-6 pointer-events-none lg:pointer-events-auto lg:pr-6",
-        "bg-transparent ease-out duration-500 opacity-0 lg:opacity-100 transition-all",
+        "fixed lg:relative w-screen left-0 top-16 lg:top-0 lg:pt-6 pointer-events-none lg:pointer-events-auto lg:pr-6",
+        "bg-transparent ease-out duration-500 opacity-0 lg:opacity-100 transition-all z-10",
         isOpen && "opacity-100 pointer-events-auto"
       )}
-      style={{ backdropFilter: isOpen ? "blur(10px)" : "" }}
     >
       <ul className="flex flex-col lg:flex-row w-full justify-end space-y-4 lg:space-y-0 lg:space-x-10 text-base xl:text-lg 3xl:text-xl pl-10 lg:pl-0">
         {user && (

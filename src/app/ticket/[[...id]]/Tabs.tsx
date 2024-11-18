@@ -31,7 +31,7 @@ const Tabs = () => {
   const t = useTranslations("common");
 
   return (
-    <div className="lg:hidden flex w-full rounded-full bg-secondary relative py-3 justify-around">
+    <div className="lg:hidden flex w-full rounded-full bg-background relative py-3 justify-around">
       <Tab
         onClick={() => setIsParticipantsSelected(true)}
         text={t("participants")}
@@ -45,7 +45,7 @@ const Tabs = () => {
 
       <div
         className={twMerge(
-          "rounded-[inherit] absolute left-0 top-0 bottom-0 w-1/2 bg-primary transition-transform duration-300 z-10",
+          "rounded-[inherit] absolute left-0 top-0 bottom-0 w-1/2 bg-accent transition-transform duration-300 z-10",
           !isParticipantsSelected && "translate-x-full"
         )}
       />

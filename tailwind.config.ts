@@ -9,10 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "var(--primary)",
-        secondary: "var(--secondary)",
+        accent: "var(--accent)",
         background: "var(--background)",
-        orange: "var(--orange)",
+        "muted-accent": "var(--muted-accent)",
+        "muted-background": "var(--muted-background)",
       },
       screens: {
         "3xl": "1920px",

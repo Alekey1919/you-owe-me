@@ -15,6 +15,7 @@ import { IConsumerStates, IPayedAmounts, ITicket } from "@app/types/types";
 import { createPortal } from "react-dom";
 import useExpensesContext from "@app/contexts/expensesContext";
 import { useTranslations } from "next-intl";
+import Button from "@/app/components/Button";
 
 export enum NewExpenseStepsEnum {
   Name,
@@ -255,17 +256,16 @@ const NewExpenseModal = ({
           />
         </div>
 
-        <button
-          className="box !bg-primary text-secondary disabled:!bg-gray-800 disabled:opacity-50 transition-all"
+        <Button
+          styles=""
           onClick={handleNext}
           disabled={nextDisabled}
-        >
-          {t(
+          text={t(
             `ticket.${
               currentStep !== NewExpenseStepsEnum.Payers ? "next" : "save"
             }`
           )}
-        </button>
+        />
 
         {currentStep > NewExpenseStepsEnum.Name && (
           <Image

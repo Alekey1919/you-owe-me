@@ -85,7 +85,7 @@ const UserBalance = ({
     <div className={twMerge("card relative ", isOpen && "!pb-16")}>
       <div
         className="flex justify-between"
-        onClick={() => setIsOpen((curr) => !curr)}
+        onClick={() => !smScreen && setIsOpen((curr) => !curr)}
       >
         <span className="text-lg font-medium pl-2">{userName}</span>
         <Image

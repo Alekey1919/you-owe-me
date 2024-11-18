@@ -57,7 +57,7 @@ const LanguageSwitcher = () => {
       <Image
         src={LanguagesIcon}
         alt={t("common.languages")}
-        className="w-8 cursor-pointer"
+        className="w-8 cursor-pointer mix-blend-difference"
         onClick={() => setShowFlags((curr) => !curr)}
       />
 

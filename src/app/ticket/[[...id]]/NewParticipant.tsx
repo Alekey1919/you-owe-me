@@ -22,7 +22,7 @@ const NewParticipant = ({
       <input
         type="text"
         placeholder="Harry Potter"
-        className="bg-transparent placeholder:text-primary placeholder:opacity-50 focus:outline-none"
+        className="bg-transparent placeholder:text-background placeholder:opacity-50 focus:outline-none"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />

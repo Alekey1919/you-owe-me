@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --primary: #3b69e2;
-  --secondary: #ffece9;
-  --background: #ffd9d9;
-  --orange: #f1973d;
+  --accent: #f2f3f4;
+  --background: #0c0c0c;
+  --muted-accent: #bdc0ba;
+  --muted-background: #434343;
 }
 
 * {
@@ -15,6 +15,7 @@
 
 *::selection {
   background: var(--background);
+  color: var(--accent);
 }
 
 .layout {
@@ -22,11 +23,11 @@
 }
 
 .box {
-  @apply pl-4 pr-3 py-3 rounded-lg lg:shadow-lg bg-secondary;
+  @apply pl-4 pr-3 py-3 rounded-lg lg:shadow-lg bg-accent text-background;
 }
 
 .button {
-  @apply pl-4 pr-3 py-3 rounded-lg shadow-lg bg-primary text-secondary transition-all duration-300;
+  @apply pl-4 pr-3 py-3 rounded-lg shadow-lg bg-accent text-background transition-all duration-300;
 }
 
 .fade-enter {
@@ -94,7 +95,11 @@
 /* Conic gradient */
 .highlighted::before {
   content: "";
-  background: conic-gradient(transparent 270deg, var(--primary), transparent);
+  background: conic-gradient(
+    transparent 270deg,
+    var(--background),
+    transparent
+  );
   position: absolute;
   top: 50%;
   left: 50%;

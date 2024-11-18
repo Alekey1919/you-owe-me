@@ -129,7 +129,7 @@ export const ConsumersStep = ({
             <button
               className={twMerge(
                 "box w-full transition-colors",
-                allConsumersSelected ? "!bg-primary text-secondary" : ""
+                allConsumersSelected ? "!bg-accent text-accent" : ""
               )}
               onClick={selectAllConsumers}
             >
@@ -140,12 +140,12 @@ export const ConsumersStep = ({
               onClick={() => setShowAllParticipants((curr) => !curr)}
             >
               <span>{t("ticket.seeAll")}</span>
-              <div className="w-8 h-4 bg-secondary rounded-full relative">
+              <div className="w-8 h-4 bg-background rounded-full relative">
                 <div
                   className={twMerge(
                     "absolute w-1/2 h-full rounded-[inherit] left-0 top-0 transition-transform",
                     showAllParticipants
-                      ? "bg-primary translate-x-full"
+                      ? "bg-accent translate-x-full"
                       : " bg-gray-500"
                   )}
                 />
@@ -163,7 +163,7 @@ export const ConsumersStep = ({
                 <div
                   className={twMerge(
                     "box transition-colors cursor-pointer",
-                    consumerStates[participant] && "!bg-primary text-secondary"
+                    consumerStates[participant] && "!bg-accent text-accent"
                   )}
                   onClick={() => selectConsumer(participant)}
                   key={index}

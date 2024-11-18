@@ -111,7 +111,7 @@ const Expense = ({
                 {payer.payer}
               </div>
               {/* Separator between payers */}
-              {theresMore && <div className="w-[1.5px] bg-secondary" />}
+              {theresMore && <div className="w-[1.5px] bg-background" />}
             </Fragment>
           );
         })}

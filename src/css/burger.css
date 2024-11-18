@@ -42,7 +42,7 @@ button {
 }
 .burger .line {
   fill: none;
-  stroke: var(--primary);
+  stroke: var(--accent);
   stroke-width: 5;
   transition-duration: 0.3s;
   stroke-linecap: round;
