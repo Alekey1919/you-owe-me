@@ -21,7 +21,7 @@ const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
         </h1>
         <BackArrowIcon
           className={twMerge(
-            "w-8 rotate-[-90deg] transition-transform",
+            "w-8 h-8 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"
           )}
         />

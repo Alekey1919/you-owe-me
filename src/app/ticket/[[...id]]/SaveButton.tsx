@@ -5,7 +5,6 @@ import { selectUser } from "@app/redux/slices/userSlice";
 import useCalculationContext from "@app/contexts/calculationContext";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
-import SaveIcon from "@/app/svgs/SaveIcon";
 
 const SaveButton = ({ openModal }: { openModal: () => void }) => {
   const user = useSelector(selectUser);
@@ -36,14 +35,10 @@ const SaveButton = ({ openModal }: { openModal: () => void }) => {
 
   return (
     <Button
-      text={
-        <div className="flex space-x-2 items-center">
-          <span>{t("save")}</span>
-          <SaveIcon className="w-4 h-4" />
-        </div>
-      }
+      text={t("save")}
       onClick={onClick}
       disabled={isDisabled}
+      styles="text-center"
     />
   );
 };

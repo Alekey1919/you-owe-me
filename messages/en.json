@@ -18,7 +18,8 @@
     "addExpense": "Add expense",
     "seeAll": "See all",
     "back": "Back",
-    "next": "Next"
+    "next": "Next",
+    "calculate": "Calculate"
   },
   "results": {
     "ticketNotFound": "Ticket not found",

@@ -1,13 +1,14 @@
 import { ISVGProps } from "../types/propTypes";
 
-const BackArrowIcon = ({ className }: ISVGProps) => {
+const BackArrowIcon = ({ className, onClick }: ISVGProps) => {
   return (
     <svg
       width="800px"
       height="800px"
       viewBox="0 0 1024 1024"
-      fill="#3b69e2"
+      fill="var(--accent)"
       className={className}
+      onClick={onClick}
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >

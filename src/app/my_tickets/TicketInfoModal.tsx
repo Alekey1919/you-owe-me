@@ -45,12 +45,13 @@ const TicketInfoModal = ({
       <div className="flex flex-col space-y-4">
         <h1 className="title text-center">{ticket.name}</h1>
         <p>
-          <span className="font-medium">{t("date")}:</span>{" "}
+          <span className="font-medium">{t("common.date")}:</span>{" "}
           {parseDateToString(ticket.date)}
         </p>
         {ticket.notes && (
           <p>
-            <span className="font-medium">{t("notes")}</span> {ticket.notes}
+            <span className="font-medium">{t("common.notes")}</span>{" "}
+            {ticket.notes}
           </p>
         )}
 

@@ -89,7 +89,7 @@ const UserBalance = ({
         <span className="text-lg font-medium pl-2">{userName}</span>
         <BackArrowIcon
           className={twMerge(
-            "w-6 transition-transform sm:hidden",
+            "w-6 h-6 transition-transform sm:hidden",
             isOpen ? "rotate-90" : "rotate-[-90deg]"
           )}
         />

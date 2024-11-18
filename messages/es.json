@@ -18,7 +18,8 @@
     "addExpense": "Agregar gasto",
     "seeAll": "Ver todos",
     "back": "Atrás",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "calculate": "Calcular"
   },
   "results": {
     "ticketNotFound": "Ticket no encontrado",

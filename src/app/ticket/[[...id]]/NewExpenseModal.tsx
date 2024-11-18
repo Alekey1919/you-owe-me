@@ -268,7 +268,7 @@ const NewExpenseModal = ({
 
         {currentStep > NewExpenseStepsEnum.Name && (
           <BackArrowIcon
-            className="w-9 absolute top-4 left-4 !mt-0 cursor-pointer"
+            className="w-6 h-6 absolute top-4 left-4 !mt-0 cursor-pointer"
             onClick={() => setCurrentStep((curr) => curr - 1)}
           />
         )}

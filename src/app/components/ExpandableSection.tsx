@@ -22,7 +22,7 @@ const ExpandableSection = ({
         {typeof text === "string" ? <p>{text}</p> : text}
         <BackArrowIcon
           className={twMerge(
-            "w-5 rotate-[-90deg] transition-transform",
+            "w-5 h-5 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"
           )}
         />

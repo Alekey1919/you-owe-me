@@ -31,11 +31,18 @@ const ExpensesList = () => {
       boxClassName: "participant",
     });
 
+  // Focus and un-focus expense when clicking on it in a touch screen
   const handleTouch = useCallback(
     (e?: any, index?: number) => {
       if (!isTouch) return;
 
-      if (!e || !e.target.className.includes("expense")) {
+      // SVGs don't have classes, so they're discarded automatically
+      if (
+        !e ||
+        index == undefined ||
+        (!(e.target instanceof SVGElement) &&
+          !e.target?.className?.includes("expense"))
+      ) {
         setFocusedExpense(null);
       } else {
         setFocusedExpense(index || 0);

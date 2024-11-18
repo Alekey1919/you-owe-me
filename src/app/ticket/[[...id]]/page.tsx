@@ -58,11 +58,13 @@ const Page = () => {
     return ticketData.participants.length < 2 || !ticketData.expenses.length;
   }, [ticketData.expenses.length, ticketData.participants.length]);
 
-  const redirectToResults = () => {
+  const redirectToResults = useCallback(() => {
+    if (calculateDisabled) return;
+
     localStorage.setItem("currentTicket", JSON.stringify(ticketData));
 
     router.push("/results");
-  };
+  }, [calculateDisabled, router, ticketData]);
 
   const fetchTicket = useCallback(async (ticketId: string) => {
     setIsLoading(true);
@@ -137,11 +139,11 @@ const Page = () => {
           <Expenses />
         </div>
 
-        <div className="w-full flex justify-center space-x-6">
+        <div className="w-full grid grid-cols-2 max-w-80 justify-center gap-6">
           <SaveButton openModal={() => setShowSaveModal(true)} />
 
           <Button
-            text="Calculate"
+            text={t("calculate")}
             onClick={redirectToResults}
             disabled={calculateDisabled}
           />

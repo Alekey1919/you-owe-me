@@ -15,7 +15,7 @@ const Button = ({
   return (
     <button
       className={twMerge(
-        "button relative group overflow-hidden outline outline-1 outline-accent outline-offset-[3px]",
+        "button relative group overflow-hidden outline mouse:outline-1 mouse:outline-accent mouse:outline-offset-[3px]",
         disabled
           ? "opacity-30 cursor-not-allowed"
           : "hover:outline-offset-0 transition-all duration-300", // Disabled only applies styles because we need the toast to be triggered on the onClick

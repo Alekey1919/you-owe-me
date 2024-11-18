@@ -29,7 +29,7 @@ const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
         <h1 className="text-2xl 2xl:text-3xl">{t("results.allExpenses")}</h1>
         <BackArrowIcon
           className={twMerge(
-            "w-8 rotate-[-90deg] transition-transform",
+            "w-8 h-8 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"
           )}
         />

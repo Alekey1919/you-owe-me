@@ -15,8 +15,9 @@ const Navbar = () => {
     <>
       <nav
         className={twMerge(
-          "fixed left-0 right-0 top-0 z-[100] px-10 py-3 flex lg:justify-end mix-blend-difference",
-          isLoading && "hidden"
+          "fixed left-0 right-0 top-0 z-[100] px-10 py-3 flex lg:justify-end transition-colors duration-300",
+          isLoading && "hidden",
+          isOpen ? "bg-background" : "mix-blend-difference"
         )}
       >
         <NavbarList
@@ -27,17 +28,6 @@ const Navbar = () => {
 
         <Burger isOpen={isOpen} setIsOpen={setIsOpen} />
       </nav>
-
-      {/* There's a bug when using mix-blend with backdrop-filter blur so the blur is applied on a different element */}
-      <div
-        className={twMerge(
-          "fixed w-screen top-0 left-0 h-[250px] z-[5] pointer-events-none lg:hidden opacity-0 transition-opacity duration-300",
-          isOpen && "opacity-100"
-        )}
-        style={{
-          backdropFilter: isOpen ? "blur(10px)" : "",
-        }}
-      />
     </>
   );
 };
