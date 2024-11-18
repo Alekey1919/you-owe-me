@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useCalculationContext from "@app/contexts/calculationContext";
 import {
   ConsumersStep,
@@ -9,13 +9,12 @@ import {
   PriceStep,
 } from "./NewExpenseSteps";
 import { twMerge } from "tailwind-merge";
-import BackArrow from "@public/images/back-arrow.svg";
-import Image from "next/image";
 import { IConsumerStates, IPayedAmounts, ITicket } from "@app/types/types";
 import { createPortal } from "react-dom";
 import useExpensesContext from "@app/contexts/expensesContext";
 import { useTranslations } from "next-intl";
 import Button from "@/app/components/Button";
+import BackArrowIcon from "@/app/svgs/BackArrowIcon";
 
 export enum NewExpenseStepsEnum {
   Name,
@@ -268,9 +267,7 @@ const NewExpenseModal = ({
         />
 
         {currentStep > NewExpenseStepsEnum.Name && (
-          <Image
-            src={BackArrow}
-            alt={t("ticket.back")}
+          <BackArrowIcon
             className="w-9 absolute top-4 left-4 !mt-0 cursor-pointer"
             onClick={() => setCurrentStep((curr) => curr - 1)}
           />

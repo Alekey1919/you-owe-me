@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ITicket } from "../types/types";
 import Image from "next/image";
-import Spinner from "@public/images/spinner.svg";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import { getUserTickets } from "../lib/fetchData";
@@ -11,6 +10,7 @@ import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import TicketInfoModal from "./TicketInfoModal";
 import Ticket from "./Ticket";
 import { useTranslations } from "next-intl";
+import Spinner from "../svgs/Spinner";
 
 const PAGE_SIZE = 10;
 
@@ -84,7 +84,7 @@ const Page = () => {
             {t("getMore")}
           </button>
         )}
-        {isLoading && <Image src={Spinner} className="w-10" alt="Spinner" />}
+        {isLoading && <Spinner className="w-10" />}
       </div>
 
       {selectedTicket !== null && (

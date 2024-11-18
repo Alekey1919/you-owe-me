@@ -1,13 +1,12 @@
 import { ReactNode, useEffect, useState } from "react";
 import { IUserBalance, IUserBalanceAmountsDetails } from "../../types/types";
 import { twMerge } from "tailwind-merge";
-import Image from "next/image";
-import Arrow from "@public/images/back-arrow.svg";
 import useMediaQueryState, {
   DefaultBreakpoints,
 } from "@app/hooks/useMediaQueryState";
 import useResultContext from "@app/contexts/resultsContext";
 import { useTranslations } from "next-intl";
+import BackArrowIcon from "@/app/svgs/BackArrowIcon";
 
 const DetailsSection = ({
   text,
@@ -88,9 +87,7 @@ const UserBalance = ({
         onClick={() => !smScreen && setIsOpen((curr) => !curr)}
       >
         <span className="text-lg font-medium pl-2">{userName}</span>
-        <Image
-          src={Arrow}
-          alt={t(`common.${isOpen ? "close" : "open"}`)}
+        <BackArrowIcon
           className={twMerge(
             "w-6 transition-transform sm:hidden",
             isOpen ? "rotate-90" : "rotate-[-90deg]"

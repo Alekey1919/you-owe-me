@@ -2,11 +2,10 @@ import { useRef, useState } from "react";
 import { setUserLocale } from "@app/services/locale";
 import { Locale } from "@/i18n/config";
 import Image from "next/image";
-import LanguagesIcon from "@public/images/language-icon.svg";
 import BritishFlag from "@public/images/british-flag.svg";
 import SpanishFlag from "@public/images/spanish-flag.svg";
 import { twMerge } from "tailwind-merge";
-import { useTranslations } from "next-intl";
+import LanguageIcon from "@/app/svgs/LanguageIcon";
 
 const Flag = ({
   image,
@@ -35,8 +34,6 @@ const LanguageSwitcher = () => {
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const t = useTranslations();
-
   const changeLanguage = (value: "en" | "es") => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -54,10 +51,8 @@ const LanguageSwitcher = () => {
 
   return (
     <div className="relative w-fit">
-      <Image
-        src={LanguagesIcon}
-        alt={t("common.languages")}
-        className="w-8 cursor-pointer mix-blend-difference"
+      <LanguageIcon
+        className="w-8 h-8 cursor-pointer"
         onClick={() => setShowFlags((curr) => !curr)}
       />
 

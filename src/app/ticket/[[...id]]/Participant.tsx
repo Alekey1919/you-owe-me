@@ -1,5 +1,4 @@
-import Cross from "@public/images/cross.svg"; // adjust the import path accordingly
-import Image from "next/image"; // adjust if using a different method for images
+import CrossIcon from "@/app/svgs/CrossIcon";
 import { CSSProperties } from "react";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
@@ -25,13 +24,8 @@ const Participant = ({
       style={styles?.container}
     >
       <span>{name}</span>
-      <button onClick={disabled ? showToast : onRemove}>
-        <Image
-          src={Cross}
-          alt="Close"
-          style={styles?.img}
-          className={twMerge("w-5", disabled && "opacity-25")}
-        />
+      <button onClick={disabled ? showToast : onRemove} style={styles?.img}>
+        <CrossIcon className={twMerge("w-5 h-5", disabled && "opacity-25")} />
       </button>
     </div>
   );

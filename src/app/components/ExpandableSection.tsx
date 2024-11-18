@@ -1,8 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import Image from "next/image";
-import Arrow from "@public/images/back-arrow.svg";
 import { useTranslations } from "next-intl";
+import BackArrowIcon from "../svgs/BackArrowIcon";
 
 const ExpandableSection = ({
   text,
@@ -24,9 +23,7 @@ const ExpandableSection = ({
         onClick={() => setIsOpen((curr) => !curr)}
       >
         {typeof text === "string" ? <p>{text}</p> : text}
-        <Image
-          src={Arrow}
-          alt={t(`common.${isOpen ? "close" : "open"}`)}
+        <BackArrowIcon
           className={twMerge(
             "w-5 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"

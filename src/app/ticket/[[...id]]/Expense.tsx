@@ -7,10 +7,9 @@ import React, {
 } from "react";
 import { IExpense } from "@app/types/types";
 import { twMerge } from "tailwind-merge";
-import Cross from "@public/images/cross.svg";
-import Edit from "@public/images/edit.svg";
-import Image from "next/image";
+import EditIcon from "@/app/svgs/EditIcon";
 import useCalculationContext from "@app/contexts/calculationContext";
+import CrossIcon from "@/app/svgs/CrossIcon";
 
 interface IPaymentPercentages {
   payer: string;
@@ -76,18 +75,8 @@ const Expense = ({
           showDetails && "open"
         )}
       >
-        <Image
-          src={Edit}
-          alt="Edit"
-          className="w-4 cursor-pointer"
-          onClick={handleEdit}
-        />
-        <Image
-          src={Cross}
-          alt="Close"
-          className="w-4 cursor-pointer"
-          onClick={deleteExpense}
-        />
+        <EditIcon className="w-4 cursor-pointer" onClick={handleEdit} />
+        <CrossIcon className="w-4 h-4 cursor-pointer" onClick={deleteExpense} />
       </div>
       <div className="w-full flex justify-between pb-3 px-4 transition-all relative pointer-events-none space-x-2">
         <span>{name}</span>

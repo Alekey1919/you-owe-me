@@ -1,12 +1,12 @@
 import Button from "@app/components/Button";
 import React, { useCallback, useMemo } from "react";
 import Image from "next/image";
-import Save from "@public/images/save.svg";
 import { useSelector } from "react-redux";
 import { selectUser } from "@app/redux/slices/userSlice";
 import useCalculationContext from "@app/contexts/calculationContext";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import SaveIcon from "@/app/svgs/SaveIcon";
 
 const SaveButton = ({ openModal }: { openModal: () => void }) => {
   const user = useSelector(selectUser);
@@ -40,7 +40,7 @@ const SaveButton = ({ openModal }: { openModal: () => void }) => {
       text={
         <div className="flex space-x-2 items-center">
           <span>{t("save")}</span>
-          <Image src={Save} alt="Save" className="w-4" />
+          <SaveIcon className="w-4 h-4" />
         </div>
       }
       onClick={onClick}

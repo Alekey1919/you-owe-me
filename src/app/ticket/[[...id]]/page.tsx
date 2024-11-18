@@ -19,9 +19,8 @@ import { useSelector } from "react-redux";
 import { selectUser } from "@app/redux/slices/userSlice";
 import SaveButton from "./SaveButton";
 import { getTicket } from "@app/lib/fetchData";
-import Image from "next/image";
-import Spinner from "@public/images/spinner.svg";
 import { useTranslations } from "next-intl";
+import Spinner from "@/app/svgs/Spinner";
 
 const Page = () => {
   const user = useSelector(selectUser);
@@ -100,7 +99,7 @@ const Page = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center absolute top-0 right-0 bottom-0 left-0">
-        <Image src={Spinner} alt="Loading" className="w-20" />
+        <Spinner className="w-20" />
       </div>
     );
   }

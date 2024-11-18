@@ -2,9 +2,8 @@ import { IUserBalances } from "@/app/types/types";
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import UserBalance from "./UserBalance";
-import Arrow from "@public/images/back-arrow.svg";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
+import BackArrowIcon from "@/app/svgs/BackArrowIcon";
 
 const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +19,7 @@ const UserBalanceList = ({ userBalances }: { userBalances: IUserBalances }) => {
         <h1 className="text-2xl 2xl:text-3xl">
           {t("results.expensesPerPerson")}
         </h1>
-        <Image
-          src={Arrow}
-          alt={t(`common.${isOpen ? "close" : "open"}`)}
+        <BackArrowIcon
           className={twMerge(
             "w-8 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"

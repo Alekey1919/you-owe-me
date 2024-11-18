@@ -1,6 +1,5 @@
+import CrossIcon from "@/app/svgs/CrossIcon";
 import React, { useState } from "react";
-import Cross from "@public/images/cross.svg";
-import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
 const NewParticipant = ({
@@ -33,7 +32,7 @@ const NewParticipant = ({
         )}
         onClick={handleClick}
       >
-        <Image src={Cross} alt="Close" className="w-5 rotate-45" />
+        <CrossIcon className="w-5 h-5 rotate-45" />
       </button>
     </div>
   );

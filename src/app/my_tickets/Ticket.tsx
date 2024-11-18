@@ -1,9 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
-import EditImg from "@public/images/edit.svg";
-import ClipboardImg from "@public/images/clipboard.svg";
 import { parseDateToString } from "../utils/parseDateToString";
 import { ITicket } from "../types/types";
+import EditIcon from "../svgs/EditIcon";
+import ClipboardIcon from "../svgs/ClipboardIcon";
 
 const Ticket = ({
   ticket,
@@ -30,14 +29,10 @@ const Ticket = ({
       </div>
       <div className="flex flex-col justify-between">
         <Link href={`/ticket/${ticket.id}`}>
-          <Image src={EditImg} alt="Edit" className="w-5 cursor-pointer" />
+          <EditIcon className="w-5 h-5 cursor-pointer" />
         </Link>
         <Link href={`/results/${ticket.id}`}>
-          <Image
-            src={ClipboardImg}
-            alt="Results"
-            className="w-5 cursor-pointer"
-          />
+          <ClipboardIcon className="w-5 h-5 cursor-pointer" />
         </Link>
       </div>
     </div>

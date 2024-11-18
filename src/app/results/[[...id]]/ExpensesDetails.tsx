@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Arrow from "@public/images/back-arrow.svg";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+
 import { twMerge } from "tailwind-merge";
 import { IExpense } from "@app/types/types";
 import ExpenseDetails from "./ExpenseDetails";
 import useResultContext from "@app/contexts/resultsContext";
 import { useTranslations } from "next-intl";
+import BackArrowIcon from "@/app/svgs/BackArrowIcon";
 
 const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +27,7 @@ const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
         onClick={() => setIsOpen((curr) => !curr)}
       >
         <h1 className="text-2xl 2xl:text-3xl">{t("results.allExpenses")}</h1>
-        <Image
-          src={Arrow}
-          alt={isOpen ? "Close" : "Open"}
+        <BackArrowIcon
           className={twMerge(
             "w-8 rotate-[-90deg] transition-transform",
             isOpen && " rotate-[90deg]"
