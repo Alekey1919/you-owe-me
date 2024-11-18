@@ -2,14 +2,22 @@
 
 import { twMerge } from "tailwind-merge";
 import useAuth from "../../hooks/useAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavbarList from "./NavbarList";
 import "@/css/burger.css";
 import Burger from "./Burger";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLoading, handleSignIn, handleSignOut } = useAuth();
+
+  const pathname = usePathname();
+
+  // Close mobile navbar when clicking on a link
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <>

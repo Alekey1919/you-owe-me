@@ -10,7 +10,7 @@ const SaveButton = ({ openModal }: { openModal: () => void }) => {
   const user = useSelector(selectUser);
 
   const {
-    ticketData: { expenses, participants },
+    ticketData: { expenses, participants, id: ticketId },
   } = useCalculationContext();
 
   const t = useTranslations("ticket");
@@ -35,7 +35,7 @@ const SaveButton = ({ openModal }: { openModal: () => void }) => {
 
   return (
     <Button
-      text={t("save")}
+      text={ticketId ? "Update" : "Save"}
       onClick={onClick}
       disabled={isDisabled}
       styles="text-center"
