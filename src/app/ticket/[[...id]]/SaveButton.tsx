@@ -1,6 +1,5 @@
 import Button from "@app/components/Button";
 import React, { useCallback, useMemo } from "react";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { selectUser } from "@app/redux/slices/userSlice";
 import useCalculationContext from "@app/contexts/calculationContext";

@@ -1,6 +1,5 @@
 import React, { ReactNode, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { useTranslations } from "next-intl";
 import BackArrowIcon from "../svgs/BackArrowIcon";
 
 const ExpandableSection = ({
@@ -13,8 +12,6 @@ const ExpandableSection = ({
   isOpenByDefault?: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(isOpenByDefault);
-
-  const t = useTranslations();
 
   return (
     <div className="flex flex-col">

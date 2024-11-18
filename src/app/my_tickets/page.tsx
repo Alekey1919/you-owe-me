@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ITicket } from "../types/types";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
 import { getUserTickets } from "../lib/fetchData";
