@@ -1,38 +1,21 @@
 import { useRef, useState } from "react";
 import { setUserLocale } from "@app/services/locale";
 import { Locale } from "@/i18n/config";
-import Image from "next/image";
-import BritishFlag from "@public/images/british-flag.svg";
-import SpanishFlag from "@public/images/spanish-flag.svg";
 import { twMerge } from "tailwind-merge";
 import LanguageIcon from "@/app/svgs/LanguageIcon";
-
-const Flag = ({
-  image,
-  isAnimating,
-  onClick,
-}: {
-  image: string;
-  isAnimating: boolean;
-  onClick: () => void;
-}) => {
-  return (
-    <div
-      className={twMerge(
-        "w-5 lg:w-8 shrink-0 cursor-pointer",
-        isAnimating && "click-shadow-animation"
-      )}
-    >
-      <Image src={image} alt="English" className="w-full" onClick={onClick} />
-    </div>
-  );
-};
+import EnglishIcon from "@/app/svgs/EnglishIcon";
+import SpanishIcon from "@/app/svgs/SpanishIcon";
+import useMediaQueryState from "@/app/hooks/useMediaQueryState";
 
 const LanguageSwitcher = () => {
   const [showFlags, setShowFlags] = useState(false);
   const [animatingFlag, setAnimatingFlag] = useState<"es" | "en" | null>(null);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const isTouch = useMediaQueryState({
+    query: "(hover: none), (pointer: coarse)",
+  });
 
   const changeLanguage = (value: "en" | "es") => {
     if (timeoutRef.current) {
@@ -63,16 +46,29 @@ const LanguageSwitcher = () => {
             "translate-x-10 lg:translate-x-0 lg:translate-y-10 !opacity-100 pointer-events-auto"
         )}
       >
-        <Flag
-          image={BritishFlag}
-          isAnimating={animatingFlag === "en"}
-          onClick={() => changeLanguage("en")}
-        />
-        <Flag
-          image={SpanishFlag}
-          isAnimating={animatingFlag === "es"}
-          onClick={() => changeLanguage("es")}
-        />
+        <div
+          className={twMerge(
+            "w-5 lg:w-8 shrink-0 cursor-pointer",
+            animatingFlag === "en" && !isTouch && "click-shadow-animation"
+          )}
+        >
+          <EnglishIcon
+            className="w-full"
+            onClick={() => changeLanguage("en")}
+          />
+        </div>
+
+        <div
+          className={twMerge(
+            "w-5 lg:w-8 shrink-0 cursor-pointer",
+            animatingFlag === "es" && !isTouch && "click-shadow-animation"
+          )}
+        >
+          <SpanishIcon
+            className="w-full"
+            onClick={() => changeLanguage("es")}
+          />
+        </div>
       </div>
     </div>
   );

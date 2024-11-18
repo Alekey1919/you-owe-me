@@ -157,7 +157,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--primary);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 0%,
+    var(--accent),
+    rgba(0, 0, 0, 0) 100%
+  );
   padding: 25%;
   width: 100%;
   height: auto;

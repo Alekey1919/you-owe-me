@@ -13,7 +13,7 @@ const SaveIcon = ({ className }: ISVGProps) => {
         stroke="none"
         stroke-width="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g
           id="Icon-Set"

@@ -11,9 +11,9 @@ const CrossIcon = ({ className, onClick }: ISVGProps) => {
       <path
         d="M4 4L20 20M4 20L20 4"
         stroke="var(--background)"
-        stroke-width="1.7"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
