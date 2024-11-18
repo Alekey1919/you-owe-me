@@ -128,7 +128,7 @@ export const ConsumersStep = ({
           <div className="flex space-x-4 w-full justify-around">
             <button
               className={twMerge(
-                "box w-full transition-colors",
+                "box w-full transition-colors !bg-muted-accent",
                 allConsumersSelected ? "!bg-accent text-accent" : ""
               )}
               onClick={selectAllConsumers}
@@ -162,7 +162,7 @@ export const ConsumersStep = ({
               return (
                 <div
                   className={twMerge(
-                    "box transition-colors cursor-pointer",
+                    "box transition-colors cursor-pointer !bg-muted-accent",
                     consumerStates[participant] && "!bg-accent text-accent"
                   )}
                   onClick={() => selectConsumer(participant)}
