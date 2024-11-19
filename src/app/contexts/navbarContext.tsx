@@ -6,6 +6,7 @@ interface INavbarContext {
   handleSignIn: () => void;
   handleSignOut: () => void;
   svgColor: string;
+  lgScreen: boolean;
 }
 
 const NavbarContext = createContext({});

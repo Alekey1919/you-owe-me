@@ -31,6 +31,22 @@ const useColorTheme = () => {
     );
   }, [dispatch, theme]);
 
+  // Adding transition to all elements so that the color change is smooth
+  // Clearing it afterwards
+  const handleTransition = () => {
+    const style = document.createElement("style");
+
+    style.textContent = `* {
+        transition: all 300ms ease-out !important;
+      }`;
+
+    document.head.appendChild(style);
+
+    setTimeout(() => {
+      document.head.removeChild(style);
+    }, 2000); // Using 2s because texts take more time to change (honestly I have no idea why but it looks cool xd)
+  };
+
   const changeColorVariables = useCallback((newTheme: ColorThemesEnum) => {
     const root = document.querySelector(":root") as HTMLElement;
 
@@ -53,6 +69,7 @@ const useColorTheme = () => {
         ? ColorPalette.mutedDark
         : ColorPalette.mutedLight;
 
+    handleTransition();
     root?.style.setProperty("--accent", accent);
     root?.style.setProperty("--muted-accent", mutedAccent);
     root?.style.setProperty("--background", background);

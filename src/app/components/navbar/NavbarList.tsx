@@ -10,17 +10,13 @@ import LightBulbIcon from "@/app/svgs/LightBulbIcon";
 import useColorTheme from "@/app/hooks/useColorTheme";
 import { selectTheme } from "@/app/redux/slices/themeSlice";
 import { ColorThemesEnum } from "@/app/utils/autoDetectColorPreference";
-import useMediaQueryState, {
-  DefaultBreakpoints,
-} from "@/app/hooks/useMediaQueryState";
 import useNavbarContext from "@/app/contexts/navbarContext";
 
 const NavbarList = () => {
-  const { isMobileOpen, handleSignIn, handleSignOut } = useNavbarContext();
+  const { isMobileOpen, handleSignIn, handleSignOut, lgScreen } =
+    useNavbarContext();
   const user = useSelector(selectUser);
   const theme = useSelector(selectTheme);
-
-  const lgScreen = useMediaQueryState({ breakpoint: DefaultBreakpoints.lg });
 
   const t = useTranslations();
 
