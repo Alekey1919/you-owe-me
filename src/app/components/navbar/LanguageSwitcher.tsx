@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { setUserLocale } from "@app/services/locale";
 import { Locale } from "@/i18n/config";
 import { twMerge } from "tailwind-merge";
@@ -6,6 +6,7 @@ import LanguageIcon from "@/app/svgs/LanguageIcon";
 import EnglishIcon from "@/app/svgs/EnglishIcon";
 import SpanishIcon from "@/app/svgs/SpanishIcon";
 import useMediaQueryState from "@/app/hooks/useMediaQueryState";
+import useNavbarContext from "@/app/contexts/navbarContext";
 
 const LanguageSwitcher = () => {
   const [showLanguages, setShowLanguages] = useState(false);
@@ -14,6 +15,8 @@ const LanguageSwitcher = () => {
   >(null);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const { isMobileOpen } = useNavbarContext();
 
   const isTouch = useMediaQueryState({
     query: "(hover: none), (pointer: coarse)",
@@ -33,6 +36,12 @@ const LanguageSwitcher = () => {
       setAnimatingLanguage(null);
     }, 750);
   };
+
+  useEffect(() => {
+    if (isMobileOpen) {
+      setShowLanguages(false);
+    }
+  }, [isMobileOpen]);
 
   return (
     <div className="relative w-fit">

@@ -6,7 +6,7 @@ import { RootState } from "../store";
 const initialState = null as IUser | null;
 
 const userSlice = createSlice({
-  name: "counter",
+  name: "user",
   initialState,
   reducers: {
     addUser(state, action: PayloadAction<IUser | null>) {

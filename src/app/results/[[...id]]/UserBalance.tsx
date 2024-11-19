@@ -23,13 +23,10 @@ const DetailsSection = ({
 
   return (
     <div className="card-section">
-      <span className="underline">
+      <span className="underline font-medium">
         {text}{" "}
         <span
-          className={twMerge(
-            "underline",
-            isInFavor ? "text-green-400" : "text-red-400"
-          )}
+          className={twMerge(isInFavor ? "text-green-400" : "text-red-400")}
         >
           ${Math.round(totalAmount)}
         </span>
