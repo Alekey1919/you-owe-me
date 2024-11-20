@@ -140,13 +140,13 @@ export const ConsumersStep = ({
               onClick={() => setShowAllParticipants((curr) => !curr)}
             >
               <span>{t("ticket.seeAll")}</span>
-              <div className="w-8 h-4 bg-background rounded-full relative">
+              <div className="w-8 h-4 rounded-full relative bg-muted-background">
                 <div
                   className={twMerge(
-                    "absolute w-1/2 h-full rounded-[inherit] left-0 top-0 transition-transform",
+                    "absolute w-1/2 h-full rounded-[inherit] left-0 top-0 transition-transform duration-300 ease-in-out",
                     showAllParticipants
                       ? "bg-accent translate-x-full"
-                      : " bg-gray-500"
+                      : " bg-muted-accent"
                   )}
                 />
               </div>

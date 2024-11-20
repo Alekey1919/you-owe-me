@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
 import TextWithSpinner from "@app/components/TextWithSpinner";
+import { selectTheme } from "@/app/redux/slices/themeSlice";
 
 const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   const [name, setName] = useState("");
@@ -20,6 +21,7 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
   const { ticketData } = useCalculationContext();
 
   const user = useSelector(selectUser);
+  const theme = useSelector(selectTheme);
 
   // If the ticket was already saved we auto-complete with the values
   useEffect(() => {
@@ -99,6 +101,9 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
             onChange={(e) => setDate(e.target.value)}
             placeholder="23/11/1998"
             className="bg-transparent"
+            style={{
+              colorScheme: theme,
+            }}
           />
         </div>
         <div className="flex w-full justify-between">
