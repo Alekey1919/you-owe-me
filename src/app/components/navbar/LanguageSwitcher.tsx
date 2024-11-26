@@ -7,6 +7,7 @@ import EnglishIcon from "@/app/svgs/EnglishIcon";
 import SpanishIcon from "@/app/svgs/SpanishIcon";
 import useMediaQueryState from "@/app/hooks/useMediaQueryState";
 import useNavbarContext from "@/app/contexts/navbarContext";
+import useDefaultLanguage from "@/app/hooks/useDefaultLanguage";
 
 const LanguageSwitcher = () => {
   const [showLanguages, setShowLanguages] = useState(false);
@@ -22,11 +23,14 @@ const LanguageSwitcher = () => {
     query: "(hover: none), (pointer: coarse)",
   });
 
+  useDefaultLanguage();
+
   const changeLanguage = (value: "en" | "es") => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
+
     const locale = value as Locale;
     setUserLocale(locale);
 

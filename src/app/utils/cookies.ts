@@ -1,4 +1,6 @@
 export const getCookie = (name: string) => {
+  if (typeof window === "undefined") return;
+
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
 
@@ -8,6 +10,8 @@ export const getCookie = (name: string) => {
 };
 
 export const setCookie = (name: string, value: string, days?: number) => {
+  if (typeof window === "undefined") return;
+
   let expires = "";
   if (days) {
     const date = new Date();
