@@ -6,6 +6,8 @@ export enum ColorThemesEnum {
 }
 
 export const autoDetectColorPreference = () => {
+  if (typeof window === "undefined") return ColorThemesEnum.Dark;
+
   const savedTheme = getCookie("theme");
 
   if (savedTheme) return savedTheme as ColorThemesEnum;

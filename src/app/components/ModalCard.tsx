@@ -35,7 +35,7 @@ const ModalCard = ({
       onClick={handleCloseAnywhere}
       style={{ backdropFilter: "blur(10px)" }}
     >
-      <div className="flex flex-col space-y-5 items-between justify-center w-10/12 max-w-[350px] lg:max-w-[unset] lg:w-[400px] bg-background rounded-xl p-4 relative">
+      <div className="flex flex-col space-y-5 items-between justify-center w-10/12 max-w-[350px] lg:max-w-[unset] lg:w-[400px] bg-background rounded-xl p-4 relative max-h-[95%]">
         {children}
       </div>
     </div>,

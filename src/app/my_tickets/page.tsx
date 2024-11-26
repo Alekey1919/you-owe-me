@@ -10,6 +10,7 @@ import TicketInfoModal from "./TicketInfoModal";
 import Ticket from "./Ticket";
 import { useTranslations } from "next-intl";
 import Spinner from "../svgs/Spinner";
+import Button from "../components/Button";
 
 const PAGE_SIZE = 10;
 
@@ -76,12 +77,10 @@ const Page = () => {
           })}
         </div>
         {hasMore && (
-          <button
-            className="button"
+          <Button
+            text={t("getMore")}
             onClick={() => user?.id && fetchData(user.id)}
-          >
-            {t("getMore")}
-          </button>
+          />
         )}
         {isLoading && <Spinner className="w-10" />}
       </div>

@@ -5,7 +5,8 @@
     "ticketRemoved": "Ticket eliminado",
     "errorDeleting": "Error al eliminar el ticket",
     "edit": "Editar",
-    "results": "Resultados"
+    "results": "Resultados",
+    "delete": "Eliminar"
   },
   "ticket": {
     "ticketNotFound": "El ticket no fue encontrado, lo sentimos (404)",

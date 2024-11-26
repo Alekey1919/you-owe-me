@@ -5,7 +5,9 @@
     "ticketRemoved": "Ticket removed",
     "errorDeleting": "Error deleting ticket",
     "edit": "Edit",
-    "results": "Results"
+    "results": "Results",
+    "delete": "Delete",
+    "cancel": "Cancel"
   },
   "ticket": {
     "ticketNotFound": "The ticket was not found, sorry (404)",

@@ -76,6 +76,10 @@
   @apply flex flex-col space-y-2 border-background border-solid border-[2px] p-2 rounded-xl text-base 2xl:text-lg mt-3;
 }
 
+.absolute-full {
+  @apply absolute top-0 right-0 left-0 bottom-0;
+}
+
 /* Hide srollbar */
 ::-webkit-scrollbar {
   display: none;
