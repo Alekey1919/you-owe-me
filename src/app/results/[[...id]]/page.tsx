@@ -10,11 +10,18 @@ import { ResultContextProvider } from "@app/contexts/resultsContext";
 import { smoothScrollTo } from "@app/utils/smoothScrollTo";
 import ErrorMessage from "./ErrorMessage";
 import { useTranslations } from "next-intl";
+import Spinner from "@/app/svgs/Spinner";
 
 const Results = ({ isTesting }: { isTesting?: boolean }) => {
   const [highlightedExpense, setHighlightedExpense] = useState("");
-  const { userBalances, transactions, expenses, participants, error } =
-    useSplitTicket(isTesting);
+  const {
+    userBalances,
+    transactions,
+    expenses,
+    participants,
+    error,
+    isLoading,
+  } = useSplitTicket(isTesting);
 
   const t = useTranslations("results");
 
@@ -48,6 +55,14 @@ const Results = ({ isTesting }: { isTesting?: boolean }) => {
 
   if (error !== null) {
     return <ErrorMessage error={error} />;
+  }
+
+  if (isLoading) {
+    return (
+      <div className="absolute-full flex items-center justify-center">
+        <Spinner className="w-10 h-10" />
+      </div>
+    );
   }
 
   return (

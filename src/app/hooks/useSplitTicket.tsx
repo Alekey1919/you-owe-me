@@ -20,6 +20,7 @@ const useSplitTicket = (isTesting?: boolean) => {
   const [expenses, setExpenses] = useState<IExpense[]>([]);
   const [participants, setParticipants] = useState<string[]>([]);
   const [error, setError] = useState<ResultErrorsEnum | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
 
   const calculateSplit = (ticket: ITicket) => {
@@ -130,6 +131,8 @@ const useSplitTicket = (isTesting?: boolean) => {
       if (!ticket) {
         setError(ResultErrorsEnum.TicketNotFound);
       } else {
+        setIsLoading(false);
+
         calculateResults(ticket);
 
         // Set page title to the ticket name
@@ -144,6 +147,8 @@ const useSplitTicket = (isTesting?: boolean) => {
     const currentTicket = localStorage.getItem("currentTicket");
 
     if (isTesting) {
+      setIsLoading(false);
+
       calculateResults(ANTO_BIRTHDAY);
     } else if (currentTicket) {
       // If a current ticket is present we use that one
@@ -151,6 +156,7 @@ const useSplitTicket = (isTesting?: boolean) => {
       // This ticket is saved in the localStorage and it allows you to do a calculation on the fly without signing in.
       const ticket: ITicket = JSON.parse(currentTicket);
 
+      setIsLoading(false);
       calculateResults(ticket);
     } else if (ticketId) {
       fetchAndCalculate(ticketId);
@@ -162,7 +168,14 @@ const useSplitTicket = (isTesting?: boolean) => {
     return () => localStorage.removeItem("currentTicket");
   }, []);
 
-  return { userBalances, transactions, expenses, participants, error };
+  return {
+    userBalances,
+    transactions,
+    expenses,
+    participants,
+    error,
+    isLoading,
+  };
 };
 
 export default useSplitTicket;
