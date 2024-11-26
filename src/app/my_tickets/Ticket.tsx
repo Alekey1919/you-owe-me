@@ -13,7 +13,7 @@ const Ticket = ({
 }) => {
   const onClick = (event: any) => {
     // Don't open modal if user clicked on one of the images (edit / results)
-    if (!event.target.alt) {
+    if (!(event.target instanceof SVGElement)) {
       handleSelect();
     }
   };
