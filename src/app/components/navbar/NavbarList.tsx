@@ -58,7 +58,10 @@ const NavbarList = () => {
           <LanguageSwitcher />
         </li>
         <li>
-          <LightBulbIcon className="w-6 h-6" onClick={switchColorTheme} />
+          <LightBulbIcon
+            className="w-6 h-6 cursor-pointer"
+            onClick={switchColorTheme}
+          />
         </li>
       </ul>
     </div>
