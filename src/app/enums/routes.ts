@@ -4,3 +4,5 @@ export enum RoutesEnum {
   MyTickets = "/my_tickets",
   Login = "/login",
 }
+
+export const protectedRoutes = [RoutesEnum.MyTickets];

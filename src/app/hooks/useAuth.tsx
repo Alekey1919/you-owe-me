@@ -8,12 +8,13 @@ import {
   User,
 } from "firebase/auth";
 import { auth, db } from "../services/firebase/firebase";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../redux/slices/userSlice";
 import { doc, setDoc } from "firebase/firestore";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { protectedRoutes, RoutesEnum } from "../enums/routes";
 
 const useAuth = () => {
   const [emailError, setEmailError] = useState("");
@@ -22,6 +23,7 @@ const useAuth = () => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
 
   const searchParams = useSearchParams();
   const t = useTranslations("login");
@@ -79,14 +81,18 @@ const useAuth = () => {
     }
   };
 
-  const handleSignOut = async () => {
+  const handleSignOut = useCallback(async () => {
     try {
       await signOut(auth);
       dispatch(removeUser());
+
+      if (protectedRoutes.includes(pathname as RoutesEnum)) {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Error signing out:", error);
     }
-  };
+  }, [dispatch, pathname, router]);
 
   const saveUserToFirestore = async (user: User) => {
     const userRef = doc(db, "users", user.uid); // Reference to the user's document
@@ -129,7 +135,7 @@ const useAuth = () => {
     });
 
     return () => stateListener();
-  }, [dispatch, router, searchParams]);
+  }, [dispatch, pathname, router, searchParams]);
 
   return {
     handleEmailLogin,

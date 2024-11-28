@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { setCookie } from "@/app/utils/cookies";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -25,8 +26,8 @@ auth.onAuthStateChanged(async (user) => {
 
   if (user) {
     const token = await user.getIdToken();
+    setCookie("auth_token", token);
     // Set the token in a cookie
-    document.cookie = `auth_token=${token}; Path=/; Secure; HttpOnly;`;
   } else {
     // Clear the cookie if not logged in
     document.cookie = "auth_token=; Path=/; Max-Age=0;";
