@@ -18,11 +18,16 @@
     "needParticipants": "Necesitas algunos participantes",
     "needExpenses": "Necesitas algunos gastos",
     "save": "Guardar",
+    "update": "Actualizar",
     "addExpense": "Agregar gasto",
     "seeAll": "Ver todos",
     "back": "Atrás",
     "next": "Siguiente",
-    "calculate": "Calcular"
+    "calculate": "Calcular",
+    "unsavedChangesWillBeLost": "Los cambios no guardados se perderán. ¿Seguro que deseas salir?",
+    "ticketSavedCorrectly": "Ticket guardado correctamente",
+    "ticketUpdatedCorrectly": "Ticket actualizado correctamente",
+    "errorSavingTicket": "No se pudo guardar el ticket"
   },
   "results": {
     "ticketNotFound": "Ticket no encontrado",

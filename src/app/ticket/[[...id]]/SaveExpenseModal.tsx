@@ -11,14 +11,22 @@ import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
 import TextWithSpinner from "@app/components/TextWithSpinner";
 import { selectTheme } from "@/app/redux/slices/themeSlice";
+import { useTranslations } from "next-intl";
 
-const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
+const SaveExpenseModal = ({
+  handleClose,
+  updateSavedData,
+}: {
+  handleClose: () => void;
+  updateSavedData: (data: ITicket) => void;
+}) => {
   const [name, setName] = useState("");
   const [date, setDate] = useState(parseDateToString(Date.now()));
   const [notes, setNotes] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   const { ticketData } = useCalculationContext();
+  const t = useTranslations("ticket");
 
   const user = useSelector(selectUser);
   const theme = useSelector(selectTheme);
@@ -52,22 +60,28 @@ const SaveExpenseModal = ({ handleClose }: { handleClose: () => void }) => {
 
     setIsSaving(true);
 
-    await setDoc(doc(db, "tickets", ticket.id), ticket);
+    try {
+      await setDoc(doc(db, "tickets", ticket.id), ticket);
 
-    toast.success(
-      isNew ? "Ticket saved correctly" : "Ticket updated correctly"
-    );
+      toast.success(t(isNew ? "ticketSavedCorrectly" : "ticketSavedCorrectly"));
 
-    handleClose();
+      updateSavedData(ticket);
+      handleClose();
+    } catch (error) {
+      console.log("Error saving ticket", error);
+      toast.error(t("errorSavingTicket"));
+    }
   }, [
     date,
     handleClose,
     name,
     notes,
+    t,
     ticketData.expenses,
     ticketData.id,
     ticketData.participants,
     user,
+    updateSavedData,
   ]);
 
   const isButtonDisabled = useMemo(() => {

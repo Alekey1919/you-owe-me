@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CalculationContextProvider } from "@app/contexts/calculationContext";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
@@ -21,6 +21,7 @@ import SaveButton from "./SaveButton";
 import { getTicket } from "@app/lib/fetchData";
 import { useTranslations } from "next-intl";
 import Spinner from "@/app/svgs/Spinner";
+import { RoutesEnum } from "@/app/enums/routes";
 
 const Page = () => {
   const user = useSelector(selectUser);
@@ -44,6 +45,7 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
+  const savedTicketData = useRef({});
 
   // In mobile we show only one section at the time
   const [isParticipantsSelected, setIsParticipantsSelected] = useState(true);
@@ -61,10 +63,22 @@ const Page = () => {
   const redirectToResults = useCallback(() => {
     if (calculateDisabled) return;
 
-    localStorage.setItem("currentTicket", JSON.stringify(ticketData));
+    // If there have been changes made but not saved tell the user those changes will be lost
+    if (
+      savedTicketData.current &&
+      JSON.stringify(savedTicketData.current) !== JSON.stringify(ticketData)
+    ) {
+      if (!confirm(t("unsavedChangesWillBeLost"))) return;
+    }
 
-    router.push("/results");
-  }, [calculateDisabled, router, ticketData]);
+    if (ticketData.id) {
+      router.push(`${RoutesEnum.Results}/${ticketData.id}`);
+    } else {
+      localStorage.setItem("currentTicket", JSON.stringify(ticketData));
+
+      router.push(RoutesEnum.Ticket);
+    }
+  }, [calculateDisabled, router, t, ticketData]);
 
   const fetchTicket = useCallback(async (ticketId: string) => {
     setIsLoading(true);
@@ -73,6 +87,7 @@ const Page = () => {
 
     if (ticket) {
       setTicketData(ticket);
+      savedTicketData.current = ticket;
     } else {
       return setTicketNotFound(true);
     }
@@ -151,7 +166,13 @@ const Page = () => {
       </div>
 
       {showSaveModal && (
-        <SaveExpenseModal handleClose={() => setShowSaveModal(false)} />
+        <SaveExpenseModal
+          handleClose={() => setShowSaveModal(false)}
+          updateSavedData={(data) => {
+            setTicketData(data);
+            savedTicketData.current = data;
+          }}
+        />
       )}
       <div id="portal" />
     </CalculationContextProvider>
