@@ -36,7 +36,11 @@
     "pays": "Pays",
     "to": "to"
   },
-  "navbar": { "newTicket": "New ticket", "login": "Login", "logout": "Logout" },
+  "navbar": {
+    "newTicket": "New ticket",
+    "login": "Login",
+    "logout": "Logout"
+  },
   "common": {
     "notes": "Notes:",
     "participants": "Participants",
