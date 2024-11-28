@@ -18,7 +18,7 @@ import useMediaQueryState, {
 const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isMobileClosing, setIsMobileClosing] = useState(false);
-  const { isLoading, handleSignIn, handleSignOut } = useAuth();
+  const { isLoading, handleSignOut } = useAuth();
 
   const theme = useSelector(selectTheme);
   const lgScreen = useMediaQueryState({ breakpoint: DefaultBreakpoints.lg });
@@ -61,7 +61,6 @@ const Navbar = () => {
       state={{
         isMobileOpen,
         setIsMobileOpen,
-        handleSignIn,
         handleSignOut,
         svgColor,
         lgScreen,

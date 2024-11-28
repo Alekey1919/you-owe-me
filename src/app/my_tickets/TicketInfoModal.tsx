@@ -9,8 +9,9 @@ import ExpandableSection from "../components/ExpandableSection";
 import TextWithSpinner from "../components/TextWithSpinner";
 import { useTranslations } from "next-intl";
 import BinIcon from "../svgs/BinIcon";
-import TwoStatesButton from "../components/TwoStatesButton";
 import { useRouter } from "next/navigation";
+import Button from "../components/Button";
+import TwoStatesText from "../components/TwoStatesText";
 
 const TicketInfoModal = ({
   ticket,
@@ -100,16 +101,20 @@ const TicketInfoModal = ({
       </div>
 
       <div className="flex space-x-3">
-        <TwoStatesButton
-          text1={t("myTickets.edit")}
-          text2={
-            <TextWithSpinner
-              text={t("myTickets.delete")}
-              isLoading={isDeleting}
-              spinnerColor="var(--background)"
+        <Button
+          text={
+            <TwoStatesText
+              text1={t("myTickets.edit")}
+              text2={
+                <TextWithSpinner
+                  text={t("myTickets.delete")}
+                  isLoading={isDeleting}
+                  spinnerColor="var(--background)"
+                />
+              }
+              showSecondText={showDeleteConfirmation}
             />
           }
-          showSecondText={showDeleteConfirmation}
           onClick={
             showDeleteConfirmation
               ? deleteTicket
@@ -117,10 +122,14 @@ const TicketInfoModal = ({
           }
           styles="w-full"
         />
-        <TwoStatesButton
-          text1={t("myTickets.results")}
-          text2={t("myTickets.cancel")}
-          showSecondText={showDeleteConfirmation}
+        <Button
+          text={
+            <TwoStatesText
+              text1={t("myTickets.results")}
+              text2={t("myTickets.cancel")}
+              showSecondText={showDeleteConfirmation}
+            />
+          }
           onClick={
             showDeleteConfirmation
               ? () => setShowDeleteConfirmation(false)

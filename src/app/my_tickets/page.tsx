@@ -83,6 +83,9 @@ const Page = () => {
           />
         )}
         {isLoading && <Spinner className="w-10" />}
+        {!isLoading && !tickets.length && (
+          <span>{t("youDontHaveAnyTickets")}</span>
+        )}
       </div>
 
       {selectedTicket !== null && (

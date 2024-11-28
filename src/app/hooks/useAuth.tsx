@@ -1,22 +1,74 @@
 import {
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   User,
 } from "firebase/auth";
-import { auth, db } from "@app/services/firebase/firebase";
+import { auth, db } from "../services/firebase/firebase";
 import { useEffect, useState } from "react";
-import { doc, setDoc } from "firebase/firestore";
-import { addUser, removeUser } from "../redux/slices/userSlice";
+import { useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
+import { addUser, removeUser } from "../redux/slices/userSlice";
+import { doc, setDoc } from "firebase/firestore";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const useAuth = () => {
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  const handleSignIn = async () => {
+  const searchParams = useSearchParams();
+  const t = useTranslations("login");
+
+  const handleError = (error: string) => {
+    let emailError = "";
+    let passwordError = "";
+
+    if (error.includes("auth/invalid-email")) {
+      emailError = t("useValidEmail");
+    }
+
+    if (error.includes("auth/email-already-in-use")) {
+      emailError = t("emailInUse");
+    }
+
+    if (error.includes("auth/invalid-credential")) {
+      passwordError = t("passwordOrEmailIncorrect");
+    }
+
+    setEmailError(emailError);
+    setPasswordError(passwordError);
+  };
+
+  const handleEmailLogin = async (email: string, password: string) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error: any) {
+      handleError(error.message);
+    }
+  };
+
+  const handleEmailRegistration = async (email: string, password: string) => {
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      saveUserToFirestore(response.user);
+    } catch (error: any) {
+      handleError(error.message);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
@@ -63,18 +115,31 @@ const useAuth = () => {
         dispatch(
           addUser({
             id: user.uid,
-            name: user.displayName || "",
-            photoURL: user.photoURL || "",
             email: user.email || "",
           })
         );
+
+        // Redirecting back to the route where user clicked on "Login"
+        const cameFrom = searchParams.get("from");
+
+        if (cameFrom) {
+          router.push(cameFrom);
+        }
       }
     });
 
     return () => stateListener();
-  }, [dispatch]);
+  }, [dispatch, router, searchParams]);
 
-  return { isLoading, handleSignOut, handleSignIn };
+  return {
+    handleEmailLogin,
+    handleEmailRegistration,
+    emailError,
+    passwordError,
+    isLoading,
+    handleGoogleLogin,
+    handleSignOut,
+  };
 };
 
 export default useAuth;

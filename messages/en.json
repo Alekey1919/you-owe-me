@@ -7,7 +7,8 @@
     "edit": "Edit",
     "results": "Results",
     "delete": "Delete",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "youDontHaveAnyTickets": "You don't have any tickets"
   },
   "ticket": {
     "ticketNotFound": "The ticket was not found, sorry (404)",
@@ -49,5 +50,15 @@
     "date": "Date",
     "open": "Open",
     "close": "Close"
+  },
+  "login": {
+    "login": "Login",
+    "register": "Register",
+    "youKnowMe": "You know me",
+    "youDontKnowMe": "You don't know me",
+    "useValidEmail": "Use a valid email",
+    "emailInUse": "Email already in use",
+    "passwordOrEmailIncorrect": "Incorrect password or email",
+    "loginWithGoogle": "Login with Google"
   }
 }

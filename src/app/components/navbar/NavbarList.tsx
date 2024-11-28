@@ -11,12 +11,16 @@ import useColorTheme from "@/app/hooks/useColorTheme";
 import { selectTheme } from "@/app/redux/slices/themeSlice";
 import { ColorThemesEnum } from "@/app/utils/autoDetectColorPreference";
 import useNavbarContext from "@/app/contexts/navbarContext";
+import { usePathname, useRouter } from "next/navigation";
 
 const NavbarList = () => {
-  const { isMobileOpen, handleSignIn, handleSignOut, lgScreen } =
-    useNavbarContext();
+  const { isMobileOpen, handleSignOut, lgScreen } = useNavbarContext();
+
   const user = useSelector(selectUser);
   const theme = useSelector(selectTheme);
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   const t = useTranslations();
 
@@ -50,7 +54,11 @@ const NavbarList = () => {
 
         <li
           className="cursor-pointer"
-          onClick={user ? handleSignOut : handleSignIn}
+          onClick={
+            user
+              ? handleSignOut
+              : () => router.push(`${RoutesEnum.Login}?from=${pathname}`)
+          }
         >
           {t(`navbar.${user ? "logout" : "login"}`)}
         </li>

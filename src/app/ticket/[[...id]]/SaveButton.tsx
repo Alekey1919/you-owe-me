@@ -35,7 +35,7 @@ const SaveButton = ({ openModal }: { openModal: () => void }) => {
 
   return (
     <Button
-      text={ticketId ? "Update" : "Save"}
+      text={t(ticketId ? "update" : "save")}
       onClick={onClick}
       disabled={isDisabled}
       styles="text-center"

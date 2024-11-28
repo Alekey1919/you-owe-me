@@ -3,7 +3,6 @@ import { createContext, Dispatch, SetStateAction, useContext } from "react";
 interface INavbarContext {
   isMobileOpen: boolean;
   setIsMobileOpen: Dispatch<SetStateAction<boolean>>;
-  handleSignIn: () => void;
   handleSignOut: () => void;
   svgColor: string;
   lgScreen: boolean;
