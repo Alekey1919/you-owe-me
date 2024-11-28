@@ -2,7 +2,7 @@
 
 import { twMerge } from "tailwind-merge";
 import useAuth from "../../hooks/useAuth";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import NavbarList from "./NavbarList";
 import "@/css/burger.css";
 import Burger from "./Burger";
@@ -18,6 +18,7 @@ import useMediaQueryState, {
 const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isMobileClosing, setIsMobileClosing] = useState(false);
+  const [svgColor, setSvgColor] = useState("");
   const { isLoading, handleSignOut } = useAuth();
 
   const theme = useSelector(selectTheme);
@@ -25,10 +26,12 @@ const Navbar = () => {
 
   // Due to some issues with the mix-blend-difference property not working correctly when the background is white, the svg needs to be the same color as the background for the effect to apply.
   // When the navbar is open we set to the accent since we have a solid background
-  const svgColor = useMemo(() => {
-    return theme === ColorThemesEnum.Light && !isMobileOpen
-      ? "var(--background)"
-      : "var(--accent)";
+  useEffect(() => {
+    if (theme === ColorThemesEnum.Light && !isMobileOpen) {
+      setSvgColor("var(--background)");
+    } else {
+      setSvgColor("var(--accent)");
+    }
   }, [isMobileOpen, theme]);
 
   const [showMixBlend, setShowMixBlend] = useState(true);
