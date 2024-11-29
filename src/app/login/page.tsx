@@ -8,6 +8,9 @@ import Button from "../components/Button";
 import TwoStatesText from "../components/TwoStatesText";
 import useAuth from "../hooks/useAuth";
 import { twMerge } from "tailwind-merge";
+import { auth } from "../services/firebase/firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const ErrorMessage = ({ text }: { text: string }) => {
   return (
@@ -26,6 +29,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [isPasswordRecovery, setIsPasswordRecovery] = useState(false);
 
   const {
     handleEmailLogin,
@@ -44,6 +48,20 @@ const Login = () => {
       handleEmailRegistration(email, password);
     }
   }, [email, handleEmailLogin, handleEmailRegistration, isLogin, password]);
+
+  const resetPassword = useCallback(
+    (email: string) => {
+      try {
+        sendPasswordResetEmail(auth, email);
+
+        toast.success(t("emailSentCorrectly"));
+      } catch (error) {
+        console.log("Error sending recovery email", error);
+        toast.success(t("couldntSendEmail"));
+      }
+    },
+    [t]
+  );
 
   const buttonDisabled = useMemo(() => {
     return !email || !password || password.length < 6;
@@ -65,7 +83,12 @@ const Login = () => {
 
           <ErrorMessage text={emailError} />
 
-          <div className="bg-background p-4 flex space-x-4 rounded-lg items-center">
+          <div
+            className={twMerge(
+              "bg-background p-4 flex space-x-4 rounded-lg items-center transition-opacity duration-300",
+              isPasswordRecovery && "opacity-0 pointer-events-none"
+            )}
+          >
             <LockIcon className="w-5 h-5" />
             <input
               type="password"
@@ -77,28 +100,55 @@ const Login = () => {
 
           <ErrorMessage text={passwordError} />
 
-          <Button
-            text={
-              <TwoStatesText
-                text1={t("login")}
-                text2={t("register")}
-                showSecondText={!isLogin}
-              />
-            }
-            styles="subtitle text-center"
-            disabled={buttonDisabled}
-            invertColors
-            onClick={handleClick}
-          />
+          <div className="relative">
+            <Button
+              text={
+                <TwoStatesText
+                  text1={t("login")}
+                  text2={t("register")}
+                  showSecondText={!isLogin}
+                />
+              }
+              styles={twMerge(
+                "subtitle w-full transition-opacity duration-300",
+                isPasswordRecovery && "opacity-0"
+              )}
+              disabled={buttonDisabled}
+              invertColors
+              onClick={handleClick}
+            />
+
+            <Button
+              text={t("sendEmail")}
+              styles={twMerge(
+                "subtitle relative absolute-full transition-opacity duration-300",
+                !isPasswordRecovery && "opacity-0"
+              )}
+              invertColors
+              onClick={() => resetPassword(email)}
+              disabled={!email}
+            />
+          </div>
 
           <TwoStatesText
             text1={t("youDontKnowMe")}
             text2={t("youKnowMe")}
             showSecondText={!isLogin}
-            styles="text-background cursor-pointer"
+            styles={twMerge(
+              "text-background cursor-pointer transition-opacity duration-300",
+              isPasswordRecovery && "opacity-0 pointer-events-none"
+            )}
             onClick={() => setIsLogin((curr) => !curr)}
           />
         </div>
+
+        <TwoStatesText
+          text1={t("iForgotMyPassword")}
+          text2={t("iKnowMyPassword")}
+          styles="cursor-pointer"
+          showSecondText={isPasswordRecovery}
+          onClick={() => setIsPasswordRecovery((curr) => !curr)}
+        />
 
         <Button
           text={t("loginWithGoogle")}

@@ -68,6 +68,11 @@
     "useValidEmail": "Usa un email valido",
     "emailInUse": "El email ya esta en uso",
     "passwordOrEmailIncorrect": "Contraseña o email incorrecto",
-    "loginWithGoogle": "Ingresar con Google"
+    "loginWithGoogle": "Ingresar con Google",
+    "emailSentCorrectly": "Correo de recuperación de contraseña enviado correctamente",
+    "couldntSendEmail": "No se pudo enviar el correo de recuperación de contraseña",
+    "iKnowMyPassword": "Sé mi contraseña",
+    "iForgotMyPassword": "Olvidé mi contraseña",
+    "sendEmail": "Enviar correo"
   }
 }

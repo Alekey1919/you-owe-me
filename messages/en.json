@@ -68,6 +68,11 @@
     "useValidEmail": "Use a valid email",
     "emailInUse": "Email already in use",
     "passwordOrEmailIncorrect": "Incorrect password or email",
-    "loginWithGoogle": "Login with Google"
+    "loginWithGoogle": "Login with Google",
+    "emailSentCorrectly": "Password recovery email sent correctly",
+    "couldntSendEmail": "Couldn't set password recovery email",
+    "iKnowMyPassword": "I know my password",
+    "iForgotMyPassword": "I forgot my password",
+    "sendEmail": "Send email"
   }
 }

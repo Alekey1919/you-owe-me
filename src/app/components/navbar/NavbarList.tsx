@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import React from "react";
+import React, { useCallback } from "react";
 import { RoutesEnum } from "../../enums/routes";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useSelector } from "react-redux";
@@ -25,6 +25,16 @@ const NavbarList = () => {
   const t = useTranslations();
 
   const { switchColorTheme } = useColorTheme();
+
+  const handleLoginRedirect = useCallback(() => {
+    if (pathname === RoutesEnum.Login) return;
+
+    if (pathname === "/") {
+      router.push(`${RoutesEnum.Login}`);
+    } else {
+      router.push(`${RoutesEnum.Login}?from=${pathname}`);
+    }
+  }, []);
 
   return (
     <div
@@ -54,11 +64,7 @@ const NavbarList = () => {
 
         <li
           className="cursor-pointer"
-          onClick={
-            user
-              ? handleSignOut
-              : () => router.push(`${RoutesEnum.Login}?from=${pathname}`)
-          }
+          onClick={user ? handleSignOut : handleLoginRedirect}
         >
           {t(`navbar.${user ? "logout" : "login"}`)}
         </li>
