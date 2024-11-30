@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import UserIcon from "../svgs/UserIcon";
 import { useTranslations } from "next-intl";
 import LockIcon from "../svgs/LockIcon";
@@ -11,6 +11,9 @@ import { twMerge } from "tailwind-merge";
 import { auth } from "../services/firebase/firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/slices/userSlice";
 
 const ErrorMessage = ({ text }: { text: string }) => {
   return (
@@ -30,6 +33,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [isPasswordRecovery, setIsPasswordRecovery] = useState(false);
+
+  const router = useRouter();
+  const user = useSelector(selectUser);
 
   const {
     handleEmailLogin,
@@ -62,6 +68,12 @@ const Login = () => {
     },
     [t]
   );
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user, router]);
 
   const buttonDisabled = useMemo(() => {
     return !email || !password || password.length < 6;

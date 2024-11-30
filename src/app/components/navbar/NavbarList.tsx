@@ -34,7 +34,7 @@ const NavbarList = () => {
     } else {
       router.push(`${RoutesEnum.Login}?from=${pathname}`);
     }
-  }, []);
+  }, [pathname, router]);
 
   return (
     <div
