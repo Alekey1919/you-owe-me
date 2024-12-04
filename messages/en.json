@@ -8,7 +8,12 @@
     "results": "Results",
     "delete": "Delete",
     "cancel": "Cancel",
-    "youDontHaveAnyTickets": "You don't have any tickets"
+    "youDontHaveAnyTickets": "You don't have any tickets",
+    "ticketName": "Ticket name",
+    "search": "Search",
+    "ticketsNotFound": "No tickets were found",
+    "somethingWentWrong": "Something went wrong",
+    "clear": "Clear"
   },
   "ticket": {
     "ticketNotFound": "The ticket was not found, sorry (404)",

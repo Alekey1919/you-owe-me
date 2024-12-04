@@ -71,8 +71,8 @@ const Navbar = () => {
     >
       <nav
         className={twMerge(
-          "fixed left-0 right-0 top-0 z-[100] px-10 py-3 flex lg:justify-end transition-colors duration-300",
-          isLoading && "hidden",
+          "fixed left-0 right-0 top-0 z-[100] px-10 pt-3 flex lg:justify-end",
+          isLoading && "opacity-0 pointer-events-none",
           isMobileOpen && "bg-background",
           showMixBlend && "mix-blend-difference"
         )}
