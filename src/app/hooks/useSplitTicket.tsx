@@ -17,6 +17,7 @@ export enum ResultErrorsEnum {
 }
 
 const useSplitTicket = (isTesting?: boolean) => {
+  const [ticketData, setTicketData] = useState<ITicket>();
   const [userBalances, setUserBalances] = useState<IUserBalances>({});
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [expenses, setExpenses] = useState<IExpense[]>([]);
@@ -136,7 +137,7 @@ const useSplitTicket = (isTesting?: boolean) => {
         setError(ResultErrorsEnum.TicketNotFound);
       } else {
         setIsLoading(false);
-
+        setTicketData(ticket);
         calculateResults(ticket);
 
         // Set page title to the ticket name
@@ -158,6 +159,7 @@ const useSplitTicket = (isTesting?: boolean) => {
       // A current ticket is a ticket that hasn't been saved. You can create a ticket in the "/ticket" page and then click on "Calculate".
       // This ticket is saved in redux and it allows you to do a calculation on the fly without signing in.
 
+      setTicketData(currentTicket);
       setIsLoading(false);
       calculateResults(currentTicket);
     } else if (ticketId) {
@@ -183,6 +185,7 @@ const useSplitTicket = (isTesting?: boolean) => {
     participants,
     error,
     isLoading,
+    ticketData,
   };
 };
 
