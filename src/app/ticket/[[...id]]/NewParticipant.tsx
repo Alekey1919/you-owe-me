@@ -28,7 +28,7 @@ const NewParticipant = ({
       <button
         className={twMerge(
           "transition-opacity",
-          name ? "cursor-pointer" : "opacity-25"
+          name ? "cursor-pointer" : "opacity-25 cursor-not-allowed"
         )}
         onClick={handleClick}
       >

@@ -25,7 +25,12 @@ const Participant = ({
     >
       <span>{name}</span>
       <button onClick={disabled ? showToast : onRemove} style={styles?.img}>
-        <CrossIcon className={twMerge("w-5 h-5", disabled && "opacity-25")} />
+        <CrossIcon
+          className={twMerge(
+            "w-5 h-5",
+            disabled && "opacity-25 cursor-not-allowed"
+          )}
+        />
       </button>
     </div>
   );

@@ -29,7 +29,6 @@
     "back": "Atrás",
     "next": "Siguiente",
     "calculate": "Calcular",
-    "unsavedChangesWillBeLost": "Los cambios no guardados se perderán. ¿Seguro que deseas salir?",
     "ticketSavedCorrectly": "Ticket guardado correctamente",
     "ticketUpdatedCorrectly": "Ticket actualizado correctamente",
     "errorSavingTicket": "No se pudo guardar el ticket"

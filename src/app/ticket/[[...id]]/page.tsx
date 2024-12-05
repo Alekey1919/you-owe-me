@@ -15,13 +15,17 @@ import Link from "next/link";
 import SaveExpenseModal from "./SaveExpenseModal";
 import { ITicket } from "@app/types/types";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "@app/redux/slices/userSlice";
 import SaveButton from "./SaveButton";
 import { getTicket } from "@app/lib/fetchData";
 import { useTranslations } from "next-intl";
 import Spinner from "@/app/svgs/Spinner";
 import { RoutesEnum } from "@/app/enums/routes";
+import {
+  addCurrentTicket,
+  selectCurrentTicket,
+} from "@/app/redux/slices/currentTicketSlice";
 
 const Page = () => {
   const user = useSelector(selectUser);
@@ -47,6 +51,8 @@ const Page = () => {
   const router = useRouter();
   const savedTicketData = useRef({});
 
+  const currentTicket = useSelector(selectCurrentTicket);
+
   // In mobile we show only one section at the time
   const [isParticipantsSelected, setIsParticipantsSelected] = useState(true);
 
@@ -54,6 +60,7 @@ const Page = () => {
   const isTouch = useMediaQueryState({
     query: "(hover: none), (pointer: coarse)",
   });
+  const dispatch = useDispatch();
   const t = useTranslations("ticket");
 
   const calculateDisabled = useMemo(() => {
@@ -63,22 +70,16 @@ const Page = () => {
   const redirectToResults = useCallback(() => {
     if (calculateDisabled) return;
 
-    // If there have been changes made but not saved tell the user those changes will be lost
-    if (
-      savedTicketData.current &&
-      JSON.stringify(savedTicketData.current) !== JSON.stringify(ticketData)
-    ) {
-      if (!confirm(t("unsavedChangesWillBeLost"))) return;
-    }
-
+    // If the ticket id exists it means it's saved, so we can fetch it in the results page
     if (ticketData.id) {
       router.push(`${RoutesEnum.Results}/${ticketData.id}`);
     } else {
-      localStorage.setItem("currentTicket", JSON.stringify(ticketData));
+      // If the ticket is not saved we store it in redux
+      dispatch(addCurrentTicket(ticketData));
 
-      router.push(RoutesEnum.Ticket);
+      router.push(`${RoutesEnum.Results}/local`);
     }
-  }, [calculateDisabled, router, t, ticketData]);
+  }, [calculateDisabled, router, ticketData, dispatch]);
 
   const fetchTicket = useCallback(async (ticketId: string) => {
     setIsLoading(true);
@@ -97,9 +98,16 @@ const Page = () => {
 
   useEffect(() => {
     if (params?.id?.length) {
-      fetchTicket(params.id[0]);
+      // If id is local we use the ticket in redux
+      if (params.id[0] === "local") {
+        if (currentTicket) {
+          setTicketData(currentTicket);
+        }
+      } else {
+        fetchTicket(params.id[0]);
+      }
     }
-  }, [params.id, fetchTicket]);
+  }, [params.id, fetchTicket, currentTicket]);
 
   useEffect(() => {
     if (user) {

@@ -9,6 +9,8 @@ import {
 } from "../types/types";
 import { useParams } from "next/navigation";
 import { getTicket } from "../lib/fetchData";
+import { useSelector } from "react-redux";
+import { selectCurrentTicket } from "../redux/slices/currentTicketSlice";
 
 export enum ResultErrorsEnum {
   TicketNotFound,
@@ -22,6 +24,8 @@ const useSplitTicket = (isTesting?: boolean) => {
   const [error, setError] = useState<ResultErrorsEnum | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
+
+  const currentTicket = useSelector(selectCurrentTicket);
 
   const calculateSplit = (ticket: ITicket) => {
     const _userBalances: IUserBalances = {}; // Track each participant's balance (positive = owes money, negative = should be reimbursed)
@@ -144,24 +148,28 @@ const useSplitTicket = (isTesting?: boolean) => {
 
   useEffect(() => {
     const ticketId = params?.id && params.id[0];
-    const currentTicket = localStorage.getItem("currentTicket");
 
     if (isTesting) {
       setIsLoading(false);
 
       calculateResults(ANTO_BIRTHDAY);
-    } else if (currentTicket) {
+    } else if (ticketId === "local" && currentTicket) {
       // If a current ticket is present we use that one
       // A current ticket is a ticket that hasn't been saved. You can create a ticket in the "/ticket" page and then click on "Calculate".
-      // This ticket is saved in the localStorage and it allows you to do a calculation on the fly without signing in.
-      const ticket: ITicket = JSON.parse(currentTicket);
+      // This ticket is saved in redux and it allows you to do a calculation on the fly without signing in.
 
       setIsLoading(false);
-      calculateResults(ticket);
+      calculateResults(currentTicket);
     } else if (ticketId) {
       fetchAndCalculate(ticketId);
     }
-  }, [calculateResults, fetchAndCalculate, isTesting, params]);
+  }, [
+    calculateResults,
+    currentTicket,
+    fetchAndCalculate,
+    isTesting,
+    params.id,
+  ]);
 
   // Clearing the current ticket
   useEffect(() => {

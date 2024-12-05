@@ -29,7 +29,6 @@
     "back": "Back",
     "next": "Next",
     "calculate": "Calculate",
-    "unsavedChangesWillBeLost": "Unsaved changes will be lost. Are you sure you want to leave?",
     "ticketSavedCorrectly": "Ticket saved correctly",
     "ticketUpdatedCorrectly": "Ticket updated correctly",
     "errorSavingTicket": "Couldn't save ticket"

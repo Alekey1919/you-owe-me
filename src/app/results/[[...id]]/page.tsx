@@ -11,6 +11,9 @@ import { smoothScrollTo } from "@app/utils/smoothScrollTo";
 import ErrorMessage from "./ErrorMessage";
 import { useTranslations } from "next-intl";
 import Spinner from "@/app/svgs/Spinner";
+import EditIcon from "@/app/svgs/EditIcon";
+import { RoutesEnum } from "@/app/enums/routes";
+import { useRouter } from "next/navigation";
 
 const Results = ({ isTesting }: { isTesting?: boolean }) => {
   const [highlightedExpense, setHighlightedExpense] = useState("");
@@ -23,6 +26,7 @@ const Results = ({ isTesting }: { isTesting?: boolean }) => {
     isLoading,
   } = useSplitTicket(isTesting);
 
+  const router = useRouter();
   const t = useTranslations("results");
 
   const groupedTransactions = useMemo(() => {
@@ -71,6 +75,12 @@ const Results = ({ isTesting }: { isTesting?: boolean }) => {
     >
       <div className="w-full flex flex-col items-center space-y-20 layout">
         <div className="flex flex-col w-full justify-center ">
+          <EditIcon
+            className="absolute top-6 lg:top-9 right-8 lg:right-[unset] lg:left-10 w-6 h-6 z-[300]"
+            color="var(--accent)"
+            onClick={() => router.push(`${RoutesEnum.Ticket}/local`)}
+          />
+
           <ExpensesDetails expenses={expenses} />
           <UserBalanceList userBalances={userBalances} />
 
