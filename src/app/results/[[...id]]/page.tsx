@@ -12,6 +12,7 @@ import ErrorMessage from "./ErrorMessage";
 import { useTranslations } from "next-intl";
 import Spinner from "@/app/svgs/Spinner";
 import EditTicket from "./EditTicket";
+import TicketInfo from "./TicketInfo";
 
 const Results = ({ isTesting }: { isTesting?: boolean }) => {
   const [highlightedExpense, setHighlightedExpense] = useState("");
@@ -74,11 +75,15 @@ const Results = ({ isTesting }: { isTesting?: boolean }) => {
       <div className="w-full flex flex-col items-center space-y-20 layout">
         <div className="flex flex-col w-full justify-center ">
           {ticketData && (
-            <EditTicket
-              ticketId={ticketData?.id}
-              ticketOwner={ticketData?.userId}
-            />
+            <div className="flex space-x-4 absolute top-6 lg:top-9 right-8 lg:right-[unset] lg:left-10 z-[100]">
+              <TicketInfo {...ticketData} />
+              <EditTicket
+                ticketId={ticketData?.id}
+                ticketOwner={ticketData?.userId}
+              />
+            </div>
           )}
+          <span className="title text-center my-4">{ticketData?.name}</span>
 
           <ExpensesDetails expenses={expenses} />
           <UserBalanceList userBalances={userBalances} />

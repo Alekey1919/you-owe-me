@@ -22,11 +22,11 @@ const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
       id={expense.name}
     >
       <span className="pl-3">
-        {expense.name} ~ ${expense.price}{" "}
+        {expense.name} ~ ${expense.price.toLocaleString("de-DE")}{" "}
         {expense.consumers.length > 1 && (
           <span className="block">{`($${Math.round(
             expense.price / expense.consumers.length
-          )} c/u)`}</span>
+          ).toLocaleString("de-DE")} c/u)`}</span>
         )}
       </span>
       <div className="card-section">
@@ -50,7 +50,8 @@ const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
           return (
             <span key={index}>
               {payer}
-              {isPaymentShared && `: $${expense.payedAmounts[payer]}`}
+              {isPaymentShared &&
+                `: $${expense.payedAmounts[payer].toLocaleString("de-DE")}`}
             </span>
           );
         })}

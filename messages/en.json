@@ -41,6 +41,8 @@
     "totalToPay": "Total to pay",
     "totalPayed": "Total payed",
     "balance": "Balance",
+    "hasToPay": "Has to pay",
+    "hasToReceive": "Has to receive",
     "expensesPerPerson": "Expenses per person",
     "pays": "Pays",
     "to": "to"

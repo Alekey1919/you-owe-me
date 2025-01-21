@@ -1,5 +1,5 @@
 export interface ISVGProps {
-  className: string;
+  className?: string;
   color?: string;
   onClick?: () => void;
 }

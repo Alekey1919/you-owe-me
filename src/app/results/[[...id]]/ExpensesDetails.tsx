@@ -23,7 +23,7 @@ const ExpensesDetails = ({ expenses }: { expenses: IExpense[] }) => {
   return (
     <div className="flex flex-col space-y-6 3xl:space-y-10">
       <div
-        className="flex space-x-10 cursor-pointer"
+        className="flex space-x-10 cursor-pointer w-full justify-between lg:justify-start"
         onClick={() => setIsOpen((curr) => !curr)}
       >
         <h1 className="text-2xl 2xl:text-3xl">{t("results.allExpenses")}</h1>

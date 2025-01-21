@@ -28,7 +28,7 @@ const DetailsSection = ({
         <span
           className={twMerge(isInFavor ? "text-green-400" : "text-red-400")}
         >
-          ${Math.round(totalAmount)}
+          ${Math.round(totalAmount).toLocaleString("de-DE")}
         </span>
       </span>
       <div
@@ -49,7 +49,7 @@ const DetailsSection = ({
                   isInFavor ? "text-green-400" : "text-red-400"
                 )}
               >
-                ${Math.round(expense.amount)}
+                ${Math.round(expense.amount).toLocaleString("de-DE")}
               </span>
             </span>
           );
@@ -118,15 +118,8 @@ const UserBalance = ({
           isOpen ? "opacity-100" : "pointer-events-none"
         )}
       >
-        {t("results.balance")}:{" "}
-        <span
-          className={twMerge(owesMoney ? "text-red-400" : "text-green-400")}
-        >
-          {/* If balance is negative e.g -1000 we remove the minus sign and add it manually before the $ sign  */}
-          {owesMoney
-            ? `-$${Math.round(userBalance.balance).toString().substring(1)}`
-            : `$${Math.round(userBalance.balance)}`}
-        </span>
+        {t(owesMoney ? "results.hasToPay" : "results.hasToReceive")}:{" "}
+        {`${Math.abs(Math.round(userBalance.balance)).toLocaleString("de-DE")}`}
       </span>
     </div>
   );

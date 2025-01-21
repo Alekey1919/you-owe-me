@@ -110,6 +110,7 @@ const Page = () => {
           <Button
             text={t("getMore")}
             onClick={() => user?.id && fetchData(user.id)}
+            styles="w-fit mx-auto"
           />
         )}
         {isLoading && (

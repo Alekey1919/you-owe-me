@@ -18,7 +18,8 @@ const UserTransactions = ({
         {transactions.map((transaction, index) => {
           return (
             <span key={index}>
-              ${Math.round(transaction.amount)} {t("to")} {transaction.payee}
+              ${Math.round(transaction.amount).toLocaleString("de-DE")}{" "}
+              {t("to")} {transaction.payee}
             </span>
           );
         })}

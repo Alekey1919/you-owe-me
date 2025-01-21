@@ -28,7 +28,7 @@ const ModalCard = ({
   return createPortal(
     <div
       className={twMerge(
-        "fixed top-0 left-0 right-0 bottom-0 bg-[#000000a9] flex items-center justify-center !m-0 z-[100] transition-all duration-300 w-full h-full",
+        "fixed top-0 left-0 right-0 bottom-0 bg-[#000000a9] flex items-center justify-center !m-0 z-[200] transition-all duration-300 w-full h-full",
         !showModal && "opacity-0 pointer-events-none -z-10"
       )}
       id="modal-container"

@@ -39,7 +39,7 @@ const EditTicket = ({
 
   return (
     <EditIcon
-      className="absolute top-6 lg:top-9 right-8 lg:right-[unset] lg:left-10 w-6 h-6 z-[300] cursor-pointer"
+      className="w-6 h-6 cursor-pointer"
       color="var(--accent)"
       onClick={handleRedirect}
     />
