@@ -119,7 +119,9 @@ const UserBalance = ({
         )}
       >
         {t(owesMoney ? "results.hasToPay" : "results.hasToReceive")}:{" "}
-        {`${Math.abs(Math.round(userBalance.balance)).toLocaleString("de-DE")}`}
+        {`$${Math.abs(Math.round(userBalance.balance)).toLocaleString(
+          "de-DE"
+        )}`}
       </span>
     </div>
   );
