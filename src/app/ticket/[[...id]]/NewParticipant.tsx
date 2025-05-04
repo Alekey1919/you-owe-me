@@ -20,7 +20,7 @@ const NewParticipant = ({
     <div className="box flex justify-between participant">
       <input
         type="text"
-        placeholder="Harry Potter"
+        placeholder="John Doe"
         className="bg-transparent placeholder:text-background placeholder:opacity-50 focus:outline-none"
         value={name}
         onChange={(e) => setName(e.target.value)}

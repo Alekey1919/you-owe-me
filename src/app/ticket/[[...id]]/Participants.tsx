@@ -7,10 +7,10 @@ import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
 
 const Participants = () => {
-  const { setTicketData } = useCalculationContext();
+  const { lgScreen, isParticipantsSelected, setTicketData } =
+    useCalculationContext();
   const [animationState, setAnimationState] = useState(AnimationStatesEnum.End);
 
-  const { lgScreen, isParticipantsSelected } = useCalculationContext();
   const t = useTranslations();
 
   const removeParticipant = (index: number) => {
