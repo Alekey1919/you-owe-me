@@ -1,20 +1,21 @@
 import Link from "next/link";
 import Button from "../Button";
 import SectionTitle from "./SectionTitle";
+import { useTranslations } from "next-intl";
 
 const CTASection = () => {
+  const t = useTranslations();
   return (
     <div className="w-full py-16 flex flex-col items-center">
       <SectionTitle
-        text="Ready to split your expenses?"
+        text={t("homepage.readyToSplitYourExpenses")}
         styles="!mb-8 lg:!mb-10 2xl:!mb-14"
       />
       <p className="text-center max-w-md text-lg mb-8">
-        Stop calculating who owes what on paper or spreadsheets. Try our simple
-        solution!
+        {t("homepage.stopOldCalculations")}
       </p>
       <Link href="/ticket">
-        <Button text="Get started now" styles="px-8 py-3 text-lg" />
+        <Button text={t("homepage.getStartedNow")} styles="px-8 py-3 text-lg" />
       </Link>
     </div>
   );

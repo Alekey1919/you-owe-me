@@ -1,4 +1,28 @@
 {
+  "homepage": {
+    "heroTitle": "Divide los gastos de forma justa y\n sin dolores de cabeza",
+    "heroSubtitle": "Calcula fácilmente quién pagó qué y quién consumió qué y luego calcula exactamente cuánto debe cada persona.",
+    "createANewTicket": "Divide tus gastos",
+    "howItWorks": "Cómo funciona",
+    "addParticipants": "Añade participantes",
+    "enterTheNames": "Introduce los nombres de todos los involucrados en la división de gastos",
+    "recordExpenses": "Registra gastos",
+    "enterDetails": "Agrega lo que se compró, cuánto costó, quién pagó y quién lo consumió",
+    "calculateAndShare": "Calcula y comparte",
+    "getOptimizeResults": "Obtén sugerencias de transferencia optimizadas que minimizan el número de transacciones necesarias",
+    "whatItDoes": "Lo que hace",
+    "smartCalculations": "Cuentas inteligentes",
+    "requireMinimalTransactionsAmount": "El algoritmo optimiza las transferencias para minimizar el número de transacciones entre los participantes",
+    "savingTickets": "Guarda los tickets",
+    "saveYourTickets": "Guarda tus divisiones de gastos para acceder a ellas más tarde o compartirlas con otros",
+    "unevenConsumption": "Consumo desigual",
+    "specifyConsumers": "Especifica exactamente quién consumió cada artículo en lugar de dividir todo por igual",
+    "multiplePayers": "Pagado por varios",
+    "multiplePeoplePaying": "Ten en cuenta cuando el gasto fue pagado por mas de una persona",
+    "readyToSplitYourExpenses": "Listo para dividir tus gastos?",
+    "stopOldCalculations": "Deja de calcular quién le debe a quién en papel o en hojas de cálculo. ¡Prueba esta simple solución!",
+    "getStartedNow": "Empieza ahora"
+  },
   "myTickets": {
     "title": "Mis tickets",
     "getMore": "Obtener más",

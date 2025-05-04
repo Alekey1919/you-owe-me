@@ -1,5 +1,6 @@
 import RightArrow from "@/app/svgs/RightArrow";
 import SectionTitle from "./SectionTitle";
+import { useTranslations } from "next-intl";
 
 const Card = ({
   title,
@@ -25,25 +26,25 @@ const Arrow = () => {
 };
 
 const HowItWorks = () => {
+  const t = useTranslations();
   return (
     <div className="w-full flex flex-col py-16">
-      <SectionTitle text="How it works" />
+      <SectionTitle text={t("homepage.howItWorks")} />
 
       <div className="flex flex-col md:flex-row gap-4 md:gap-8 2xl:gap-12 mx-auto px-4">
         <Card
-          title="Add participants"
-          description="Enter the names of everyone involved in splitting the expenses"
+          title={t("homepage.howItWorks")}
+          description={t("homepage.enterTheNames")}
         />
         <Arrow />
         <Card
-          title="Record expenses"
-          description=" Enter what was purchased, how much it cost, who paid, and who
-          consumed it"
+          title={t("homepage.recordExpenses")}
+          description={t("homepage.enterDetails")}
         />
         <Arrow />
         <Card
-          title="Calculate & share"
-          description="Get optimized transfer suggestions that minimize the number of transactions needed"
+          title={t("homepage.calculateAndShare")}
+          description={t("homepage.getOptimizeResults")}
         />
       </div>
     </div>

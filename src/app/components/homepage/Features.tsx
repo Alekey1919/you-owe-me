@@ -4,6 +4,7 @@ import UsersIcon from "@/app/svgs/UsersIcon";
 import UnevenBalanceIcon from "@/app/svgs/UnevenBalcnaceIcon";
 import SaveIcon from "@/app/svgs/SaveIcon";
 import { ReactElement, isValidElement, cloneElement } from "react";
+import { useTranslations } from "next-intl";
 
 const Feature = ({
   icon,
@@ -33,34 +34,32 @@ const Feature = ({
 };
 
 const Features = () => {
+  const t = useTranslations();
   return (
     <div className="w-full flex-col items-center">
-      <SectionTitle text="What it handles" />
+      <SectionTitle text={t("homepage.whatItDoes")} />
 
       <div className="flex flex-col items-center md:grid md:grid-cols-2 gap-12 max-w-sm md:max-w-5xl mx-auto px-4">
         <Feature
           icon={<CalculatorIcon />}
-          title="Smart calculations"
-          description="Our algorithm optimizes transfers to minimize the number of
-        transactions between participants"
+          title={t("homepage.smartCalculations")}
+          description={t("homepage.requireMinimalTransactionsAmount")}
         />
         <Feature
           icon={<SaveIcon color="var(--accent)" />}
-          title="Saving tickets"
-          description="Save your expense splits to access them later or share with others"
+          title={t("homepage.savingTickets")}
+          description={t("homepage.saveYourTickets")}
         />
         <Feature
           icon={<UnevenBalanceIcon />}
-          title="Uneven consumption"
-          description="Specify exactly who consumed each item rather than splitting
-        everything equally"
+          title={t("homepage.unevenConsumption")}
+          description={t("homepage.specifyConsumers")}
         />
 
         <Feature
           icon={<UsersIcon />}
-          title="Multiple payers"
-          description="Handle situations where multiple people contributed to paying for a
-            single expense"
+          title={t("homepage.multiplePayers")}
+          description={t("homepage.multiplePeoplePaying")}
         />
       </div>
     </div>

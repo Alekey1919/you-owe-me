@@ -4,11 +4,13 @@ import OrangeShape from "@public/images/orange_shape.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
+import { useTranslations } from "next-intl";
 
 const Hero = () => {
+  const t = useTranslations();
+
   return (
     <>
-      {/* First section - hero with shapes */}
       <div className="flex flex-col items-center justify-center min-h-screen w-full overflow-hidden relative">
         <Image
           src={WhiteShape}
@@ -27,19 +29,19 @@ const Hero = () => {
         />
 
         <div className="z-10 flex flex-col items-center space-y-8">
-          <h1 className="font-semibold z-10 text-center text-3xl lg:text-5xl lg:leading-[70px] 3xl:text-7xl 3xl:leading-[90px] 4xl:text-8xl 4xl:leading-[120px]">
-            Split expenses fairly
-            <br />
-            <span className="text-accent">without the headache</span>
+          <h1 className="font-semibold z-10 text-center text-3xl lg:text-5xl lg:leading-[70px] 3xl:text-7xl 3xl:leading-[90px] 4xl:text-8xl 4xl:leading-[120px] whitespace-pre-wrap">
+            {t("homepage.heroTitle")}
           </h1>
 
           <p className="text-base 2xl:text-lg text-center max-w-md">
-            Easily track who paid what and who consumed what, then calculate
-            exactly how much each person owes.
+            {t("homepage.heroSubtitle")}
           </p>
 
           <Link href="/ticket">
-            <Button text="Create a new ticket" styles="px-8 py-3 text-lg" />
+            <Button
+              text={t("homepage.createANewTicket")}
+              styles="px-8 py-3 text-lg"
+            />
           </Link>
         </div>
       </div>
