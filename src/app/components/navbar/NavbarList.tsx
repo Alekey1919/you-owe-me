@@ -39,7 +39,7 @@ const NavbarList = () => {
   return (
     <div
       className={twMerge(
-        "fixed lg:relative w-screen left-0 top-16 lg:top-0 pb-4 lg:pb-0 lg:pt-6 pointer-events-none lg:pointer-events-auto lg:pr-6",
+        "fixed lg:relative w-screen left-0 top-14 lg:top-0 pb-4 lg:pb-0 lg:pt-6 pointer-events-none lg:pointer-events-auto lg:pr-6",
         "bg-background lg:bg-transparent ease-out duration-500 opacity-0 lg:opacity-100 transition-all z-10",
         isMobileOpen && "opacity-100 pointer-events-auto"
       )}
