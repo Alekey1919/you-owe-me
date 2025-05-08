@@ -3,6 +3,8 @@ import useCalculationContext from "@app/contexts/calculationContext";
 import { NewExpenseStepsEnum } from "@/app/ticket/[[...id]]/NewExpenseModal";
 import { IPayedAmounts } from "@app/types/types";
 import { getCarouselStyles, StepContainer } from "../utils/stepUtils";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface PayersStepProps {
   currentStep: NewExpenseStepsEnum;
@@ -10,18 +12,45 @@ interface PayersStepProps {
   handlePayerAmount: (value: { payer: string; amount: number }) => void;
   payedAmounts: IPayedAmounts;
   isOpen: boolean;
+  handleFullPayment: (payer: string) => void;
 }
+
+const Button = ({
+  text,
+  isActive,
+  onClick,
+}: {
+  text: string;
+  isActive: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <button
+      className={twMerge(
+        "border-0 bg-transparent text-accent transition-opacity duration-300",
+        !isActive && "opacity-50"
+      )}
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
+};
 
 const PayersStep = ({
   currentStep,
   fullPrice,
   handlePayerAmount,
+  handleFullPayment,
   payedAmounts,
   isOpen,
 }: PayersStepProps) => {
+  const [isMultiPayer, setIsMultiPayer] = useState(false);
   const {
     ticketData: { participants },
   } = useCalculationContext();
+
+  const t = useTranslations();
 
   const onChange = (e: any, payer: string) => {
     let value = e.target.value === "" ? 0 : parseInt(e.target.value);
@@ -62,22 +91,46 @@ const PayersStep = ({
       classNames={twMerge("transition-height", isOpen && "open")}
     >
       <div className="flex flex-col space-y-2 w-full cursor-pointer">
+        <div className="w-full flex justify-between mb-4">
+          <Button
+            text={t("common.singlePayer")}
+            isActive={!isMultiPayer}
+            onClick={() => setIsMultiPayer(false)}
+          />
+          <Button
+            text={t("common.multiplePayers")}
+            isActive={isMultiPayer}
+            onClick={() => setIsMultiPayer(true)}
+          />
+        </div>
         {participants.map((participant, index) => {
           return (
             <div className="box flex justify-between" key={index}>
               <span>{participant}</span>
-              <div className="flex space-x-4">
-                <span>$</span>
-                <input
-                  type="text"
-                  max={fullPrice}
-                  min={0}
-                  className="w-20 bg-transparent "
-                  placeholder="0"
-                  value={payedAmounts[participant] || 0}
-                  onChange={(e) => onChange(e, participant)}
-                />
-              </div>
+              {!isMultiPayer ? (
+                <button
+                  className={twMerge(
+                    "bg-background text-accent rounded-lg px-4 flex items-center text-sm transition-opacity duration-300",
+                    payedAmounts[participant] !== fullPrice && "opacity-50"
+                  )}
+                  onClick={() => handleFullPayment(participant)}
+                >
+                  Payed
+                </button>
+              ) : (
+                <div className="flex space-x-4">
+                  <span>$</span>
+                  <input
+                    type="text"
+                    max={fullPrice}
+                    min={0}
+                    className="w-20 bg-transparent "
+                    placeholder="0"
+                    value={payedAmounts[participant] || 0}
+                    onChange={(e) => onChange(e, participant)}
+                  />
+                </div>
+              )}
             </div>
           );
         })}

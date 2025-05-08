@@ -145,6 +145,17 @@ const NewExpenseModal = ({
     });
   };
 
+  const handleFullPayment = (payer: string) => {
+    setPayedAmounts((curr) => {
+      const _curr = { ...curr };
+
+      Object.keys(_curr).map((key) => (_curr[key] = 0));
+      _curr[payer] = price;
+
+      return _curr;
+    });
+  };
+
   // Initialize consumers state
   useEffect(() => {
     const _consumerStates: IConsumerStates = {};
@@ -252,6 +263,7 @@ const NewExpenseModal = ({
             isOpen={
               showAllParticipants || currentStep === NewExpenseStepsEnum.Payers
             }
+            handleFullPayment={handleFullPayment}
           />
         </div>
 

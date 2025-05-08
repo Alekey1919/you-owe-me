@@ -88,7 +88,9 @@
     "languages": "Idiomas",
     "date": "Fecha",
     "open": "Abrir",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "singlePayer": "Un solo pagador",
+    "multiplePayers": "Varios pagadores"
   },
   "login": {
     "login": "Ingresar",
