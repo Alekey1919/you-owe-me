@@ -7,7 +7,7 @@ import {
   NameStep,
   PayersStep,
   PriceStep,
-} from "./NewExpenseSteps";
+} from "@app/components/newExpense/steps";
 import { twMerge } from "tailwind-merge";
 import { IConsumerStates, IPayedAmounts, ITicket } from "@app/types/types";
 import { createPortal } from "react-dom";
