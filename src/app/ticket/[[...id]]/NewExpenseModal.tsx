@@ -146,14 +146,7 @@ const NewExpenseModal = ({
   };
 
   const handleFullPayment = (payer: string) => {
-    setPayedAmounts((curr) => {
-      const _curr = { ...curr };
-
-      Object.keys(_curr).map((key) => (_curr[key] = 0));
-      _curr[payer] = price;
-
-      return _curr;
-    });
+    setPayedAmounts({ [payer]: price });
   };
 
   // Initialize consumers state

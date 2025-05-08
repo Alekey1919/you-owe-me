@@ -105,32 +105,41 @@ const PayersStep = ({
         </div>
         {participants.map((participant, index) => {
           return (
-            <div className="box flex justify-between" key={index}>
+            <div
+              className="box flex justify-between relative overflow-hidden"
+              key={index}
+            >
               <span>{participant}</span>
-              {!isMultiPayer ? (
-                <button
-                  className={twMerge(
-                    "bg-background text-accent rounded-lg px-4 flex items-center text-sm transition-opacity duration-300",
-                    payedAmounts[participant] !== fullPrice && "opacity-50"
-                  )}
-                  onClick={() => handleFullPayment(participant)}
-                >
-                  Payed
-                </button>
-              ) : (
-                <div className="flex space-x-4">
-                  <span>$</span>
-                  <input
-                    type="text"
-                    max={fullPrice}
-                    min={0}
-                    className="w-20 bg-transparent "
-                    placeholder="0"
-                    value={payedAmounts[participant] || 0}
-                    onChange={(e) => onChange(e, participant)}
-                  />
-                </div>
-              )}
+
+              <button
+                className={twMerge(
+                  "bg-background text-accent rounded-lg px-4 flex items-center text-sm transition-all duration-300",
+                  "absolute top-0 bottom-0 my-auto right-2 h-fit py-1",
+                  payedAmounts[participant] !== fullPrice && "opacity-50",
+                  isMultiPayer ? "-translate-y-[150%]" : "translate-y-0"
+                )}
+                onClick={() => handleFullPayment(participant)}
+              >
+                {t("common.payed")}
+              </button>
+
+              <div
+                className={twMerge(
+                  "flex space-x-4 transition-all duration-300",
+                  !isMultiPayer && "translate-y-[150%]"
+                )}
+              >
+                <span>$</span>
+                <input
+                  type="number"
+                  max={fullPrice}
+                  min={0}
+                  className="w-20 bg-transparent "
+                  placeholder="0"
+                  value={payedAmounts[participant] || 0}
+                  onChange={(e) => onChange(e, participant)}
+                />
+              </div>
             </div>
           );
         })}

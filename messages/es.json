@@ -90,7 +90,8 @@
     "open": "Abrir",
     "close": "Cerrar",
     "singlePayer": "Un solo pagador",
-    "multiplePayers": "Varios pagadores"
+    "multiplePayers": "Varios pagadores",
+    "payed": "Pagó"
   },
   "login": {
     "login": "Ingresar",

@@ -90,7 +90,8 @@
     "open": "Open",
     "close": "Close",
     "singlePayer": "Single payer",
-    "multiplePayers": "Multiple payers"
+    "multiplePayers": "Multiple payers",
+    "payed": "Payed"
   },
   "login": {
     "login": "Login",
