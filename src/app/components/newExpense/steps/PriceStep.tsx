@@ -19,7 +19,7 @@ const PriceStep = ({ value, setValue, currentStep }: PriceStepProps) => {
     >
       <input
         type="number"
-        value={value}
+        value={value === 0 ? "" : value}
         placeholder="0"
         className="box text-gray-500 !outline-none"
         onChange={onChange}

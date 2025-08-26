@@ -55,7 +55,8 @@
     "calculate": "Calculate",
     "ticketSavedCorrectly": "Ticket saved correctly",
     "ticketUpdatedCorrectly": "Ticket updated correctly",
-    "errorSavingTicket": "Couldn't save ticket"
+    "errorSavingTicket": "Couldn't save ticket",
+    "addAtLeastOneParticipant": "You must add at least one participant."
   },
   "results": {
     "ticketNotFound": "Ticket not found",

@@ -1,17 +1,22 @@
-import { useEffect, useMemo, useState } from "react";
-import ExpensesList from "./ExpensesList";
-import useCalculationContext from "@app/contexts/calculationContext";
-import { twMerge } from "tailwind-merge";
 import Button from "@app/components/Button";
-import NewExpenseModal from "./NewExpenseModal";
+import useCalculationContext from "@app/contexts/calculationContext";
 import { ExpensesContextProvider } from "@app/contexts/expensesContext";
 import { useTranslations } from "next-intl";
+import { useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { twMerge } from "tailwind-merge";
+import ExpensesList from "./ExpensesList";
+import NewExpenseModal from "./NewExpenseModal";
 
 const Expenses = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
-  const { lgScreen, isParticipantsSelected } = useCalculationContext();
+  const {
+    lgScreen,
+    isParticipantsSelected,
+    ticketData: { participants },
+  } = useCalculationContext();
   const t = useTranslations();
 
   const isSelectedInMobile = useMemo(() => {
@@ -25,6 +30,14 @@ const Expenses = () => {
       setShowModal(true);
     }
   }, [editingIndex]);
+
+  const handleOpen = () => {
+    if (participants.length === 0) {
+      return toast.error(t("ticket.addAtLeastOneParticipant"));
+    }
+
+    setShowModal(true);
+  };
 
   return (
     <ExpensesContextProvider
@@ -46,10 +59,7 @@ const Expenses = () => {
           {t("common.expenses")}:
         </span>
         <div className="flex flex-col space-y-2">
-          <Button
-            text={t("ticket.addExpense")}
-            onClick={() => setShowModal(true)}
-          />
+          <Button text={t("ticket.addExpense")} onClick={handleOpen} />
           <NewExpenseModal showModal={showModal} setShowModal={setShowModal} />
           <ExpensesList />
         </div>

@@ -1,10 +1,10 @@
-import { twMerge } from "tailwind-merge";
-import useCalculationContext from "@app/contexts/calculationContext";
 import { NewExpenseStepsEnum } from "@/app/ticket/[[...id]]/NewExpenseModal";
+import useCalculationContext from "@app/contexts/calculationContext";
 import { IPayedAmounts } from "@app/types/types";
-import { getCarouselStyles, StepContainer } from "../utils/stepUtils";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { twMerge } from "tailwind-merge";
+import { getCarouselStyles, StepContainer } from "../utils/stepUtils";
 
 interface PayersStepProps {
   currentStep: NewExpenseStepsEnum;
@@ -136,7 +136,7 @@ const PayersStep = ({
                   min={0}
                   className="w-20 bg-transparent "
                   placeholder="0"
-                  value={payedAmounts[participant] || 0}
+                  value={payedAmounts[participant] || ""}
                   onChange={(e) => onChange(e, participant)}
                 />
               </div>

@@ -1,10 +1,10 @@
-import WhiteShape from "@public/images/white_shape.svg";
 import BlueShape from "@public/images/blue_shape.svg";
 import OrangeShape from "@public/images/orange_shape.svg";
+import WhiteShape from "@public/images/white_shape.svg";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
-import { useTranslations } from "next-intl";
 
 const Hero = () => {
   const t = useTranslations();
@@ -15,17 +15,17 @@ const Hero = () => {
         <Image
           src={WhiteShape}
           alt="Shape"
-          className="w-[400px] lg:w-[60%] absolute translate-x-8 lg:translate-y-[10%] lg:translate-x-[10%] rotate-90 opacity-20"
+          className="w-[400px] lg:w-[60%] absolute translate-x-8 lg:translate-y-[10%] lg:translate-x-[10%] rotate-90 opacity-20 pointer-events-none"
         />
         <Image
           src={BlueShape}
           alt="Shape"
-          className="w-[200px] lg:w-[30%] absolute translate-x-24 translate-y-20 lg:translate-y-[40%] lg:translate-x-[75%] opacity-30"
+          className="w-[200px] lg:w-[30%] absolute translate-x-24 translate-y-20 lg:translate-y-[40%] lg:translate-x-[75%] opacity-30 pointer-events-none"
         />
         <Image
           src={OrangeShape}
           alt="Shape"
-          className="w-[200px] -translate-x-28 -translate-y-14 lg:w-[30%] absolute lg:translate-y-[-20%] lg:translate-x-[-65%] opacity-30"
+          className="w-[200px] -translate-x-28 -translate-y-14 lg:w-[30%] absolute lg:translate-y-[-20%] lg:translate-x-[-65%] opacity-30 pointer-events-none"
         />
 
         <div className="z-10 flex flex-col items-center space-y-8">

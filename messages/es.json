@@ -1,7 +1,7 @@
 {
   "homepage": {
     "heroTitle": "Divide los gastos de forma justa y\n sin dolores de cabeza",
-    "heroSubtitle": "Calcula fácilmente quién pagó qué y quién consumió qué y luego calcula exactamente cuánto debe cada persona.",
+    "heroSubtitle": "Calcula fácilmente quién pagó qué, quién consumió qué y luego calcula exactamente cuánto debe cada persona.",
     "createANewTicket": "Divide tus gastos",
     "howItWorks": "Cómo funciona",
     "addParticipants": "Añade participantes",
@@ -55,7 +55,8 @@
     "calculate": "Calcular",
     "ticketSavedCorrectly": "Ticket guardado correctamente",
     "ticketUpdatedCorrectly": "Ticket actualizado correctamente",
-    "errorSavingTicket": "No se pudo guardar el ticket"
+    "errorSavingTicket": "No se pudo guardar el ticket",
+    "addAtLeastOneParticipant": "Debes añadir al menos un participante."
   },
   "results": {
     "ticketNotFound": "Ticket no encontrado",
