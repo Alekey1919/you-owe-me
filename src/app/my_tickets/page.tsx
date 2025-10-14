@@ -1,17 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ITicket } from "../types/types";
-import { useSelector } from "react-redux";
-import { selectUser } from "../redux/slices/userSlice";
-import { getUserTickets } from "../lib/fetchData";
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
-import TicketInfoModal from "./TicketInfoModal";
-import Ticket from "./Ticket";
 import { useTranslations } from "next-intl";
-import Spinner from "../svgs/Spinner";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import Button from "../components/Button";
+import { getUserTickets } from "../lib/fetchData";
+import { selectUser } from "../redux/slices/userSlice";
 import SearchIcon from "../svgs/SearchIcon";
+import Spinner from "../svgs/Spinner";
+import { ITicket } from "../types/types";
+import Ticket from "./Ticket";
+import TicketInfoModal from "./TicketInfoModal";
 
 import Search from "./Search";
 
@@ -23,6 +23,7 @@ const Page = () => {
   const [hasMore, setHasMore] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<number | null>(null);
   const [searchActive, setSearchActive] = useState(false);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const [showSearch, setShowSearch] = useState(false);
 
@@ -33,25 +34,28 @@ const Page = () => {
 
   const user = useSelector(selectUser);
 
-  const fetchData = useCallback(async (userId: string) => {
-    console.log("fetching");
-    setIsLoading(true);
+  const fetchData = useCallback(
+    async (userId: string) => {
+      setIsLoading(true);
 
-    const { tickets: _tickets, lastVisible } = await getUserTickets({
-      userId,
-      lastDoc: lastDoc.current,
-      pageSize: PAGE_SIZE,
-    });
+      const { tickets: _tickets, lastVisible } = await getUserTickets({
+        userId,
+        lastDoc: lastDoc.current,
+        pageSize: PAGE_SIZE,
+        sortOrder,
+      });
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    console.log("tickets", _tickets);
-    if (_tickets.length) {
-      setTickets((curr) => [...curr, ..._tickets]);
-      setHasMore(_tickets.length === PAGE_SIZE);
-      lastDoc.current = lastVisible;
-    }
-  }, []);
+      console.log("tickets", _tickets);
+      if (_tickets.length) {
+        setTickets((curr) => [...curr, ..._tickets]);
+        setHasMore(_tickets.length === PAGE_SIZE);
+        lastDoc.current = lastVisible;
+      }
+    },
+    [sortOrder]
+  );
 
   const removeFromList = (index: number) => {
     setTickets((curr) => {
@@ -63,17 +67,23 @@ const Page = () => {
     });
   };
 
-  useEffect(() => {
-    if (user?.id && !searchActive) {
-      fetchData(user.id);
-    }
-  }, [fetchData, user?.id, searchActive]);
-
   const clearSearch = useCallback(() => {
     setTickets([]);
     lastDoc.current = undefined;
     setSearchActive(false);
   }, []);
+
+  // Handle initial load and sort order changes
+  useEffect(() => {
+    if (user?.id && !searchActive) {
+      // Reset tickets and lastDoc when sort order changes
+      setTickets([]);
+      lastDoc.current = undefined;
+
+      // Fetch new data with the current sort order
+      fetchData(user.id);
+    }
+  }, [user?.id, searchActive, sortOrder, fetchData]);
 
   return (
     <>
@@ -93,6 +103,8 @@ const Page = () => {
           searchActive={searchActive}
           setSearchActive={setSearchActive}
           clearSearch={clearSearch}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 4xl:grid-cols-5 w-full gap-4">

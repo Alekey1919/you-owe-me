@@ -37,7 +37,10 @@
     "search": "Search",
     "ticketsNotFound": "No tickets were found",
     "somethingWentWrong": "Something went wrong",
-    "clear": "Clear"
+    "clear": "Clear",
+    "sortBy": "Sort by",
+    "newest": "Newest",
+    "oldest": "Oldest"
   },
   "ticket": {
     "ticketNotFound": "The ticket was not found, sorry (404)",

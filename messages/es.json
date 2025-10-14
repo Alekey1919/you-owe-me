@@ -37,7 +37,10 @@
     "search": "Buscar",
     "ticketsNotFound": "No se encontró ningún tickets",
     "somethingWentWrong": "Algo salió mal",
-    "clear": "Eliminar"
+    "clear": "Eliminar",
+    "sortBy": "Ordenar por",
+    "newest": "Más reciente",
+    "oldest": "Más antiguo"
   },
   "ticket": {
     "ticketNotFound": "El ticket no fue encontrado, lo sentimos (404)",

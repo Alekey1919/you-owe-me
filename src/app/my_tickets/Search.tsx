@@ -1,14 +1,14 @@
-import React, { useCallback, useMemo, useState } from "react";
-import Button from "../components/Button";
-import { twMerge } from "tailwind-merge";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useTranslations } from "next-intl";
-import { useSelector } from "react-redux";
-import { selectTheme } from "../redux/slices/themeSlice";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../services/firebase/firebase";
-import { selectUser } from "../redux/slices/userSlice";
-import { ITicket } from "../types/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { twMerge } from "tailwind-merge";
+import Button from "../components/Button";
+import { selectTheme } from "../redux/slices/themeSlice";
+import { selectUser } from "../redux/slices/userSlice";
+import { db } from "../services/firebase/firebase";
+import { ITicket } from "../types/types";
 
 const Search = ({
   isOpen,
@@ -16,12 +16,16 @@ const Search = ({
   searchActive,
   setSearchActive,
   clearSearch,
+  sortOrder,
+  setSortOrder,
 }: {
   isOpen: boolean;
   setTickets: (tickets: ITicket[]) => void;
   searchActive: boolean;
   setSearchActive: (v: boolean) => void;
   clearSearch: () => void;
+  sortOrder: "asc" | "desc";
+  setSortOrder: (order: "asc" | "desc") => void;
 }) => {
   const [ticketName, setTicketName] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -48,26 +52,30 @@ const Search = ({
 
   const handleSearch = useCallback(async () => {
     try {
-      let ticketsQuery = query(collection(db, "tickets"));
+      // Build constraints array
+      const constraints = [];
 
       // Adding filters dynamically
       if (user?.id) {
-        ticketsQuery = query(ticketsQuery, where("userId", "==", user.id));
+        constraints.push(where("userId", "==", user.id));
       }
       if (ticketName) {
-        ticketsQuery = query(ticketsQuery, where("name", "==", ticketName));
+        constraints.push(where("name", "==", ticketName));
       }
       if (startDate) {
-        ticketsQuery = query(
-          ticketsQuery,
-          where("date", ">=", Date.parse(startDate))
-        );
+        constraints.push(where("date", ">=", Date.parse(startDate)));
 
         // Using endDate if specified or today
         const _endDate = endDate ? Date.parse(endDate) : new Date().getTime();
 
-        ticketsQuery = query(ticketsQuery, where("date", "<=", _endDate));
+        constraints.push(where("date", "<=", _endDate));
       }
+
+      // Add orderBy at the end
+      constraints.push(orderBy("date", sortOrder));
+
+      // Build the query with all constraints
+      const ticketsQuery = query(collection(db, "tickets"), ...constraints);
 
       const querySnapshot = await getDocs(ticketsQuery);
 
@@ -90,7 +98,16 @@ const Search = ({
     ticketName,
     user?.id,
     t,
+    sortOrder,
   ]);
+
+  // Re-run search when sort order changes and search is active
+  useEffect(() => {
+    if (searchActive) {
+      handleSearch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortOrder]);
 
   return (
     <div
@@ -110,6 +127,20 @@ const Search = ({
           value={ticketName}
           onChange={(e) => setTicketName(e.target.value)}
         />
+      </div>
+
+      <div className="flex w-full justify-between">
+        <label htmlFor="sort">{t("sortBy")}:</label>
+        <select
+          id="sort"
+          className="bg-transparent border-0 border-b-[1px] border-b-accent"
+          style={{ colorScheme: theme }}
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+        >
+          <option value="desc">{t("newest")}</option>
+          <option value="asc">{t("oldest")}</option>
+        </select>
       </div>
 
       <div className="flex flex-col w-full">

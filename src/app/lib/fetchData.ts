@@ -1,40 +1,56 @@
 import {
   collection,
+  deleteDoc,
+  doc,
   DocumentData,
   getDocs,
   limit,
+  orderBy,
   query,
   QueryDocumentSnapshot,
   startAfter,
   where,
-  doc,
-  deleteDoc,
 } from "firebase/firestore";
-import { db } from "../services/firebase/firebase";
 import { CollectionsEnum } from "../enums/collectionsEnum";
+import { db } from "../services/firebase/firebase";
 import { ITicket } from "../types/types";
 
 export const getUserTickets = async ({
   userId,
   lastDoc,
   pageSize,
+  sortOrder = "desc",
 }: {
   userId: string;
   pageSize: number;
   lastDoc?: QueryDocumentSnapshot<DocumentData, DocumentData>;
+  sortOrder?: "asc" | "desc";
 }) => {
   const colRef = collection(db, CollectionsEnum.Tickets);
-  let q = query(colRef, where("userId", "==", userId), limit(pageSize));
 
-  // If lastDoc is provided, start after it
+  // Build query with all constraints at once
+  let q;
   if (lastDoc) {
-    q = query(q, startAfter(lastDoc));
+    q = query(
+      colRef,
+      where("userId", "==", userId),
+      orderBy("date", sortOrder),
+      startAfter(lastDoc),
+      limit(pageSize)
+    );
+  } else {
+    q = query(
+      colRef,
+      where("userId", "==", userId),
+      orderBy("date", sortOrder),
+      limit(pageSize)
+    );
   }
 
   const snapshot = await getDocs(q);
   const tickets = snapshot.docs.map((doc) => ({
     id: doc.id,
-    ...doc.data(),
+    ...(doc.data() as object),
   })) as ITicket[];
 
   // Get the last document for the next page
