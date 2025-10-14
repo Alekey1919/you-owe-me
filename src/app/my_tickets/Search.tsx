@@ -1,4 +1,11 @@
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
@@ -59,9 +66,7 @@ const Search = ({
       if (user?.id) {
         constraints.push(where("userId", "==", user.id));
       }
-      if (ticketName) {
-        constraints.push(where("name", "==", ticketName));
-      }
+      // We'll filter by name client-side for partial matching
       if (startDate) {
         constraints.push(where("date", ">=", Date.parse(startDate)));
 
@@ -74,17 +79,31 @@ const Search = ({
       // Add orderBy at the end
       constraints.push(orderBy("date", sortOrder));
 
+      // If searching by name only (no date range), limit the query to avoid fetching all tickets
+      // This improves performance for users with many tickets
+      if (ticketName && !startDate) {
+        constraints.push(limit(100)); // Fetch last 100 tickets for name-only searches
+      }
+
       // Build the query with all constraints
       const ticketsQuery = query(collection(db, "tickets"), ...constraints);
 
       const querySnapshot = await getDocs(ticketsQuery);
 
-      const tickets = querySnapshot.docs.map((doc) => ({
+      let tickets = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      }));
+      })) as ITicket[];
 
-      setTickets(tickets as ITicket[]);
+      // Filter by ticket name client-side for partial, case-insensitive matching
+      if (ticketName) {
+        const searchLower = ticketName.toLowerCase().trim();
+        tickets = tickets.filter((ticket) =>
+          ticket.name.toLowerCase().includes(searchLower)
+        );
+      }
+
+      setTickets(tickets);
       setSearchActive(true);
     } catch (error) {
       console.error("Error querying tickets: ", error);
