@@ -172,6 +172,7 @@ const Search = ({
               "bg-transparent",
               !startDate && "text-transparent"
             )}
+            value={startDate}
             style={{ colorScheme: theme }}
             onChange={(e) => setStartDate(e.target.value)}
           />
@@ -184,6 +185,7 @@ const Search = ({
               "bg-transparent",
               !endDate && "text-transparent"
             )}
+            value={endDate}
             style={{ colorScheme: theme }}
             onChange={(e) => setEndDate(e.target.value)}
           />
