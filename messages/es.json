@@ -73,7 +73,8 @@
     "hasToReceive": "Debe recibir",
     "expensesPerPerson": "Gastos por persona",
     "pays": "Paga",
-    "to": "a"
+    "to": "a",
+    "amountCopied": "Monto copiado al portapapeles"
   },
   "navbar": {
     "newTicket": "Nuevo ticket",
@@ -95,7 +96,8 @@
     "close": "Cerrar",
     "singlePayer": "Un solo pagador",
     "multiplePayers": "Varios pagadores",
-    "payed": "Pagó"
+    "payed": "Pagó",
+    "each": "c/u"
   },
   "login": {
     "login": "Ingresar",

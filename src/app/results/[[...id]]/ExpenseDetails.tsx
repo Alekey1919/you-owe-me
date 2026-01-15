@@ -1,7 +1,7 @@
 import useResultContext from "@app/contexts/resultsContext";
 import { IExpense } from "@app/types/types";
 import { useTranslations } from "next-intl";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
@@ -26,7 +26,7 @@ const ExpenseDetails = ({ expense }: { expense: IExpense }) => {
         {expense.consumers.length > 1 && (
           <span className="block">{`($${Math.round(
             expense.price / expense.consumers.length
-          ).toLocaleString("de-DE")} c/u)`}</span>
+          ).toLocaleString("de-DE")} ${t("common.each")})`}</span>
         )}
       </span>
       <div className="card-section">

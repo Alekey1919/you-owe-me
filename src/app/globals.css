@@ -27,11 +27,11 @@ input:focus {
 }
 
 .box {
-  @apply pl-4 pr-3 py-3 rounded-lg lg:shadow-lg bg-accent text-background;
+  @apply p-4 rounded-lg lg:shadow-lg bg-accent text-background;
 }
 
 .button {
-  @apply pl-4 pr-3 py-3 rounded-lg shadow-lg bg-accent text-background transition-all duration-300;
+  @apply p-4 rounded-lg shadow-lg bg-accent text-background transition-all duration-300;
 }
 
 .button.invert-colors {
@@ -77,7 +77,7 @@ input:focus {
 }
 
 .card {
-  @apply box flex flex-col relative;
+  @apply box flex flex-col relative px-4;
 }
 
 .card-section {

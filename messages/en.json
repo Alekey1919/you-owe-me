@@ -73,7 +73,8 @@
     "hasToReceive": "Has to receive",
     "expensesPerPerson": "Expenses per person",
     "pays": "Pays",
-    "to": "to"
+    "to": "to",
+    "amountCopied": "Amount copied to clipboard"
   },
   "navbar": {
     "newTicket": "New ticket",
@@ -95,7 +96,8 @@
     "close": "Close",
     "singlePayer": "Single payer",
     "multiplePayers": "Multiple payers",
-    "payed": "Payed"
+    "payed": "Payed",
+    "each": "each"
   },
   "login": {
     "login": "Login",
