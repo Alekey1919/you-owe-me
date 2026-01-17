@@ -1,19 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import UserIcon from "../svgs/UserIcon";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { useTranslations } from "next-intl";
-import LockIcon from "../svgs/LockIcon";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { twMerge } from "tailwind-merge";
 import Button from "../components/Button";
 import TwoStatesText from "../components/TwoStatesText";
 import useAuth from "../hooks/useAuth";
-import { twMerge } from "tailwind-merge";
-import { auth } from "../services/firebase/firebase";
-import { sendPasswordResetEmail } from "firebase/auth";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
 import { selectUser } from "../redux/slices/userSlice";
+import { auth } from "../services/firebase/firebase";
+import LockIcon from "../svgs/LockIcon";
+import UserIcon from "../svgs/UserIcon";
 
 const ErrorMessage = ({ text }: { text: string }) => {
   return (
@@ -147,7 +147,7 @@ const Login = () => {
             text2={t("youKnowMe")}
             showSecondText={!isLogin}
             styles={twMerge(
-              "text-background cursor-pointer transition-opacity duration-300",
+              "text-background cursor-pointer transition-opacity duration-300 group",
               isPasswordRecovery && "opacity-0 pointer-events-none"
             )}
             onClick={() => setIsLogin((curr) => !curr)}
@@ -157,7 +157,7 @@ const Login = () => {
         <TwoStatesText
           text1={t("iForgotMyPassword")}
           text2={t("iKnowMyPassword")}
-          styles="cursor-pointer"
+          styles="cursor-pointer group"
           showSecondText={isPasswordRecovery}
           onClick={() => setIsPasswordRecovery((curr) => !curr)}
         />

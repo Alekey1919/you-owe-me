@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 const TwoStatesText = ({
@@ -22,7 +22,7 @@ const TwoStatesText = ({
       <span className="invisible">.</span>
       <span
         className={twMerge(
-          "absolute-full flex items-center justify-center transition-transform duration-300",
+          "absolute-full flex items-center justify-center transition-transform duration-300 group-hover:underline",
           showSecondText && "translate-y-full"
         )}
       >
@@ -30,7 +30,7 @@ const TwoStatesText = ({
       </span>
       <span
         className={twMerge(
-          "absolute-full flex items-center justify-center -translate-y-full transition-transform duration-300",
+          "absolute-full flex items-center justify-center -translate-y-full transition-transform duration-300 group-hover:underline",
           showSecondText && "translate-y-0"
         )}
       >
