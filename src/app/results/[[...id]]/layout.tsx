@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     // Create metadata with ticket information
     return {
-      title: `${ticketData.name} - Resultados de la División`,
+      title: `${ticketData.name}`,
       description:
         ticketData.notes ||
         `Resultados de la división de "${ticketData.name}" con ${ticketData.participants.length} participantes.`,
