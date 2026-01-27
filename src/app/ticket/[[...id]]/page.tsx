@@ -1,31 +1,30 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Button from "@app/components/Button";
 import { CalculationContextProvider } from "@app/contexts/calculationContext";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Expenses from "./Expenses";
 import Participants from "./Participants";
-import Button from "@app/components/Button";
 // import { EXPENSES, PARTICIPANTS } from "@root/mockedData";
-import Tabs from "./Tabs";
-import useMediaQueryState, {
-  DefaultBreakpoints,
-} from "@app/hooks/useMediaQueryState";
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import SaveExpenseModal from "./SaveExpenseModal";
-import { ITicket } from "@app/types/types";
-import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "@app/redux/slices/userSlice";
-import SaveButton from "./SaveButton";
-import { getTicket } from "@app/lib/fetchData";
-import { useTranslations } from "next-intl";
-import Spinner from "@/app/svgs/Spinner";
 import { RoutesEnum } from "@/app/enums/routes";
 import {
   addCurrentTicket,
   selectCurrentTicket,
 } from "@/app/redux/slices/currentTicketSlice";
+import Spinner from "@/app/svgs/Spinner";
+import useMediaQueryState, {
+  DefaultBreakpoints,
+} from "@app/hooks/useMediaQueryState";
+import { getTicket } from "@app/lib/fetchData";
+import { selectUser } from "@app/redux/slices/userSlice";
+import { ITicket } from "@app/types/types";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import SaveButton from "./SaveButton";
+import SaveExpenseModal from "./SaveExpenseModal";
+import Tabs from "./Tabs";
 
 const Page = () => {
   const user = useSelector(selectUser);
@@ -41,7 +40,7 @@ const Page = () => {
   };
 
   const [ticketData, setTicketData] = useState<ITicket>(
-    initialState as ITicket
+    initialState as ITicket,
   );
 
   const [ticketNotFound, setTicketNotFound] = useState(false);

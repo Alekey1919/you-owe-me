@@ -3,6 +3,7 @@ import {
   deleteDoc,
   doc,
   DocumentData,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -36,14 +37,14 @@ export const getUserTickets = async ({
       where("userId", "==", userId),
       orderBy("date", sortOrder),
       startAfter(lastDoc),
-      limit(pageSize)
+      limit(pageSize),
     );
   } else {
     q = query(
       colRef,
       where("userId", "==", userId),
       orderBy("date", sortOrder),
-      limit(pageSize)
+      limit(pageSize),
     );
   }
 
@@ -60,6 +61,15 @@ export const getUserTickets = async ({
 };
 
 export const getTicket = async ({ ticketId }: { ticketId: string }) => {
+  // Try fetching by document ID first (this works for Firestore auto-generated ids)
+  const docRef = doc(db, CollectionsEnum.Tickets, ticketId);
+  const snap = await getDoc(docRef);
+
+  if (snap.exists()) {
+    return { id: snap.id, ...(snap.data() as ITicket) } as ITicket;
+  }
+
+  // Fallback for legacy documents that stored `id` inside the document data
   const colRef = collection(db, CollectionsEnum.Tickets);
   const q = query(colRef, where("id", "==", ticketId));
 

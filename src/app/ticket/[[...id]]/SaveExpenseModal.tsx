@@ -1,17 +1,16 @@
+import { selectTheme } from "@/app/redux/slices/themeSlice";
 import ModalCard from "@app/components/ModalCard";
+import TextWithSpinner from "@app/components/TextWithSpinner";
 import useCalculationContext from "@app/contexts/calculationContext";
 import { selectUser } from "@app/redux/slices/userSlice";
 import { db } from "@app/services/firebase/firebase";
 import { ITicket } from "@app/types/types";
 import { parseDateToString } from "@app/utils/parseDateToString";
-import { doc, setDoc } from "firebase/firestore";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
-import toast from "react-hot-toast";
-import TextWithSpinner from "@app/components/TextWithSpinner";
-import { selectTheme } from "@/app/redux/slices/themeSlice";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const SaveExpenseModal = ({
   handleClose,
@@ -48,8 +47,7 @@ const SaveExpenseModal = ({
 
     const isNew = !ticketData.id;
 
-    const ticket: ITicket = {
-      id: isNew ? uuidv4() : ticketData.id,
+    const ticketDataToSave = {
       name,
       date: Date.parse(date), // We save the timestamp
       notes,
@@ -61,11 +59,29 @@ const SaveExpenseModal = ({
     setIsSaving(true);
 
     try {
-      await setDoc(doc(db, "tickets", ticket.id), ticket);
+      if (isNew) {
+        const docRef = await addDoc(
+          collection(db, "tickets"),
+          ticketDataToSave as any,
+        );
+        const savedTicket: ITicket = {
+          id: docRef.id,
+          ...(ticketDataToSave as ITicket),
+        };
 
-      toast.success(t(isNew ? "ticketSavedCorrectly" : "ticketSavedCorrectly"));
+        toast.success(t("ticketSavedCorrectly"));
+        updateSavedData(savedTicket);
+      } else {
+        const ticket: ITicket = {
+          id: ticketData.id,
+          ...(ticketDataToSave as ITicket),
+        };
+        await setDoc(doc(db, "tickets", ticket.id), ticket);
 
-      updateSavedData(ticket);
+        toast.success(t("ticketSavedCorrectly"));
+        updateSavedData(ticket);
+      }
+
       handleClose();
     } catch (error) {
       console.log("Error saving ticket", error);

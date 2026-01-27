@@ -1,18 +1,18 @@
 "use client";
 
+import Spinner from "@/app/svgs/Spinner";
+import { ResultContextProvider } from "@app/contexts/resultsContext";
+import { smoothScrollTo } from "@app/utils/smoothScrollTo";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import useSplitTicket from "../../hooks/useSplitTicket";
 import { ITransaction } from "../../types/types";
-import UserTransactions from "./UserTransactions";
-import UserBalanceList from "./UserBalanceList";
-import ExpensesDetails from "./ExpensesDetails";
-import { ResultContextProvider } from "@app/contexts/resultsContext";
-import { smoothScrollTo } from "@app/utils/smoothScrollTo";
-import ErrorMessage from "./ErrorMessage";
-import { useTranslations } from "next-intl";
-import Spinner from "@/app/svgs/Spinner";
 import EditTicket from "./EditTicket";
+import ErrorMessage from "./ErrorMessage";
+import ExpensesDetails from "./ExpensesDetails";
 import TicketInfo from "./TicketInfo";
+import UserBalanceList from "./UserBalanceList";
+import UserTransactions from "./UserTransactions";
 
 const Results = ({ isTesting }: { isTesting?: boolean }) => {
   const [highlightedExpense, setHighlightedExpense] = useState("");

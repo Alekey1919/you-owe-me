@@ -1,5 +1,9 @@
+import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { ANTO_BIRTHDAY } from "../../../mockedData";
+import { getTicket } from "../lib/fetchData";
+import { selectCurrentTicket } from "../redux/slices/currentTicketSlice";
 import {
   IExpense,
   ITicket,
@@ -7,10 +11,6 @@ import {
   ITransactionData,
   IUserBalances,
 } from "../types/types";
-import { useParams } from "next/navigation";
-import { getTicket } from "../lib/fetchData";
-import { useSelector } from "react-redux";
-import { selectCurrentTicket } from "../redux/slices/currentTicketSlice";
 
 export enum ResultErrorsEnum {
   TicketNotFound,
@@ -144,7 +144,7 @@ const useSplitTicket = (isTesting?: boolean) => {
         document.title = ticket.name;
       }
     },
-    [calculateResults]
+    [calculateResults],
   );
 
   useEffect(() => {
