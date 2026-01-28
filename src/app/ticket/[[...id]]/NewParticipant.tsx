@@ -1,5 +1,8 @@
+import useCalculationContext from "@/app/contexts/calculationContext";
 import CrossIcon from "@/app/svgs/CrossIcon";
-import React, { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 
 const NewParticipant = ({
@@ -8,9 +11,18 @@ const NewParticipant = ({
   handleAdd: (name: string) => void;
 }) => {
   const [name, setName] = useState("");
+  const t = useTranslations();
+
+  const {
+    ticketData: { participants },
+  } = useCalculationContext();
 
   const handleClick = () => {
     if (!name) return;
+
+    if (participants.includes(name)) {
+      return toast.error(t("ticket.participantAlreadyExists"));
+    }
 
     handleAdd(name);
     setName("");
@@ -28,7 +40,7 @@ const NewParticipant = ({
       <button
         className={twMerge(
           "transition-opacity",
-          name ? "cursor-pointer" : "opacity-25 cursor-not-allowed"
+          name ? "cursor-pointer" : "opacity-25 cursor-not-allowed",
         )}
         onClick={handleClick}
       >

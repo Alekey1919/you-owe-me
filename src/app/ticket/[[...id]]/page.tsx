@@ -26,18 +26,18 @@ import SaveButton from "./SaveButton";
 import SaveExpenseModal from "./SaveExpenseModal";
 import Tabs from "./Tabs";
 
+const initialState = {
+  id: "",
+  name: "",
+  date: 0,
+  notes: undefined,
+  participants: [], //PARTICIPANTS,
+  expenses: [], //EXPENSES,
+  userId: "",
+};
+
 const Page = () => {
   const user = useSelector(selectUser);
-
-  const initialState = {
-    id: "",
-    name: "",
-    date: 0,
-    notes: undefined,
-    participants: [], //PARTICIPANTS,
-    expenses: [], //EXPENSES,
-    userId: "",
-  };
 
   const [ticketData, setTicketData] = useState<ITicket>(
     initialState as ITicket,
@@ -108,6 +108,7 @@ const Page = () => {
     }
   }, [params.id, fetchTicket, currentTicket]);
 
+  // Save userId in ticket data when user changes
   useEffect(() => {
     if (user) {
       setTicketData((curr) => {
@@ -156,7 +157,7 @@ const Page = () => {
           {t("allParticipantsAndExpenses")}
         </h1>
         {!lgScreen && <Tabs />}
-        <div className="flex lg:space-x-40 lg:justify-center lg:mt-10 w-full overflow-hidden lg:overflow-visible">
+        <div className="flex lg:space-x-40 lg:justify-center lg:mt-10 w-full overflow-hidden lg:overflow-visible grow">
           <Participants />
           <Expenses />
         </div>

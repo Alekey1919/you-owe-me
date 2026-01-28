@@ -59,7 +59,8 @@
     "ticketSavedCorrectly": "Ticket saved correctly",
     "ticketUpdatedCorrectly": "Ticket updated correctly",
     "errorSavingTicket": "Couldn't save ticket",
-    "addAtLeastOneParticipant": "You must add at least one participant."
+    "addAtLeastOneParticipant": "You must add at least one participant.",
+    "participantAlreadyExists": "Participant already exists."
   },
   "results": {
     "ticketNotFound": "Ticket not found",

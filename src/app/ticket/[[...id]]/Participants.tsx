@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from "react";
-import NewParticipant from "./NewParticipant";
-import ParticipantList from "./ParticipantList";
 import useCalculationContext from "@app/contexts/calculationContext";
 import { AnimationStatesEnum } from "@app/hooks/useListAnimations";
-import { twMerge } from "tailwind-merge";
 import { useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
+import { twMerge } from "tailwind-merge";
+import NewParticipant from "./NewParticipant";
+import ParticipantList from "./ParticipantList";
 
 const Participants = () => {
   const { lgScreen, isParticipantsSelected, setTicketData } =
@@ -57,7 +57,7 @@ const Participants = () => {
     <div
       className={twMerge(
         "flex flex-col lg:space-y-8 w-full shrink-0 lg:w-[unset] transition-translate duration-300",
-        isSelectedInMobile === false && "-translate-x-full"
+        isSelectedInMobile === false && "-translate-x-full",
       )}
     >
       <span className="subtitle text-center hidden lg:block">
