@@ -4,8 +4,8 @@ export const parseDateToString = (date: number) => {
 
 export const parseDateToReadableString = (date: number) => {
   const d = new Date(date);
-  const day = String(d.getDate()).padStart(2, "0");
-  const month = String(d.getMonth() + 1).padStart(2, "0"); // Months are 0-based
-  const year = d.getFullYear();
+  const day = String(d.getUTCDate()).padStart(2, "0");
+  const month = String(d.getUTCMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const year = d.getUTCFullYear();
   return `${day}/${month}/${year}`;
 };

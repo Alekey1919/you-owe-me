@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const TicketInfo = ({ name, date, notes }: ITicket) => {
   const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <InfoIcon
