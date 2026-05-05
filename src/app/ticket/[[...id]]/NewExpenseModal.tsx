@@ -1,20 +1,20 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import useCalculationContext from "@app/contexts/calculationContext";
+import Button from "@/app/components/Button";
+import BackArrowIcon from "@/app/svgs/BackArrowIcon";
 import {
   ConsumersStep,
   NameStep,
   PayersStep,
   PriceStep,
 } from "@app/components/newExpense/steps";
-import { twMerge } from "tailwind-merge";
-import { IConsumerStates, IPayedAmounts, ITicket } from "@app/types/types";
-import { createPortal } from "react-dom";
+import useCalculationContext from "@app/contexts/calculationContext";
 import useExpensesContext from "@app/contexts/expensesContext";
+import { IConsumerStates, IPayedAmounts, ITicket } from "@app/types/types";
 import { useTranslations } from "next-intl";
-import Button from "@/app/components/Button";
-import BackArrowIcon from "@/app/svgs/BackArrowIcon";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
+import { twMerge } from "tailwind-merge";
 
 export enum NewExpenseStepsEnum {
   Name,
@@ -92,7 +92,7 @@ const NewExpenseModal = ({
       price,
       payedAmounts: payedAmounts,
       consumers: Object.keys(consumerStates).filter(
-        (key) => consumerStates[key]
+        (key) => consumerStates[key],
       ),
     };
 
@@ -219,45 +219,52 @@ const NewExpenseModal = ({
   return createPortal(
     <div
       className={twMerge(
-        "fixed top-0 left-0 right-0 bottom-0 bg-[#000000a9] flex items-center justify-center !m-0 z-[100] transition-all duration-300 w-full h-full",
-        !showModal && "opacity-0 pointer-events-none -z-10"
+        "fixed top-0 left-0 right-0 bottom-0 bg-[#000000a9] flex items-start md:items-center justify-center !m-0 z-[100] transition-all duration-300 w-full h-full py-4",
+        !showModal && "opacity-0 pointer-events-none -z-10",
       )}
       id="modal-container"
       onClick={handleExit}
       style={{ backdropFilter: "blur(10px)" }}
     >
-      <div className="flex flex-col space-y-5 items-between justify-center w-10/12 max-w-[350px] lg:max-w-[unset] lg:w-[400px] bg-background rounded-xl p-4 relative">
+      <div className="flex flex-col space-y-5 items-between justify-center w-10/12 max-w-[350px] lg:max-w-[unset] lg:w-[400px] bg-background rounded-xl p-4 relative my-auto max-h-[calc(100dvh-2rem)] overflow-hidden">
         <h1 className="title text-center">
           {t(`common.${titles[currentStep]}`)}
         </h1>
-        <div className="w-full flex overflow-visible transition-transform ">
-          <NameStep value={name} setValue={setName} currentStep={currentStep} />
+        <div className="w-full min-h-0 flex-1 overflow-hidden">
+          <div className="w-full flex overflow-visible transition-transform">
+            <NameStep
+              value={name}
+              setValue={setName}
+              currentStep={currentStep}
+            />
 
-          <PriceStep
-            value={price}
-            setValue={setPrice}
-            currentStep={currentStep}
-          />
+            <PriceStep
+              value={price}
+              setValue={setPrice}
+              currentStep={currentStep}
+            />
 
-          <ConsumersStep
-            consumerStates={consumerStates}
-            selectAllConsumers={selectAllConsumers}
-            selectConsumer={selectConsumer}
-            currentStep={currentStep}
-            showAllParticipants={showAllParticipants}
-            setShowAllParticipants={setShowAllParticipants}
-          />
+            <ConsumersStep
+              consumerStates={consumerStates}
+              selectAllConsumers={selectAllConsumers}
+              selectConsumer={selectConsumer}
+              currentStep={currentStep}
+              showAllParticipants={showAllParticipants}
+              setShowAllParticipants={setShowAllParticipants}
+            />
 
-          <PayersStep
-            currentStep={currentStep}
-            fullPrice={price}
-            handlePayerAmount={handlePayerAmount}
-            payedAmounts={payedAmounts}
-            isOpen={
-              showAllParticipants || currentStep === NewExpenseStepsEnum.Payers
-            }
-            handleFullPayment={handleFullPayment}
-          />
+            <PayersStep
+              currentStep={currentStep}
+              fullPrice={price}
+              handlePayerAmount={handlePayerAmount}
+              payedAmounts={payedAmounts}
+              isOpen={
+                showAllParticipants ||
+                currentStep === NewExpenseStepsEnum.Payers
+              }
+              handleFullPayment={handleFullPayment}
+            />
+          </div>
         </div>
 
         <Button
@@ -267,7 +274,7 @@ const NewExpenseModal = ({
           text={t(
             `ticket.${
               currentStep !== NewExpenseStepsEnum.Payers ? "next" : "save"
-            }`
+            }`,
           )}
         />
 
@@ -279,7 +286,7 @@ const NewExpenseModal = ({
         )}
       </div>
     </div>,
-    document.getElementById("portal")!
+    document.getElementById("portal")!,
   );
 };
 

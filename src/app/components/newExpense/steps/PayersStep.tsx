@@ -28,7 +28,7 @@ const Button = ({
     <button
       className={twMerge(
         "border-0 bg-transparent text-accent transition-opacity duration-300",
-        !isActive && "opacity-50"
+        !isActive && "opacity-50",
       )}
       onClick={onClick}
     >
@@ -90,7 +90,7 @@ const PayersStep = ({
       styles={getCarouselStyles(currentStep, NewExpenseStepsEnum.Payers)}
       classNames={twMerge("transition-height", isOpen && "open")}
     >
-      <div className="flex flex-col space-y-2 w-full cursor-pointer">
+      <div className="flex flex-col space-y-2 w-full cursor-pointer h-full min-h-0">
         <div className="w-full flex justify-between mb-4">
           <Button
             text={t("common.singlePayer")}
@@ -103,46 +103,48 @@ const PayersStep = ({
             onClick={() => setIsMultiPayer(true)}
           />
         </div>
-        {participants.map((participant, index) => {
-          return (
-            <div
-              className="box flex justify-between relative overflow-hidden"
-              key={index}
-            >
-              <span>{participant}</span>
-
-              <button
-                className={twMerge(
-                  "bg-background text-accent rounded-lg px-4 flex items-center text-sm transition-all duration-300",
-                  "absolute top-0 bottom-0 my-auto right-2 h-fit py-1",
-                  payedAmounts[participant] !== fullPrice && "opacity-50",
-                  isMultiPayer ? "-translate-y-[150%]" : "translate-y-0"
-                )}
-                onClick={() => handleFullPayment(participant)}
-              >
-                {t("common.payed")}
-              </button>
-
+        <div className="visible-scrollbar flex flex-col space-y-2 max-h-[240px] md:max-h-[40dvh] overflow-y-auto">
+          {participants.map((participant, index) => {
+            return (
               <div
-                className={twMerge(
-                  "flex space-x-4 transition-all duration-300",
-                  !isMultiPayer && "translate-y-[150%]"
-                )}
+                className="box flex justify-between relative overflow-hidden"
+                key={index}
               >
-                <span>$</span>
-                <input
-                  type="number"
-                  max={fullPrice}
-                  min={0}
-                  className="w-20 bg-transparent "
-                  placeholder="0"
-                  value={payedAmounts[participant] || ""}
-                  onChange={(e) => onChange(e, participant)}
-                />
+                <span>{participant}</span>
+
+                <button
+                  className={twMerge(
+                    "bg-background text-accent rounded-lg px-4 flex items-center text-sm transition-all duration-300",
+                    "absolute top-0 bottom-0 my-auto right-2 h-fit py-1",
+                    payedAmounts[participant] !== fullPrice && "opacity-50",
+                    isMultiPayer ? "-translate-y-[150%]" : "translate-y-0",
+                  )}
+                  onClick={() => handleFullPayment(participant)}
+                >
+                  {t("common.payed")}
+                </button>
+
+                <div
+                  className={twMerge(
+                    "flex space-x-4 transition-all duration-300",
+                    !isMultiPayer && "translate-y-[150%]",
+                  )}
+                >
+                  <span>$</span>
+                  <input
+                    type="number"
+                    max={fullPrice}
+                    min={0}
+                    className="w-20 bg-transparent "
+                    placeholder="0"
+                    value={payedAmounts[participant] || ""}
+                    onChange={(e) => onChange(e, participant)}
+                  />
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </StepContainer>
   );

@@ -1,10 +1,10 @@
-import { CSSProperties } from "react";
 import { NewExpenseStepsEnum } from "@/app/ticket/[[...id]]/NewExpenseModal";
+import { CSSProperties } from "react";
 import { twMerge } from "tailwind-merge";
 
 export const getCarouselStyles = (
   stepNumber: NewExpenseStepsEnum,
-  currentStep: NewExpenseStepsEnum
+  currentStep: NewExpenseStepsEnum,
 ) => {
   const isVisible = stepNumber === currentStep;
   return {
@@ -26,8 +26,8 @@ export const StepContainer = ({
   return (
     <div
       className={twMerge(
-        "flex space-x-10 items-center w-full shrink-0 transition-all duration-300 justify-center",
-        classNames
+        "flex space-x-10 items-start w-full h-full min-h-0 shrink-0 transition-all duration-300 justify-center",
+        classNames,
       )}
       style={styles}
     >

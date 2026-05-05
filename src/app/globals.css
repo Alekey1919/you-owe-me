@@ -45,7 +45,9 @@ input:focus {
 .fade-enter-active {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 300ms, transform 300ms;
+  transition:
+    opacity 300ms,
+    transform 300ms;
 }
 .fade-exit {
   opacity: 1;
@@ -54,7 +56,9 @@ input:focus {
 .fade-exit-active {
   opacity: 0;
   transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
+  transition:
+    opacity 300ms,
+    transform 300ms;
 }
 
 .transition-height {
@@ -91,6 +95,30 @@ input:focus {
 /* Hide srollbar */
 ::-webkit-scrollbar {
   display: none;
+}
+
+/* Re-enable visible scrollbar for specific scroll areas */
+.visible-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted-background) transparent;
+}
+
+.visible-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+}
+
+.visible-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.visible-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--muted-background);
+  border-radius: 9999px;
+}
+
+.visible-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #616161;
 }
 
 .highlighted {

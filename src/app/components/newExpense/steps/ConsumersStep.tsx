@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction, useMemo } from "react";
-import { twMerge } from "tailwind-merge";
-import useCalculationContext from "@app/contexts/calculationContext";
 import { NewExpenseStepsEnum } from "@/app/ticket/[[...id]]/NewExpenseModal";
+import useCalculationContext from "@app/contexts/calculationContext";
 import { IConsumerStates } from "@app/types/types";
 import { useTranslations } from "next-intl";
+import { Dispatch, SetStateAction, useMemo } from "react";
+import { twMerge } from "tailwind-merge";
 import { getCarouselStyles, StepContainer } from "../utils/stepUtils";
 
 interface ConsumersStepProps {
@@ -40,12 +40,12 @@ const ConsumersStep = ({
       <StepContainer
         styles={getCarouselStyles(currentStep, NewExpenseStepsEnum.Consumers)}
       >
-        <div className="flex flex-col w-full space-y-4">
+        <div className="flex flex-col w-full space-y-4 h-full min-h-0">
           <div className="flex space-x-4 w-full justify-around">
             <button
               className={twMerge(
                 "box w-full transition-colors !bg-muted-accent",
-                allConsumersSelected ? "!bg-accent text-accent" : ""
+                allConsumersSelected ? "!bg-accent text-accent" : "",
               )}
               onClick={selectAllConsumers}
             >
@@ -62,7 +62,7 @@ const ConsumersStep = ({
                     "absolute w-1/2 h-full rounded-[inherit] left-0 top-0 transition-transform duration-300 ease-in-out",
                     showAllParticipants
                       ? "bg-accent translate-x-full"
-                      : " bg-muted-accent"
+                      : " bg-muted-accent",
                   )}
                 />
               </div>
@@ -70,24 +70,26 @@ const ConsumersStep = ({
           </div>
           <div
             className={twMerge(
-              "flex flex-col space-y-2 transition-height",
-              showAllParticipants && "open"
+              "flex flex-col space-y-2 transition-height min-h-0",
+              showAllParticipants && "open",
             )}
           >
-            {participants.map((participant, index) => {
-              return (
-                <div
-                  className={twMerge(
-                    "box transition-colors cursor-pointer !bg-muted-accent",
-                    consumerStates[participant] && "!bg-accent text-accent"
-                  )}
-                  onClick={() => selectConsumer(participant)}
-                  key={index}
-                >
-                  {participant}
-                </div>
-              );
-            })}
+            <div className="visible-scrollbar flex flex-col space-y-2 max-h-[240px] md:max-h-[40dvh] overflow-y-auto">
+              {participants.map((participant, index) => {
+                return (
+                  <div
+                    className={twMerge(
+                      "box transition-colors cursor-pointer !bg-muted-accent",
+                      consumerStates[participant] && "!bg-accent text-accent",
+                    )}
+                    onClick={() => selectConsumer(participant)}
+                    key={index}
+                  >
+                    {participant}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </StepContainer>
