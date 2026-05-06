@@ -50,8 +50,8 @@ const Expenses = () => {
     >
       <div
         className={twMerge(
-          "flex flex-col lg:space-y-8 min-w-[260px] w-full shrink-0 lg:w-[unset] transition-transform duration-300 pl-[1px]",
-          isSelectedInMobile && "-translate-x-full"
+          "flex flex-col lg:space-y-8 min-w-[260px] w-full shrink-0 lg:w-[unset] transition-transform duration-300 pl-[1px] max-w-[300px]",
+          isSelectedInMobile && "-translate-x-full",
         )}
       >
         {/* TODO: Add placeholder to calculate boxHeight in animations hook  */}

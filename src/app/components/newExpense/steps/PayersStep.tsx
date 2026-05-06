@@ -107,7 +107,7 @@ const PayersStep = ({
           {participants.map((participant, index) => {
             return (
               <div
-                className="box flex justify-between relative overflow-hidden"
+                className="box flex justify-between relative overflow-hidden shrink-0"
                 key={index}
               >
                 <span>{participant}</span>
